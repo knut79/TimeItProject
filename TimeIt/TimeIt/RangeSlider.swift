@@ -99,14 +99,14 @@ class RangeSlider: UIControl {
     var formattedLowerValue:String
     {
         get{
-            return lowerValue < 0 ? "\(Int(lowerValue * -1))BC" : "\(lowerValue)"
+            return lowerValue < 0 ? "\(Int(lowerValue * -1))BC" : "\(Int(lowerValue))"
         }
     }
     
     var formattedUpperValue:String
     {
         get{
-            return upperValue < 0 ? "\(Int(upperValue * -1))BC" : "\(upperValue)"
+            return upperValue < 0 ? "\(Int(upperValue * -1))BC" : "\(Int(upperValue))"
         }
     }
     

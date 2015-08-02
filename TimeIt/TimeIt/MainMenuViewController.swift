@@ -19,8 +19,13 @@ class MainMenuViewController: UIViewController, ADBannerViewDelegate {
     var timelineButton:UIButton!
     var loadingDataView:UIView!
     var loadingDataLabel:UILabel!
+    var datactrl:DataHandler!
     
     let queue = NSOperationQueue()
+    
+    var globalGameStats:GameStats!
+    var updateGlobalGameStats:Bool = false
+    var newGameStatsValues:(Int,Int,Int)!
 
     //let rangeSlider = RangeSlider(frame: CGRectZero)
     
@@ -29,7 +34,7 @@ class MainMenuViewController: UIViewController, ADBannerViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        datactrl = DataHandler()
 
         self.canDisplayBannerAds = true
         bannerView = ADBannerView(frame: CGRectMake(0, UIScreen.mainScreen().bounds.size.height - 44, UIScreen.mainScreen().bounds.size.width, 44))
@@ -73,33 +78,6 @@ class MainMenuViewController: UIViewController, ADBannerViewDelegate {
         rangeSlider.typeValue = sliderType.bothLowerAndUpper
         */
         
-
-        loadingDataLabel = UILabel(frame: CGRectMake(0, 0, 200, 50))
-        loadingDataLabel.text = "Loading data.."
-        loadingDataLabel.textAlignment = NSTextAlignment.Center
-        loadingDataView = UIView(frame: CGRectMake(50, 50, 200, 50))
-        loadingDataView.backgroundColor = UIColor.redColor()
-        loadingDataView.addSubview(loadingDataLabel)
-        self.view.addSubview(loadingDataView)
-        
-        var pulseAnimation:CABasicAnimation = CABasicAnimation(keyPath: "opacity");
-        pulseAnimation.duration = 0.3
-        pulseAnimation.toValue = NSNumber(float: 0.3)
-        pulseAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        pulseAnimation.autoreverses = true
-        pulseAnimation.repeatCount = 100
-        pulseAnimation.delegate = self
-        loadingDataView.layer.addAnimation(pulseAnimation, forKey: "asd")
-
-        
-        
-        populateData({ () in
-            self.view.addSubview(self.playButton)
-            self.loadingDataView.alpha = 0
-            self.loadingDataView.layer.removeAllAnimations()
-        })
-
-        
         /*
         let backgroundOperation = BackgroundPopulateData()
         
@@ -119,6 +97,7 @@ class MainMenuViewController: UIViewController, ADBannerViewDelegate {
         }
         */
         //test
+        /*
         giveNoBonus(){ (value:Bool) in
             println("outside 2")
         }
@@ -128,19 +107,75 @@ class MainMenuViewController: UIViewController, ADBannerViewDelegate {
             //println("got back: \(result)")
             println("got back")
         }
+        */
     }
     
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
     
+    override func viewDidAppear(animated: Bool) {
+        
+        if Int(datactrl.dataPopulatedID as! NSNumber) == 0
+        {
+            loadingDataLabel = UILabel(frame: CGRectMake(0, 0, 200, 50))
+            loadingDataLabel.text = "Loading data.."
+            loadingDataLabel.textAlignment = NSTextAlignment.Center
+            loadingDataView = UIView(frame: CGRectMake(50, 50, 200, 50))
+            loadingDataView.backgroundColor = UIColor.redColor()
+            loadingDataView.addSubview(loadingDataLabel)
+            self.view.addSubview(loadingDataView)
+            
+            var pulseAnimation:CABasicAnimation = CABasicAnimation(keyPath: "opacity");
+            pulseAnimation.duration = 0.3
+            pulseAnimation.toValue = NSNumber(float: 0.3)
+            pulseAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+            pulseAnimation.autoreverses = true
+            pulseAnimation.repeatCount = 100
+            pulseAnimation.delegate = self
+            loadingDataView.layer.addAnimation(pulseAnimation, forKey: "asd")
+            
+            populateData({ () in
+                self.view.addSubview(self.playButton)
+                self.globalGameStats = GameStats(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width * 0.75, UIScreen.mainScreen().bounds.size.height * 0.08),okScore: Int(self.datactrl.okScoreID as! NSNumber),goodScore: Int(self.datactrl.goodScoreID as! NSNumber),loveScore: Int(self.datactrl.loveScoreID as! NSNumber))
+                self.view.addSubview(self.globalGameStats)
+                self.loadingDataView.alpha = 0
+                self.loadingDataView.layer.removeAllAnimations()
+            })
+            
+            loadingDataView?.frame =  CGRectMake(50, 50, 200, 50)
+        }
+        else
+        {
+            self.view.addSubview(self.playButton)
+            globalGameStats = GameStats(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width * 0.75, UIScreen.mainScreen().bounds.size.height * 0.08),okScore: Int(datactrl.okScoreID as! NSNumber),goodScore: Int(datactrl.goodScoreID as! NSNumber),loveScore: Int(datactrl.loveScoreID as! NSNumber))
+            self.view.addSubview(globalGameStats)
+        }
+        
+        if updateGlobalGameStats
+        {
+            que(){ () in
+                println("outside 2")
+            }
+            globalGameStats.addOkPoints(newGameStatsValues.0, completion: { () in
+                self.globalGameStats.addGoodPoints(self.newGameStatsValues.1, completion: { () in
+                    self.globalGameStats.addLovePoints(self.newGameStatsValues.2)
+                })
+            })
+            
+            
+            updateGlobalGameStats = false
+            datactrl.updateGameData(newGameStatsValues.0,deltaGoodPoints: newGameStatsValues.1,deltaLovePoints: newGameStatsValues.2)
+            datactrl.saveGameData()
+        }
+    }
+    
+    
     override func viewDidLayoutSubviews() {
 
-        
-        
         bannerView?.frame = CGRectMake(0, UIScreen.mainScreen().bounds.size.height - 44, UIScreen.mainScreen().bounds.size.width, 44)
         
-        loadingDataView.frame =  CGRectMake(50, 50, 200, 50)
+        loadingDataView?.frame =  CGRectMake(50, 50, 200, 50)
         
         playButton.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width / 2, UIScreen.mainScreen().bounds.size.height / 2)
         playButton.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, UIScreen.mainScreen().bounds.size.height / 3)
@@ -194,6 +229,10 @@ class MainMenuViewController: UIViewController, ADBannerViewDelegate {
         
     }
     
+    func que(completion: (() -> (Void))?)
+    {
+        completion!()
+    }
 
 
     override func didReceiveMemoryWarning() {

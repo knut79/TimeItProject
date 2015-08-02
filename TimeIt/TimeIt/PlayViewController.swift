@@ -52,12 +52,10 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         
         // Do any additional setup after loading the view, typically from a nib.
         datactrl = DataHandler()
-        
         datactrl.fetchData()
-
         datactrl.shuffleEvents()
         
-        gameStats = GameStats(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width * 0.75, UIScreen.mainScreen().bounds.size.height * 0.08))
+        gameStats = GameStats(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width * 0.75, UIScreen.mainScreen().bounds.size.height * 0.08),okScore: 0,goodScore: 0,loveScore: 0)
         
         //timelineScrollView = UIScrollView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height * 0.20))
         timelineScrollView = UIScrollView(frame: CGRectMake(0, gameStats.frame.maxY, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height * 0.20))
@@ -74,9 +72,6 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         timelineScrollView.maximumZoomScale = 1.0
         timelineScrollView.zoomScale = minscaleWidth
 
-
-        
-        
         answerAnimationLabel = UILabel(frame: CGRectMake(0, 0, rectangleWidth,rectangleHeight))
         answerAnimationLabel.font = UIFont.boldSystemFontOfSize(24)
         answerAnimationLabel.textAlignment = NSTextAlignment.Center
@@ -198,7 +193,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                             
                             
                             }, completion: { (value: Bool) in
-                                self.rangeButton.setTitle("\(self.rangeMinLabel.text!) is\nthe year", forState: UIControlState.Normal)
+                                self.rangeButton.setTitle("\(rangeSlider.formattedLowerValue) is\nthe year", forState: UIControlState.Normal)
                                 self.rangeMinLabel.center = oldRangeMinCenter
                                 self.rangeMaxLabel.center = oldRangeMaxCenter
                                 self.rangeMinLabel.alpha = 0
@@ -215,7 +210,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         {
             if answerButtonReadyForText
             {
-                self.rangeButton.setTitle("\(self.rangeMinLabel.text!) is\nthe year", forState: UIControlState.Normal)
+                self.rangeButton.setTitle("\(rangeSlider.formattedLowerValue) is\nthe year", forState: UIControlState.Normal)
             }
             
             rangeMinLabel.text = rangeSlider.formattedLowerValue //"\(Int(rangeSlider.lowerValue))"
@@ -576,7 +571,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             
             }, completion: { (value: Bool) in
                 self.gameStats.addOkPoints(points)
-                self.datactrl.updateWithRightAnswer(self.currentQuestion, score:points)
+                self.datactrl.updateOkScore(self.currentQuestion, deltaScore:points)
                 self.answerAnimationLabel.alpha = 0
         })
     }
@@ -609,7 +604,6 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                 self.timelineView.animateTimelinePocket(periodButton.period, scale:self.timelineScrollView.zoomScale)
                 
                 self.bonusQuestion(periodButton)
-                //self.setNextQuestion()
         })
     }
     
@@ -1004,7 +998,21 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     
     func backAction()
     {
+        //datactrl.saveGameData()
         self.performSegueWithIdentifier("segueFromPlayToMainMenu", sender: nil)
+    }
+    
+    override func prepareForSegue(segue: (UIStoryboardSegue!), sender: AnyObject!) {
+        if (segue.identifier == "segueFromPlayToMainMenu") {
+            var svc = segue!.destinationViewController as! MainMenuViewController
+            if gameStats.newValues()
+            {
+                svc.updateGlobalGameStats = true
+                svc.newGameStatsValues = (gameStats.okPoints!,gameStats.goodPoints!,gameStats.lovePoints)
+                //svc.imagefile = currentImagefile
+            }
+        }
+        
     }
     
     func bannerViewDidLoadAd(banner: ADBannerView!) {

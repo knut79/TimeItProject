@@ -12,9 +12,7 @@ import UIKit
 
 
 
-let DataPopulatedKey = "DataPopulated"
-//let BedroomFloorKey = "BedroomFloor"
-//let BedroomWallKey = "BedroomWall"
+
 
 class DataHandler
 {
@@ -30,11 +28,6 @@ class DataHandler
     
     func populateData()
     {
-        
-        if Int(dataPopulatedID as! NSNumber) == 1
-        {
-            return
-        }
 
         let t1 = PeriodData(from: 1990, to: 2000)
         let t2 = PeriodData(from: 1980, to: 1990)
@@ -228,6 +221,7 @@ class DataHandler
     
     func updateOkScore(historicEvent:HistoricEvent, deltaScore:Int)
     {
+        //okScoreID = Int(okScoreID as! NSNumber) + deltaScore
         historicEvent.okScore = historicEvent.okScore + Int16(deltaScore)
         if historicEvent.okScore < 0
         {
@@ -238,6 +232,7 @@ class DataHandler
     
     func updateGoodScore(historicEvent:HistoricEvent, deltaScore:Int)
     {
+        //goodScoreID = Int(goodScoreID as! NSNumber) + deltaScore
         historicEvent.goodScore = historicEvent.goodScore + Int16(deltaScore)
         if historicEvent.goodScore < 0
         {
@@ -248,12 +243,20 @@ class DataHandler
     
     func updateLoveScore(historicEvent:HistoricEvent, deltaScore:Int)
     {
+        //loveScoreID = Int(loveScoreID as! NSNumber) + deltaScore
         historicEvent.loveScore = historicEvent.loveScore + Int16(deltaScore)
         if historicEvent.loveScore < 0
         {
             historicEvent.loveScore = 0
         }
         save()
+    }
+    
+    func updateGameData(deltaOkPoints:Int,deltaGoodPoints:Int,deltaLovePoints:Int)
+    {
+        okScoreID = Int(okScoreID as! NSNumber) + deltaOkPoints
+        goodScoreID = Int(goodScoreID as! NSNumber) + deltaGoodPoints
+        loveScoreID = Int(loveScoreID as! NSNumber) + deltaLovePoints
     }
     
     func shuffleEvents()
@@ -326,8 +329,7 @@ class DataHandler
         
     }
     
-    
-    
+
     func save() {
         var error : NSError?
         if(managedObjectContext!.save(&error) ) {
@@ -336,8 +338,7 @@ class DataHandler
     }
     
     func fetchData() {
-        
-        
+
         // Create a new fetch request using the LogItem entity
         // eqvivalent to select * from Relation
         let fetchEvents = NSFetchRequest(entityName: "HistoricEvent")
@@ -361,12 +362,22 @@ class DataHandler
         if let fetchResults = managedObjectContext!.executeFetchRequest(fetchPeriods, error: nil) as? [Period] {
             periodsItems = fetchResults
         }
-         
     }
     
+    let DataPopulatedKey = "DataPopulated"
+    //let BedroomFloorKey = "BedroomFloor"
+    //let BedroomWallKey = "BedroomWall"
+    let OkScoreKey = "OkScore"
+    let GoodScoreKey = "GoodScore"
+    let LoveScoreKey = "LoveScore"
+    
+    
     var dataPopulatedID:AnyObject = 0
-    var bedroomFloorID: AnyObject = 101
-    var bedroomWallID: AnyObject = 101
+    var okScoreID:AnyObject = 0
+    var goodScoreID:AnyObject = 0
+    var loveScoreID:AnyObject = 0
+    //var bedroomFloorID: AnyObject = 101
+    //var bedroomWallID: AnyObject = 101
 
     func loadGameData() {
         // getting path to GameData.plist
@@ -386,7 +397,7 @@ class DataHandler
                 println("GameData.plist not found. Please, make sure it is part of the bundle.")
             }
         } else {
-            println("GameData.plist already exits at path.")
+            println("GameData.plist already exits at path. \(path)")
             // use this to delete file from documents directory
             //fileManager.removeItemAtPath(path, error: nil)
         }
@@ -396,6 +407,9 @@ class DataHandler
         if let dict = myDict {
             //loading values
             dataPopulatedID = dict.objectForKey(DataPopulatedKey)!
+            okScoreID = dict.objectForKey(OkScoreKey)!
+            goodScoreID = dict.objectForKey(GoodScoreKey)!
+            loveScoreID = dict.objectForKey(LoveScoreKey)!
             //bedroomWallID = dict.objectForKey(BedroomWallKey)!
             //...
         } else {
@@ -410,6 +424,9 @@ class DataHandler
         var dict: NSMutableDictionary = ["XInitializerItem": "DoNotEverChangeMe"]
         //saving values
         dict.setObject(dataPopulatedID, forKey: DataPopulatedKey)
+        dict.setObject(okScoreID, forKey: OkScoreKey)
+        dict.setObject(goodScoreID, forKey: GoodScoreKey)
+        dict.setObject(loveScoreID, forKey: LoveScoreKey)
         //dict.setObject(bedroomWallID, forKey: BedroomWallKey)
         //...
         //writing to GameData.plist

@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>LoveScore</key>
+	<integer>0</integer>
+	<key>GoodScore</key>
+	<integer>0</integer>
+	<key>OkScore</key>
+	<integer>44</integer>
+	<key>EventUpdate</key>
+	<date>2015-08-02T15:57:33Z</date>
 	<key>DataPopulated</key>
 	<integer>0</integer>
 	<key>BedroomFloor</key>
