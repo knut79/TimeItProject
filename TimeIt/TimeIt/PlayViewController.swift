@@ -78,6 +78,10 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         answerAnimationLabel.textAlignment = NSTextAlignment.Center
         answerAnimationLabel.numberOfLines = 1;
         answerAnimationLabel.adjustsFontSizeToFitWidth = true
+        answerAnimationLabel.layer.shadowOpacity = 1.0
+        answerAnimationLabel.layer.shadowRadius = 0.7
+        answerAnimationLabel.layer.shadowColor = UIColor.blackColor().CGColor
+        answerAnimationLabel.layer.shadowOffset = CGSizeMake(0.0, 0.0)
         answerAnimationLabel.alpha = 0
         
         answerAnimationYellLabel = UILabel(frame: CGRectMake(0, 0, rectangleWidth,rectangleHeight))
@@ -105,12 +109,14 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         //originalCenterQueston = CGPointMake(UIScreen.mainScreen().bounds.width / 2, UIScreen.mainScreen().bounds.height * 0.15)
         //questionLabel.center = originalCenterQueston
         
-        self.view.addSubview(gameStats)
-        self.view.addSubview(answerAnimationLabel)
-        self.view.addSubview(answerAnimationYellLabel)
+        
+
         view.addSubview(backButton)
         self.view.addSubview(questionLabel)
         self.view.addSubview(timelineScrollView)
+        self.view.addSubview(gameStats)
+        self.view.addSubview(answerAnimationLabel)
+        self.view.addSubview(answerAnimationYellLabel)
 
         
         startPlay()
@@ -567,22 +573,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     
     func givePointsForRightPath(periodButton:PeriodButton)
     {
-        let points = periodButton.level * 5
-        answerAnimationLabel.textColor = UIColor.greenColor()
-        self.view.bringSubviewToFront(answerAnimationLabel)
-
-        answerAnimationLabel.center = periodButton.center
-        answerAnimationLabel.text = "\(points)"
-        answerAnimationLabel.alpha = 1
-        UIView.animateWithDuration(1.0, animations: { () -> Void in
-            
-            self.answerAnimationLabel.center = self.gameStats.okPointsView.center
-            
-            }, completion: { (value: Bool) in
-                self.gameStats.addOkPoints(points)
-                self.datactrl.updateOkScore(self.currentQuestion, deltaScore:points)
-                self.answerAnimationLabel.alpha = 0
-        })
+        animateRightPeriod(periodButton)
     }
     
     var lastRightPeriodButtonClicked:PeriodButton!
@@ -591,32 +582,46 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         lastRightPeriodButtonClicked = periodButton
         rightPeriodStrikes = rightPeriodStrikes + 1
         
+        animateRightPeriod(periodButton, completion: {() -> Void in
+            var xPos = self.timelineView.getXPosOfTimelineItem(periodButton.period)
+            var yPosForceBottomOfScroll:CGFloat = 9999
+            self.timelineScrollView.zoomToRect(CGRectMake(xPos - rectangleWidth, yPosForceBottomOfScroll , rectangleWidth * 3, self.timelineScrollView.frame.height), animated: true)
+            
+            self.timelineView.animateTimelinePocket(periodButton.period, scale:self.timelineScrollView.zoomScale)
+            self.bonusQuestion(periodButton)
+        })
+ 
+    }
+    
+    func animateRightPeriod(periodButton:PeriodButton,completion: (() -> (Void))? = nil)
+    {
         let points = periodButton.level * 10
         answerAnimationLabel.textColor = UIColor.greenColor()
-        self.view.bringSubviewToFront(answerAnimationLabel)
+        view.bringSubviewToFront(answerAnimationLabel)
         answerAnimationLabel.center = periodButton.center
         answerAnimationLabel.text = "\(points)"
-        answerAnimationLabel.alpha = 1
+        self.answerAnimationLabel.alpha = 0
+
 
         UIView.animateWithDuration(1.0, animations: { () -> Void in
-
-            let xOffset = self.gameStats.okPointsView.center.x
-            self.answerAnimationLabel.center = CGPointMake(xOffset, self.gameStats.center.y)
-            self.answerAnimationLabel.transform = CGAffineTransformScale(self.answerAnimationLabel.transform, 1.5, 1.5)
+            //self.answerAnimationLabel.center = self.gameStats.okPointsView.center
+            self.answerAnimationLabel.alpha = 1
+            self.answerAnimationLabel.center = self.gameStats.okPointsView.center
+            self.answerAnimationLabel.transform = CGAffineTransformScale(self.answerAnimationLabel.transform, 1.2, 1.2)
             }, completion: { (value: Bool) in
-                self.answerAnimationLabel.transform = CGAffineTransformIdentity
-                self.gameStats.addOkPoints(points)
-                self.datactrl.updateOkScore(self.currentQuestion, deltaScore:points)
-                self.answerAnimationLabel.alpha = 0
-                self.timelineView.setNeedsDisplay()
                 
-                var xPos = self.timelineView.getXPosOfTimelineItem(periodButton.period)
-                var yPosForceBottomOfScroll:CGFloat = 9999 //self.timelineScrollView.contentOffset.y + self.timelineScrollView.frame.height
-                self.timelineScrollView.zoomToRect(CGRectMake(xPos - rectangleWidth, yPosForceBottomOfScroll , rectangleWidth * 3, self.timelineScrollView.frame.height), animated: true)
-                
-                self.timelineView.animateTimelinePocket(periodButton.period, scale:self.timelineScrollView.zoomScale)
-                
-                self.bonusQuestion(periodButton)
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+
+                    self.answerAnimationLabel.alpha = 0
+                    
+                    }, completion: { (value: Bool) in
+                        
+                        self.answerAnimationLabel.transform = CGAffineTransformIdentity
+                        self.gameStats.addOkPoints(points)
+                        self.datactrl.updateOkScore(self.currentQuestion, deltaScore:points)
+                        self.answerAnimationLabel.alpha = 0
+                        completion?()
+                })
         })
     }
     

@@ -74,7 +74,10 @@ class GameStats:UIView {
         animationLabel.textAlignment = NSTextAlignment.Center
         animationLabel.textColor = UIColor.blackColor()
         animationLabel.font = UIFont.boldSystemFontOfSize(20)
-        //lovePointsLabel.backgroundColor = UIColor.greenColor()
+        animationLabel.layer.shadowOpacity = 1.0
+        animationLabel.layer.shadowRadius = 0.7
+        animationLabel.layer.shadowColor = UIColor.blackColor().CGColor
+        animationLabel.layer.shadowOffset = CGSizeMake(0.0, 0.0)
         animationLabel.text = "test"
         animationLabel.alpha = 0
         self.addSubview(animationLabel)
@@ -107,52 +110,19 @@ class GameStats:UIView {
         else
         {
             okPointsView.layer.removeAllAnimations()
-            self.okPoints! += points
+            okPoints! += points
             
             animationLabel.text = "+\(points)"
-            animationLabel.textColor = UIColor.greenColor()
-            animationLabel.center = okPointsView.center
             
-            UIView.animateWithDuration(0.5, animations: { () -> Void in
-                self.animationLabel.transform = CGAffineTransformScale(self.animationLabel.transform, 2, 2)
-                self.animationLabel.alpha = 1
+            animateAddPoints(okPointsView,completion: {() -> Void in
                 
-                }, completion: { (value: Bool) in
-                    self.animationLabel.alpha = 0
-                    self.animationLabel.transform = CGAffineTransformIdentity
-                    self.okPointsLabel.text = "\(self.okPoints!) 😌"
-                    self.animateView(self.okPointsView)
-                    completion?()
+                self.okPointsLabel.text = "\(self.okPoints!) 😌"
+                self.animateView(self.okPointsView)
+                completion?()
             })
         }
     }
-    
-    func subtractOkPoints(points:Int)
-    {
-        okPointsView.layer.removeAllAnimations()
-        self.okPoints! -= points
-        if( okPoints < 0)
-        {
-            okPoints = 0
-        }
-        
-        animationLabel.transform = CGAffineTransformScale(animationLabel.transform, 1.5, 1.5)
-        animationLabel.text = "-\(points)"
-        animationLabel.textColor = UIColor.redColor()
-        animationLabel.center = okPointsView.center
-        animationLabel.alpha = 1
-        UIView.animateWithDuration(0.5, animations: { () -> Void in
-            
-            self.animationLabel.alpha = 0
-            self.animationLabel.transform = CGAffineTransformIdentity
-            }, completion: { (value: Bool) in
-                self.animationLabel.alpha = 0
-                self.animationLabel.transform = CGAffineTransformIdentity
-                self.okPointsLabel.text = "\(self.okPoints!) 😌"
-                
-                self.animateView(self.okPointsView)
-        })
-    }
+
 
     func addGoodPoints(points:Int,completion: (() -> (Void))? = nil)
     {
@@ -163,50 +133,17 @@ class GameStats:UIView {
         else
         {
             goodPointsView.layer.removeAllAnimations()
-            self.goodPoints! += points
+            goodPoints! += points
             
             animationLabel.text = "+\(points)"
-            animationLabel.textColor = UIColor.greenColor()
-            animationLabel.center = goodPointsView.center
             
-            UIView.animateWithDuration(0.5, animations: { () -> Void in
-                self.animationLabel.transform = CGAffineTransformScale(self.animationLabel.transform, 2, 2)
-                self.animationLabel.alpha = 1
+            animateAddPoints(goodPointsView,completion: {() -> Void in
                 
-                }, completion: { (value: Bool) in
-                    self.animationLabel.alpha = 0
-                    self.animationLabel.transform = CGAffineTransformIdentity
-                    self.goodPointsLabel.text = "\(self.goodPoints!) 😀"
-                    self.animateView(self.goodPointsView)
-                    completion?()
-            })
-        }
-    }
-    
-    func subtractGoodPoints(points:Int)
-    {
-        goodPointsView.layer.removeAllAnimations()
-        self.goodPoints! -= points
-        if( goodPoints < 0)
-        {
-            goodPoints = 0
-        }
-
-        animationLabel.transform = CGAffineTransformScale(animationLabel.transform, 1.5, 1.5)
-        animationLabel.text = "-\(points)"
-        animationLabel.textColor = UIColor.redColor()
-        animationLabel.center = goodPointsView.center
-        animationLabel.alpha = 1
-        UIView.animateWithDuration(0.5, animations: { () -> Void in
-            
-            self.animationLabel.alpha = 0
-            self.animationLabel.transform = CGAffineTransformIdentity
-            }, completion: { (value: Bool) in
-                self.animationLabel.alpha = 0
-                self.animationLabel.transform = CGAffineTransformIdentity
                 self.goodPointsLabel.text = "\(self.goodPoints!) 😀"
                 self.animateView(self.goodPointsView)
-        })
+                completion?()
+            })
+        }
     }
     
     func addLovePoints(points:Int)
@@ -218,24 +155,105 @@ class GameStats:UIView {
         else
         {
             lovePointsView.layer.removeAllAnimations()
-            self.lovePoints! += points
+            lovePoints! += points
             
             animationLabel.text = "+\(points)"
-            animationLabel.textColor = UIColor.greenColor()
-            animationLabel.center = lovePointsView.center
             
-            UIView.animateWithDuration(0.5, animations: { () -> Void in
-                self.animationLabel.transform = CGAffineTransformScale(self.animationLabel.transform, 2, 2)
-                self.animationLabel.alpha = 1
+            animateAddPoints(lovePointsView,completion: {() -> Void in
                 
-                }, completion: { (value: Bool) in
-                    self.animationLabel.alpha = 0
-                    self.animationLabel.transform = CGAffineTransformIdentity
-                    self.lovePointsLabel.text = "\(self.lovePoints!) 😍"
-                    self.animateView(self.lovePointsView)
+                self.lovePointsLabel.text = "\(self.lovePoints!) 😍"
+                self.animateView(self.lovePointsView)
             })
         }
     }
+    
+    func animateAddPoints(animateView:UIView,completion: (() -> Void)?)
+    {
+        animationLabel.textColor = UIColor.greenColor()
+        animationLabel.center = animateView.center
+        
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
+            self.animationLabel.transform = CGAffineTransformScale(self.animationLabel.transform, 2, 2)
+            self.animationLabel.alpha = 1
+            
+            }, completion: { (value: Bool) in
+                self.animationLabel.alpha = 0
+                self.animationLabel.transform = CGAffineTransformIdentity
+                completion?()
+
+        })
+    }
+    
+    func subtractOkPoints(var points:Int)
+    {
+        if self.okPoints <= 0
+        {
+            return
+        }
+        
+        okPointsView.layer.removeAllAnimations()
+        var deltaPoints = points - self.okPoints!
+        self.okPoints! -= points
+        if( okPoints < 0)
+        {
+            okPoints = 0
+            points = deltaPoints
+        }
+        
+        animationLabel.text = "-\(points)"
+        self.okPointsLabel.text = "\(self.okPoints!) 😌"
+        animateSubractPoints(okPointsView,completion: {() -> Void in
+            
+            self.animateView(self.okPointsView)
+        })
+
+    }
+    
+    func subtractGoodPoints(var points:Int)
+    {
+        if self.goodPoints <= 0
+        {
+            return
+        }
+        goodPointsView.layer.removeAllAnimations()
+        var deltaPoints = points - self.okPoints!
+        self.goodPoints! -= points
+        if( goodPoints < 0)
+        {
+            goodPoints = 0
+            points = deltaPoints
+        }
+
+        animationLabel.text = "-\(points)"
+        self.goodPointsLabel.text = "\(self.goodPoints!) 😀"
+        animateSubractPoints(goodPointsView,completion: {() -> Void in
+            
+            self.animateView(self.goodPointsView)
+        })
+        
+        animationLabel.transform = CGAffineTransformScale(animationLabel.transform, 1.5, 1.5)
+    }
+    
+    func animateSubractPoints(animateView:UIView,completion: (() -> Void)?)
+    {
+        self.animationLabel.transform = CGAffineTransformIdentity
+
+        animationLabel.textColor = UIColor.redColor()
+        animationLabel.center = animateView.center
+        animationLabel.alpha = 1
+        UIView.animateWithDuration(1, animations: { () -> Void in
+            
+            self.animationLabel.frame.offset(dx: 0, dy: self.animationLabel.frame.height )
+            self.animationLabel.alpha = 0
+            self.animationLabel.transform = CGAffineTransformScale(self.animationLabel.transform, 0.3, 0.3)
+            }, completion: { (value: Bool) in
+                self.animationLabel.alpha = 0
+                self.animationLabel.transform = CGAffineTransformIdentity
+                completion?()
+        })
+    }
+    
+
     
     func animateView(view:UIView)
     {
