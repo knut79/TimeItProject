@@ -12,3 +12,5 @@ import UIKit
 let rectangleWidth:CGFloat = 200.0
 let rectangleHeight:CGFloat = 50.0
 
+let lowPercentWindow = 0.1
+let highPercentWindow = 0.2

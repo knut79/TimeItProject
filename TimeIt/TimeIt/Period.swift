@@ -94,16 +94,18 @@ class Period: NSManagedObject {
         items = self.mutableSetValueForKey("events")
         items.addObject(event)
     }
-    
-    func lowPercent() -> Int
+
+    func lowPercentHalfWindow() -> Int
     {
-        var val = Double(Int(self.toYear) - Int(self.fromYear)) * 0.1
+        //var val = Double(Int(self.toYear) - Int(self.fromYear)) * 0.05
+        var val = Double(Int(self.toYear) - Int(self.fromYear)) * (lowPercentWindow / 2)
         return Int(val)
     }
  
-    func highPercent() -> Int
+    func highPercentHalfWindow() -> Int
     {
-        var val = Double(Int(self.toYear) - Int(self.fromYear)) * 0.2
+        //var val = Double(Int(self.toYear) - Int(self.fromYear)) * 0.1
+        var val = Double(Int(self.toYear) - Int(self.fromYear)) * (highPercentWindow / 2)
         return Int(val)
     }
 

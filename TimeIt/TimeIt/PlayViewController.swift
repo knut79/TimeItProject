@@ -24,6 +24,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     var minscaleWidth:CGFloat!
     
     var answerAnimationLabel:UILabel!
+    var answerAnimationYellLabel:UILabel!
     var originalCenterQueston:CGPoint!
     
     let rangeSlider = RangeSlider(frame: CGRectZero)
@@ -78,6 +79,13 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         answerAnimationLabel.numberOfLines = 1;
         answerAnimationLabel.adjustsFontSizeToFitWidth = true
         answerAnimationLabel.alpha = 0
+        
+        answerAnimationYellLabel = UILabel(frame: CGRectMake(0, 0, rectangleWidth,rectangleHeight))
+        answerAnimationYellLabel.font = UIFont.boldSystemFontOfSize(24)
+        answerAnimationYellLabel.textAlignment = NSTextAlignment.Center
+        answerAnimationYellLabel.numberOfLines = 1;
+        answerAnimationYellLabel.adjustsFontSizeToFitWidth = true
+        answerAnimationYellLabel.alpha = 0
 
         backButton.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width * 0.9, 0, UIScreen.mainScreen().bounds.size.width * 0.1, UIScreen.mainScreen().bounds.size.width * 0.1)
         backButton.backgroundColor = UIColor.whiteColor()
@@ -99,6 +107,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         
         self.view.addSubview(gameStats)
         self.view.addSubview(answerAnimationLabel)
+        self.view.addSubview(answerAnimationYellLabel)
         view.addSubview(backButton)
         self.view.addSubview(questionLabel)
         self.view.addSubview(timelineScrollView)
@@ -561,8 +570,8 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         let points = periodButton.level * 5
         answerAnimationLabel.textColor = UIColor.greenColor()
         self.view.bringSubviewToFront(answerAnimationLabel)
-        let xOffset = self.gameStats.okPointsView.center.x
-        answerAnimationLabel.center = CGPointMake(xOffset,periodButton.center.y)
+
+        answerAnimationLabel.center = periodButton.center
         answerAnimationLabel.text = "\(points)"
         answerAnimationLabel.alpha = 1
         UIView.animateWithDuration(1.0, animations: { () -> Void in
@@ -579,19 +588,18 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     var lastRightPeriodButtonClicked:PeriodButton!
     func rightAnswerGiven(periodButton:PeriodButton)
     {
-        let points = periodButton.level * 10
-        rightPeriodStrikes = rightPeriodStrikes + 1
         lastRightPeriodButtonClicked = periodButton
+        rightPeriodStrikes = rightPeriodStrikes + 1
+        
+        let points = periodButton.level * 10
         answerAnimationLabel.textColor = UIColor.greenColor()
         self.view.bringSubviewToFront(answerAnimationLabel)
-        answerAnimationLabel.center = periodButton.center//CGPointMake(periodButton.frame.maxX, periodButton.frame.maxY)
+        answerAnimationLabel.center = periodButton.center
         answerAnimationLabel.text = "\(points)"
         answerAnimationLabel.alpha = 1
-        //animate zoominrect
+
         UIView.animateWithDuration(1.0, animations: { () -> Void in
-            var xPos = self.timelineView.getXPosOfTimelineItem(periodButton.period)
-            var yPosForceBottomOfScroll:CGFloat = 9999 //self.timelineScrollView.contentOffset.y + self.timelineScrollView.frame.height
-            self.timelineScrollView.zoomToRect(CGRectMake(xPos - rectangleWidth, yPosForceBottomOfScroll , rectangleWidth * 3, self.timelineScrollView.frame.height), animated: true)
+
             let xOffset = self.gameStats.okPointsView.center.x
             self.answerAnimationLabel.center = CGPointMake(xOffset, self.gameStats.center.y)
             self.answerAnimationLabel.transform = CGAffineTransformScale(self.answerAnimationLabel.transform, 1.5, 1.5)
@@ -601,6 +609,11 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                 self.datactrl.updateOkScore(self.currentQuestion, deltaScore:points)
                 self.answerAnimationLabel.alpha = 0
                 self.timelineView.setNeedsDisplay()
+                
+                var xPos = self.timelineView.getXPosOfTimelineItem(periodButton.period)
+                var yPosForceBottomOfScroll:CGFloat = 9999 //self.timelineScrollView.contentOffset.y + self.timelineScrollView.frame.height
+                self.timelineScrollView.zoomToRect(CGRectMake(xPos - rectangleWidth, yPosForceBottomOfScroll , rectangleWidth * 3, self.timelineScrollView.frame.height), animated: true)
+                
                 self.timelineView.animateTimelinePocket(periodButton.period, scale:self.timelineScrollView.zoomScale)
                 
                 self.bonusQuestion(periodButton)
@@ -824,14 +837,13 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     
     func valueWithinRange(valueGiven:Int,questionValue:Int) -> Int
     {
-        let test = Int(questionValue + lastRightPeriodButtonClicked.period.lowPercent())
-        let withinUpper10 = valueGiven <= test
-        let withinLower10 = valueGiven >= (Int(questionValue - lastRightPeriodButtonClicked.period.lowPercent()))
-        println("valueGiven\(valueGiven) questionValue \(questionValue)")
-        println("upper10 \(Int(CGFloat(questionValue) * 1.1)) lower10 \(Int(CGFloat(questionValue) * 0.9))")
+        let withinUpper10 = valueGiven <= Int(questionValue + lastRightPeriodButtonClicked.period.lowPercentHalfWindow())
+        let withinLower10 = valueGiven >= (Int(questionValue - lastRightPeriodButtonClicked.period.lowPercentHalfWindow()))
+        //println("valueGiven\(valueGiven) questionValue \(questionValue)")
+        //println("upper10 \(Int(CGFloat(questionValue) * 1.1)) lower10 \(Int(CGFloat(questionValue) * 0.9))")
         
-        let withinUpper20 = valueGiven <= (Int(questionValue + lastRightPeriodButtonClicked.period.highPercent()))
-        let withinLower20 = valueGiven >= (Int(questionValue + lastRightPeriodButtonClicked.period.lowPercent()))
+        let withinUpper20 = valueGiven <= (Int(questionValue + lastRightPeriodButtonClicked.period.highPercentHalfWindow()))
+        let withinLower20 = valueGiven >= (Int(questionValue + lastRightPeriodButtonClicked.period.lowPercentHalfWindow()))
         if valueGiven == questionValue
         {
             return 3
@@ -903,14 +915,53 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     {
 
         let lovePoint = points == 3
+        let percentString:String = {() -> String in
+            if points == 1
+            {
+                return "\(Int(highPercentWindow * 100))% window"
+            }
+            else if points == 2
+            {
+                return "\(Int(lowPercentWindow * 100))% window"
+            }
+            else if points == 3
+            {
+                return "Perfect"
+            }
+            
+            return ""
+        }()
+        
+        let iconString = {() -> String in
+            if points == 1
+            {
+                return "😀"
+            }
+            else if points == 2
+            {
+                return "😀😀"
+            }
+            else if points == 3
+            {
+                return "😍"
+            }
+            return ""
+        }()
         
         rangeSlider.higlightWindow((currentQuestion.fromYear,currentQuestion.toYear))
         
         answerAnimationLabel.textColor = UIColor.greenColor()
         self.view.bringSubviewToFront(answerAnimationLabel)
-        answerAnimationLabel.center = CGPointMake(animateFromView.frame.maxX, animateFromView.frame.maxY)
-        answerAnimationLabel.text = lovePoint ? "😍" : "\(points) x 😀"
-        answerAnimationLabel.alpha = 1
+        answerAnimationLabel.center = animateFromView.center //CGPointMake(animateFromView.frame.maxX, animateFromView.frame.maxY)
+        answerAnimationLabel.text = iconString
+        answerAnimationLabel.alpha = 0
+        
+        
+        answerAnimationYellLabel.textColor = UIColor.blackColor()
+        self.view.bringSubviewToFront(answerAnimationYellLabel)
+        answerAnimationYellLabel.center = animateFromView.center //CGPointMake(animateFromView.frame.maxX, animateFromView.frame.maxY)
+        answerAnimationYellLabel.text = percentString
+        answerAnimationYellLabel.transform = CGAffineTransformScale(self.answerAnimationYellLabel.transform, 0.1, 0.1)
         //animate zoominrect
         UIView.animateWithDuration(1.0, animations: { () -> Void in
             var xPos = self.timelineView.getXPosOfTimelineItem(self.lastRightPeriodButtonClicked.period)
@@ -918,29 +969,45 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             self.timelineScrollView.zoomToRect(CGRectMake(xPos - rectangleWidth, yPosForceBottomOfScroll , rectangleWidth * 3, self.timelineScrollView.frame.height), animated: true)
             let xOffset = lovePoint ? self.gameStats.lovePointsView.center.x : self.gameStats.goodPointsView.center.x
             self.answerAnimationLabel.center =  CGPointMake(xOffset,self.gameStats.center.y )
+            self.answerAnimationLabel.alpha = 1
             self.answerAnimationLabel.transform = CGAffineTransformScale(self.answerAnimationLabel.transform, 1.5, 1.5)
+            
+            self.answerAnimationYellLabel.center =  CGPointMake(UIScreen.mainScreen().bounds.width / 2,self.answerAnimationYellLabel.center.y )
+            self.answerAnimationYellLabel.transform = CGAffineTransformIdentity
+            self.answerAnimationYellLabel.alpha = 1
+            self.answerAnimationYellLabel.transform = CGAffineTransformScale(self.answerAnimationYellLabel.transform, 1.5, 1.5)
+            
             }, completion: { (value: Bool) in
-                self.answerAnimationLabel.transform = CGAffineTransformIdentity
-                self.answerAnimationLabel.alpha = 0
-                //TODO: perfectscore
                 
-                if lovePoint
-                {
-                    self.gameStats.addLovePoints(1)
-                    self.datactrl.updateLoveScore(self.currentQuestion, deltaScore:1)
-                }
-                else
-                {
-                    self.gameStats.addGoodPoints(points)
-                    self.datactrl.updateGoodScore(self.currentQuestion, deltaScore:points)
-                }
-                
-                
-                
-                self.timelineView.setNeedsDisplay()
-                self.timelineView.animateTimelinePocket(self.lastRightPeriodButtonClicked.period, scale:self.timelineScrollView.zoomScale)
-                
-                completionClosure!()
+                UIView.animateWithDuration(0.5, animations: { () -> Void in
+                    self.answerAnimationLabel.alpha = 0
+                    self.answerAnimationYellLabel.alpha = 0
+                    }, completion: { (value: Bool) in
+                        self.answerAnimationYellLabel.alpha = 0
+                        self.answerAnimationLabel.transform = CGAffineTransformIdentity
+                        self.answerAnimationLabel.alpha = 0
+                        
+                        self.answerAnimationYellLabel.transform = CGAffineTransformIdentity
+                        self.answerAnimationYellLabel.alpha = 0
+                        //TODO: perfectscore
+                        
+                        if lovePoint
+                        {
+                            self.gameStats.addLovePoints(1)
+                            self.datactrl.updateLoveScore(self.currentQuestion, deltaScore:1)
+                        }
+                        else
+                        {
+                            self.gameStats.addGoodPoints(points)
+                            self.datactrl.updateGoodScore(self.currentQuestion, deltaScore:points)
+                        }
+                        
+                        self.timelineView.setNeedsDisplay()
+                        self.timelineView.animateTimelinePocket(self.lastRightPeriodButtonClicked.period, scale:self.timelineScrollView.zoomScale)
+                        
+                        completionClosure!()
+                        
+                })
         })
     }
     
