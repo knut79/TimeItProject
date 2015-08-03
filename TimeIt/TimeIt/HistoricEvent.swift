@@ -22,9 +22,14 @@ class HistoricEvent: NSManagedObject {
     @NSManaged var okScore:Int16
     @NSManaged var goodScore:Int16
     @NSManaged var loveScore:Int16
+    
+    @NSManaged var level:Int16
+    @NSManaged var tags:String
+    
+    @NSManaged var idForUpdate:Int16
 
     //added on picture with coordinates on parent filepoint
-    class func createInManagedObjectContext(moc: NSManagedObjectContext, title:String, from: Int, to:Int, text:String) -> HistoricEvent{
+    class func createInManagedObjectContext(moc: NSManagedObjectContext, idForUpdate:Int, title:String, from: Int, to:Int, text:String, level:Int) -> HistoricEvent{
         let newitem = NSEntityDescription.insertNewObjectForEntityForName("HistoricEvent", inManagedObjectContext: moc) as! HistoricEvent
         newitem.fromYear = Int16(from)
         newitem.toYear = Int16(to)
@@ -32,10 +37,13 @@ class HistoricEvent: NSManagedObject {
         newitem.text = text
         newitem.title = title
         newitem.periods = NSMutableSet()
+        newitem.tags = ""
+        newitem.level = Int16(level)
+        newitem.idForUpdate = Int16(idForUpdate)
         return newitem
     }
     
-    class func createInManagedObjectContext(moc: NSManagedObjectContext, title:String, year: Int, text:String) -> HistoricEvent{
+    class func createInManagedObjectContext(moc: NSManagedObjectContext, idForUpdate:Int, title:String, year: Int, text:String, level:Int) -> HistoricEvent{
         let newitem = NSEntityDescription.insertNewObjectForEntityForName("HistoricEvent", inManagedObjectContext: moc) as! HistoricEvent
         newitem.fromYear = Int16(year)
         newitem.toYear = Int16(year)
@@ -43,6 +51,9 @@ class HistoricEvent: NSManagedObject {
         newitem.text = text
         newitem.title = title
         newitem.periods = NSMutableSet()
+        newitem.tags = ""
+        newitem.level = Int16(level)
+        newitem.idForUpdate = Int16(idForUpdate)
         return newitem
     }
     

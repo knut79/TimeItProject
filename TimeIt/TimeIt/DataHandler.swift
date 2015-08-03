@@ -26,7 +26,7 @@ class DataHandler
         periodsItems = []
     }
     
-    func populateData()
+    func populateData(completePopulating: (() -> (Void))?)
     {
 
         let t1 = PeriodData(from: 1990, to: 2000)
@@ -92,13 +92,6 @@ class DataHandler
         let h18 = PeriodData(from: 200, to: 300)
         let h19 = PeriodData(from: 100, to: 200)
         let h20 = PeriodData(from: 0, to: 100)
-        /*
-        let h61 = PeriodData(from: -500, to:-400 )
-        let h62 = PeriodData(from: -400, to:-300 )
-        let h63 = PeriodData(from: -300, to:-200 )
-        let h64 = PeriodData(from: -200, to:-100 )
-        let h65 = PeriodData(from: -100, to:0 )
-        */
         
         let fh1 = PeriodData(from: 1500, to: 2000,periods:[h1,h2,h3,h4,h5])
         let fh2 = PeriodData(from: 1000, to: 1500,periods:[h6,h7,h8,h9,h10],timelineItem:true)
@@ -115,107 +108,132 @@ class DataHandler
         
         savePeriodesFromCollection(dataToPopulate)
         
-        //test
-        /*
-        createHistoricEvent("King David conquers Jerusalem", year:-990, type:periodType.fivehundred)
-        createHistoricEvent("First Olympiad in Greece", year:-776, type:periodType.fivehundred)
-        createHistoricEvent("Rome founded by Romulus", year:-753, type:periodType.fivehundred)
-        createHistoricEvent("Aesop’s fables thought to be written", year:-990, type:periodType.fivehundred)
-        createHistoricEvent("Babylon ruled by Nebuchadnezzar", from: -605, to: -562, type:periodType.fivehundred)
-        createHistoricEvent("Buddha born in India.", year:-563, type:periodType.fivehundred)
-        createHistoricEvent("Confucius born in China", year:-551, type:periodType.fivehundred)
-        createHistoricEvent("Roman calendar introduced", year:-535, type:periodType.fivehundred, text: "It had 10 months, with 304 days in a year that began in March.")
-        createHistoricEvent("Pythagoras describes his theorem", year:-532, type:periodType.fivehundred,text:"Pythagoras of Crotona describes the relations between sides of right-angled triangle, and tone vibrations.")
-        createHistoricEvent("Rome as a Republic founded", year:-500, type:periodType.fivehundred, text:"End of monarchy in Rome")
-        createHistoricEvent("Socrates drink hemlock", year:-399, type:periodType.fivehundred, text:"Socrates is required to drink hemlock to end his life after being found guilty of corrupting the youth of Athens")
-        createHistoricEvent("Aristotle writes Meteorologica", year:-990, type:periodType.fivehundred,text: "The first book on weather.")
-        createHistoricEvent("Persian empire", from:-550 , to:-330, type:periodType.fivehundred)
-        createHistoricEvent("Alexander the Great rule Macedonia", from:-336 , to:-323, type:periodType.fivehundred)
-        createHistoricEvent("Livius Andronicus is the first Roman poet", year:-240, type:periodType.fivehundred)
+
+        var id = 1
+        newEvent(id++,title: "King David conquers Jerusalem", year:-990, type:periodType.fivehundred)
+        newEvent(id++,title:id++,title:"First Olympiad in Greece", year:-776, type:periodType.fivehundred)
+        newEvent(id++,title:"Rome founded by Romulus", year:-753, type:periodType.fivehundred)
+        newEvent(id++,title:"Aesop’s fables thought to be written", year:-990, type:periodType.fivehundred)
+        newEvent(id++,title:"Babylon ruled by Nebuchadnezzar", from: -605, to: -562, type:periodType.fivehundred)
+        newEvent(id++,title:"Buddha born in India.", year:-563, type:periodType.fivehundred)
+        newEvent(id++,title:"Confucius born in China", year:-551, type:periodType.fivehundred)
+        newEvent(id++,title:"Roman calendar introduced", year:-535, type:periodType.fivehundred, text: "It had 10 months, with 304 days in a year that began in March.")
+        newEvent(id++,title:"Pythagoras describes his theorem", year:-532, type:periodType.fivehundred,text:"Pythagoras of Crotona describes the relations between sides of right-angled triangle, and tone vibrations.")
+        newEvent(id++,title:"Rome as a Republic founded", year:-500, type:periodType.fivehundred, text:"End of monarchy in Rome")
+        newEvent(id++,title:"Socrates drink hemlock", year:-399, type:periodType.fivehundred, text:"Socrates is required to drink hemlock to end his life after being found guilty of corrupting the youth of Athens")
+        newEvent(id++,title:"Aristotle writes Meteorologica", year:-990, type:periodType.fivehundred,text: "The first book on weather.")
+        newEvent(id++,title:"Persian empire", from:-550 , to:-330, type:periodType.fivehundred)
+        newEvent(id++,title:"Alexander the Great rule Macedonia", from:-336 , to:-323, type:periodType.fivehundred)
+        newEvent(id++,title:"Livius Andronicus is the first Roman poet", year:-240, type:periodType.fivehundred)
         
-        createHistoricEvent("Archimedes explains principles of lever", year:-212, type:periodType.fivehundred, text:"Area of circle, principles of lever, the screw, and buoyancy.")
-        createHistoricEvent("Eratosthenes determines the size of Earth", year:-194, type:periodType.fivehundred)
-        createHistoricEvent("The Romans invade Britain", year:-55, type:periodType.fivehundred)
-        createHistoricEvent("Rule of Cleopatra in Egypt", from:-51, to: -30, type:periodType.fivehundred)
-        createHistoricEvent("Julius Caesar assassinated", year:-44, type:periodType.fivehundred)
-        createHistoricEvent("Solomon builds the Temple in Jerusalem", year:-950, type:periodType.fivehundred)
+        newEvent(id++,title:"Archimedes explains principles of lever", year:-212, type:periodType.fivehundred, text:"Area of circle, principles of lever, the screw, and buoyancy.")
+        newEvent(id++,title:"Eratosthenes determines the size of Earth", year:-194, type:periodType.fivehundred)
+        newEvent(id++,title:"The Romans invade Britain", year:-55, type:periodType.fivehundred)
+        newEvent(id++,title:"Rule of Cleopatra in Egypt", from:-51, to: -30, type:periodType.fivehundred)
+        newEvent(id++,title:"Julius Caesar assassinated", year:-44, type:periodType.fivehundred)
+        newEvent(id++,title:"Solomon builds the Temple in Jerusalem", year:-950, type:periodType.fivehundred)
         
-        createHistoricEvent("Tiberius becomes roman Emperor", year:14, type:periodType.hundred)
-        createHistoricEvent("Nero becomes last Caesar", year:54, type:periodType.hundred)
-        createHistoricEvent("First seismoscope developed in China", year:132, type:periodType.hundred)
-        createHistoricEvent("Marcus Aurelius becomes emperor of Rome", year:161, type:periodType.hundred)
-        createHistoricEvent("Emperor Commodus assisinated in Rome", year:193, type:periodType.hundred)
-        createHistoricEvent("Founding of Constantinople", year:330, type:periodType.hundred)
-        createHistoricEvent("Library of Alexandria is destroyed by fire", year:391, type:periodType.hundred)
+        newEvent(id++,title:"Tiberius becomes roman Emperor", year:14, type:periodType.hundred)
+        newEvent(id++,title:"Nero becomes last Caesar", year:54, type:periodType.hundred)
+        newEvent(id++,title:"First seismoscope developed in China", year:132, type:periodType.hundred)
+        newEvent(id++,title:"Marcus Aurelius becomes emperor of Rome", year:161, type:periodType.hundred)
+        newEvent(id++,title:"Emperor Commodus assisinated in Rome", year:193, type:periodType.hundred)
+        newEvent(id++,title:"Founding of Constantinople", year:330, type:periodType.hundred)
+        newEvent(id++,title:"Library of Alexandria is destroyed by fire", year:391, type:periodType.hundred)
         
-        createHistoricEvent("Angles and Saxons conquer Britain", year:449, type:periodType.hundred)
-        createHistoricEvent("Attila the Hun crosses the Rhine into Gaul", year:451, type:periodType.hundred)
-        createHistoricEvent("Vandals conquer Rome", year:455, type:periodType.hundred)
-        createHistoricEvent("Battle of Vouille", year:507, type:periodType.hundred, text:"Clovis, King of the Franks, defeats the Visigoths at the Battle of Vouille")
-        createHistoricEvent("The plague of Europe", from:542, to:593, type:periodType.hundred)
-        createHistoricEvent("The Lombards invade Italy", year:568, type:periodType.hundred)
+        newEvent(id++,title:"Angles and Saxons conquer Britain", year:449, type:periodType.hundred)
+        newEvent(id++,title:"Attila the Hun crosses the Rhine into Gaul", year:451, type:periodType.hundred)
+        newEvent(id++,title:"Vandals conquer Rome", year:455, type:periodType.hundred)
+        newEvent(id++,title:"Battle of Vouille", year:507, type:periodType.hundred, text:"Clovis, King of the Franks, defeats the Visigoths at the Battle of Vouille")
+        newEvent(id++,title:"The plague of Europe", from:542, to:593, type:periodType.hundred)
+        newEvent(id++,title:"The Lombards invade Italy", year:568, type:periodType.hundred)
         
-        createHistoricEvent("Dagobert becomes King of the Franks", year:629, type:periodType.hundred)
-        createHistoricEvent("Muhammad the Prophet dies", year:632, type:periodType.hundred)
-        createHistoricEvent("Arabs destroy the city of Carthage", year:695, type:periodType.hundred, text:"Ending Byzantine rule in North Africa")
-        createHistoricEvent("Moslem conquest of Spain", year:711, type:periodType.hundred)
-        createHistoricEvent("Battle of Tours", year:732, type:periodType.hundred, text:"Frankish forces led by Charles Martel halt the Muslim advance into Europe")
-        createHistoricEvent("First printed newspaper appears in Peking", year:748, type:periodType.hundred)
+        newEvent(id++,title:"Dagobert becomes King of the Franks", year:629, type:periodType.hundred)
+        newEvent(id++,title:"Muhammad the Prophet dies", year:632, type:periodType.hundred)
+        newEvent(id++,title:"Arabs destroy the city of Carthage", year:695, type:periodType.hundred, text:"Ending Byzantine rule in North Africa")
+        newEvent(id++,title:"Moslem conquest of Spain", year:711, type:periodType.hundred)
+        newEvent(id++,title:"Battle of Tours", year:732, type:periodType.hundred, text:"Frankish forces led by Charles Martel halt the Muslim advance into Europe")
+        newEvent(id++,title:"First printed newspaper appears in Peking", year:748, type:periodType.hundred)
         
-        createHistoricEvent("Battle of Atlakh", year:751, type:periodType.hundred, text: "Islamic army defeats the Chinese at the Battle of Atlakh, giving Muslims control of the Silk Road.")
-        createHistoricEvent("Charlemagne becomes king of the Franks", year:771, type:periodType.hundred)
-        createHistoricEvent("Charlemagne declares war against the Saxons in Germany", year:748, type:periodType.hundred)
-        createHistoricEvent("Musa al-Kwarizmi born in Baghdad", year:780, type:periodType.hundred, text:"He introduced Hindu-Arabic numerals in his book Kitab al-jabr wa al-mugabalah.")
-        createHistoricEvent("Vikings invade Ireland", year:795, type:periodType.hundred)
-        createHistoricEvent("Charlemagne dies of pleurisy", year:814, type:periodType.hundred)
-        createHistoricEvent("Toilet paper thought be used first in China", year:850, type:periodType.hundred)
-        createHistoricEvent("Iceland discovered", year:861, type:periodType.hundred)
-        createHistoricEvent("World’s first printed book ", year:868, type:periodType.hundred,text:"The world’s first printed book The Diamond Sutra is produced in China.")
-        createHistoricEvent("Vikings settle in Iceland", year:874, type:periodType.hundred)
-        createHistoricEvent("First record of an automatic instrument", year:890, type:periodType.hundred, text:"First record of an automatic instrument, an organ-building treatise called Banu Musa.")
-        createHistoricEvent("Vikings discover Greenland", year:900, type:periodType.hundred)
-        createHistoricEvent("Earliest recorded mention of playing cards, found in China.", year:969, type:periodType.hundred)
-        createHistoricEvent("Mieczyslaw I becomes first ruler of Poland", year:960, type:periodType.hundred)
-        createHistoricEvent("The Capetian dynasty", from:987 , to:1328, type:periodType.hundred)
-        createHistoricEvent("Musical notation systematised.", year:990, type:periodType.hundred)
+        newEvent(id++,title:"Battle of Atlakh", year:751, type:periodType.hundred, text: "Islamic army defeats the Chinese at the Battle of Atlakh, giving Muslims control of the Silk Road.")
+        newEvent(id++,title:"Charlemagne becomes king of the Franks", year:771, type:periodType.hundred)
+        newEvent(id++,title:"Charlemagne declares war against the Saxons in Germany", year:748, type:periodType.hundred)
+        newEvent(id++,title:"Musa al-Kwarizmi born in Baghdad", year:780, type:periodType.hundred, text:"He introduced Hindu-Arabic numerals in his book Kitab al-jabr wa al-mugabalah.")
+        newEvent(id++,title:"Vikings invade Ireland", year:795, type:periodType.hundred)
+        newEvent(id++,title:"Charlemagne dies of pleurisy", year:814, type:periodType.hundred)
+        newEvent(id++,title:"Toilet paper thought be used first in China", year:850, type:periodType.hundred)
+        newEvent(id++,title:"Iceland discovered", year:861, type:periodType.hundred)
+        newEvent(id++,title:"World’s first printed book ", year:868, type:periodType.hundred,text:"The world’s first printed book The Diamond Sutra is produced in China.")
+        newEvent(id++,title:"Vikings settle in Iceland", year:874, type:periodType.hundred)
+        newEvent(id++,title:"First record of an automatic instrument", year:890, type:periodType.hundred, text:"First record of an automatic instrument, an organ-building treatise called Banu Musa.")
+        newEvent(id++,title:"Vikings discover Greenland", year:900, type:periodType.hundred)
+        newEvent(id++,title:"Earliest recorded mention of playing cards, found in China.", year:969, type:periodType.hundred)
+        newEvent(id++,title:"Mieczyslaw I becomes first ruler of Poland", year:960, type:periodType.hundred)
+        newEvent(id++,title:"The Capetian dynasty", from:987 , to:1328, type:periodType.hundred)
+        newEvent(id++,title:"Musical notation systematised.", year:990, type:periodType.hundred)
         
-        createHistoricEvent("Leif Ericson lands in North America, calling it Vinland", year:1000, type:periodType.fifty)
-        createHistoricEvent("Paper money printed in China.", year:1023, type:periodType.fifty)
-        createHistoricEvent("William the Conqueror invades England", year:1066, type:periodType.fifty,text:"William the Conqueror, from Normandy in France, invades England, defeats last Saxon king, Harold II, at Battle of Hastings")
-        createHistoricEvent("Shen Kua of China writes about the magnetic compass", year:1086, type:periodType.fifty)
-        createHistoricEvent("First modern university established in Bologna, Italy", year:1088, type:periodType.fifty)
-        createHistoricEvent("Leif Ericson lands in North America, calling it Vinland", year:1000, type:periodType.fifty)
-        createHistoricEvent("Leif Ericson lands in North America, calling it Vinland", year:1000, type:periodType.fifty)
-        createHistoricEvent("Leif Ericson lands in North America, calling it Vinland", year:1000, type:periodType.fifty)
-        createHistoricEvent("Leif Ericson lands in North America, calling it Vinland", year:1000, type:periodType.fifty)
-        createHistoricEvent("Leif Ericson lands in North America, calling it Vinland", year:1000, type:periodType.fifty)
-        */
+        newEvent(id++,title:"Leif Ericson lands in North America", year:1000, type:periodType.fifty, text: "The viking Leif Ericson lands in North America, calling it Vinland")
+        newEvent(id++,title:"Paper money printed in China.", year:1023, type:periodType.fifty)
+        newEvent(id++,title:"William the Conqueror invades England", year:1066, type:periodType.fifty,text:"William the Conqueror, from Normandy in France, invades England, defeats last Saxon king, Harold II, at Battle of Hastings")
+        newEvent(id++,title:"Shen Kua of China writes about the magnetic compass", year:1086, type:periodType.fifty)
+        newEvent(id++,title:"First modern university", year:1088, type:periodType.fifty, text: "First modern university established in Bologna, Italy")
+        
+        newEvent(id++,title:"Pope Urban II calls for holy war", year:1094, type:periodType.fifty,text:"At Council of Clermont, Pope Urban II calls for holy war to wrest Jerusalem from Muslims, launching the First Crusade the next year. Gilbert Crispin’s “A Friendly Disputation” published – a series of discussions on the opposing arguments of faiths between him and a Jew from Mainz.")
+        newEvent(id++,title:"Crusaders capture Jerusalem", year:1099, type:periodType.fifty)
+        newEvent(id++,title:"Chinese money printed in 3 colors to stop counterfeit", year:1107, type:periodType.fifty)
+        newEvent(id++,title:"Henry V crowned Holy Roman Emperor", year:1111, type:periodType.fifty)
+        newEvent(id++,title:"Knights Templar Order established in Jerusalem", year:1119, type:periodType.fifty)
+        newEvent(id++,title:"Honorius II is elected pope", year:1124, type:periodType.fifty)
+        newEvent(id++,title:"Second Crusade led by King Louis VIII", year:1145, type:periodType.fifty)
+        newEvent(id++,title:"Moscow built by Prince Yuri Dolgoruky", year:1147, type:periodType.fifty)
+        newEvent(id++,title:"The temple complex of Angkor Wat built", year:1150, type:periodType.fifty, text:"built by King Suryavarman II in Kampuchea (formerly Cambodia).")
+        newEvent(id++,title:"Map of western China printed", year:1162, type:periodType.fifty, text:"Oldest known printed map")
+        newEvent(id++,title:"Construction of the Leaning Tower of Pisa begins", year:1173, type:periodType.fifty,text:"Genghis Khan born")
+        newEvent(id++,title:"Magnetic compass invented", year:1182, type:periodType.fifty,text:"The type of ore that attracted iron was known as magnesian stone because it was discovered in Magnesia in Asia Minor. The discovery of the magnet’s use in determining direction was made independently in China and Europe, the latter by English theologian and natural philosopher Alexander Neckam.")
+        newEvent(id++,title:"Richard I becomes King of England", year:1189, type:periodType.fifty, text:"Known as Coeur de Lion or Richard the Lionheart")
+        newEvent(id++,title:"The Louvre Museum in Paris built as a fortress", year:1190, type:periodType.fifty)
+        newEvent(id++,title:"Buttons invented to decorate clothing", year:1200, type:periodType.fifty)
+        newEvent(id++,title:"Genghis Khan captures Peking", year:1241, type:periodType.fifty)
+        newEvent(id++,title:"Magna Carta signed by King John", year:1000, type:periodType.fifty,text:"The Great Charter, or Magna Carta, limiting royals power, signed and sealed by King John of England on 15 June at Runnymede, west of London near what is now Windsor. The Fourth Lateran Council recognized the doctrine of transubstantiation by which the bread and wine of the church service were seen as Christ’s flesh and blood.")
+        newEvent(id++,title:"The Inquisition begins", year:1000, type:periodType.fifty)
+        newEvent(id++,title:"University of Oxford founded", year:1233, type:periodType.fifty)
+        newEvent(id++,title:"Leif Ericson lands in North America, calling it Vinland", year:1249, type:periodType.fifty)
+        newEvent(id++,title:"Leif Ericson lands in North America, calling it Vinland", year:1000, type:periodType.fifty)
+        newEvent(id++,title:"Leif Ericson lands in North America, calling it Vinland", year:1000, type:periodType.fifty)
+        newEvent(id++,title:"Leif Ericson lands in North America, calling it Vinland", year:1000, type:periodType.fifty)
+        newEvent(id++,title:"Leif Ericson lands in North America, calling it Vinland", year:1000, type:periodType.fifty)
+        newEvent(id++,title:"Leif Ericson lands in North America, calling it Vinland", year:1000, type:periodType.fifty)
+        newEvent(id++,title:"Leif Ericson lands in North America, calling it Vinland", year:1000, type:periodType.fifty)
+        newEvent(id++,title:"Leif Ericson lands in North America, calling it Vinland", year:1000, type:periodType.fifty)
+        newEvent(id++,title:"Leif Ericson lands in North America, calling it Vinland", year:1000, type:periodType.fifty)
+        
         
         
 
-        
-        createHistoricEvent("war (1918-1939)", from: 1918, to:1939, type:periodType.fifty)
-        createHistoricEvent("Test between (1918-1960)", from: 1918, to:1960, type:periodType.fifty,text:"First record of an automatic instrument, an organ-building treatise called Banu Musa. First record of an automatic instrument, an organ-building treatise called Banu Musa.")
-        createHistoricEvent("Someone is born (1751)", year: 1751, type:periodType.fifty)
-        createHistoricEvent("old war (1918-1939)", from: -540, to:-300, type:periodType.fivehundred, text:"The best approach to add padding to a UILabel is to subclass UILabel and add an edgeInsets property. You then set the desired insets and the label will be drawn accordingly.")
+        /*
+        newEvent(id++,title:"war (1918-1939)", from: 1918, to:1939, type:periodType.fifty,level: 1)
+        newEvent(id++,title:"Test between (1918-1960)", from: 1918, to:1960, type:periodType.fifty,text:"First record of an automatic instrument, an organ-building treatise called Banu Musa. First record of an automatic instrument, an organ-building treatise called Banu Musa.",level: 2)
+        newEvent(id++,title:"Someone is born (1751)", year: 1751, type:periodType.fifty,level:2)
+        newEvent(id++,title:"old war (1918-1939)", from: -540, to:-300, type:periodType.fivehundred, text:"The best approach to add padding to a UILabel is to subclass UILabel and add an edgeInsets property. You then set the desired insets and the label will be drawn accordingly.",level: 3)
+        */
 
         save()
         
         dataPopulatedID = 1
         saveGameData()
         
-        
+        completePopulating?()
     }
     
-    func createHistoricEvent(title:String, from: Int, to:Int, type:periodType, text:String = "")
+    func newEvent(idForUpdate:Int,title:String, from: Int, to:Int, type:periodType, text:String = "", level:Int = 0, tags:String = "")
     {
-        let q1 = HistoricEvent.createInManagedObjectContext(self.managedObjectContext!,  title:title, from: from, to:to, text:text)
+        let q1 = HistoricEvent.createInManagedObjectContext(self.managedObjectContext!,idForUpdate:idForUpdate,  title:title, from: from, to:to, text:text, level:level)
         hookQuestionToPeriods(q1,type: type)
     }
     
-    func createHistoricEvent(title:String, year: Int, type:periodType, text:String = "")
+    func newEvent(idForUpdate:Int,title:String, year: Int, type:periodType, text:String = "", level:Int = 0, tags:String = "")
     {
-        let q1 = HistoricEvent.createInManagedObjectContext(self.managedObjectContext!,  title:title, year:year, text:text)
+        let q1 = HistoricEvent.createInManagedObjectContext(self.managedObjectContext!,idForUpdate:idForUpdate,  title:title, year:year, text:text,level:level)
         hookQuestionToPeriods(q1,type: type)
     }
     
@@ -337,7 +355,7 @@ class DataHandler
         }
     }
     
-    func fetchData() {
+    func fetchData(fromLevel:Int,toLevel:Int) {
 
         // Create a new fetch request using the LogItem entity
         // eqvivalent to select * from Relation
@@ -346,7 +364,7 @@ class DataHandler
         //let sortDescriptor = NSSortDescriptor(key: "number", ascending: true)
         //fetchRequest.sortDescriptors = [sortDescriptor]
         
-        let predicate = NSPredicate(format: "periods.@count > 0") //!=NULL
+        let predicate = NSPredicate(format: "periods.@count > 0 AND level >= \(fromLevel) AND level <= \(toLevel)") //!=NULL
         //let predicate = NSPredicate(format: "titlenumber contains %@", "Worst")
         // Set the predicate on the fetch request
         fetchEvents.predicate = predicate
@@ -365,19 +383,20 @@ class DataHandler
     }
     
     let DataPopulatedKey = "DataPopulated"
-    //let BedroomFloorKey = "BedroomFloor"
-    //let BedroomWallKey = "BedroomWall"
     let OkScoreKey = "OkScore"
     let GoodScoreKey = "GoodScore"
     let LoveScoreKey = "LoveScore"
-    
+    let TagsKey = "Tags"
+    let LevelKey = "Level"
+    let EventsUpdateKey = "EventsUpdate"
     
     var dataPopulatedID:AnyObject = 0
     var okScoreID:AnyObject = 0
     var goodScoreID:AnyObject = 0
     var loveScoreID:AnyObject = 0
-    //var bedroomFloorID: AnyObject = 101
-    //var bedroomWallID: AnyObject = 101
+    var tagsID:AnyObject = 0
+    var levelID:AnyObject = 0
+    var eventsUpdateID:AnyObject = 0
 
     func loadGameData() {
         // getting path to GameData.plist
@@ -410,8 +429,9 @@ class DataHandler
             okScoreID = dict.objectForKey(OkScoreKey)!
             goodScoreID = dict.objectForKey(GoodScoreKey)!
             loveScoreID = dict.objectForKey(LoveScoreKey)!
-            //bedroomWallID = dict.objectForKey(BedroomWallKey)!
-            //...
+            tagsID = dict.objectForKey(TagsKey)!
+            levelID = dict.objectForKey(LevelKey)!
+            eventsUpdateID = dict.objectForKey(EventsUpdateKey)!
         } else {
             println("WARNING: Couldn't create dictionary from GameData.plist! Default values will be used!")
         }
@@ -427,8 +447,9 @@ class DataHandler
         dict.setObject(okScoreID, forKey: OkScoreKey)
         dict.setObject(goodScoreID, forKey: GoodScoreKey)
         dict.setObject(loveScoreID, forKey: LoveScoreKey)
-        //dict.setObject(bedroomWallID, forKey: BedroomWallKey)
-        //...
+        dict.setObject(tagsID, forKey: TagsKey)
+        dict.setObject(levelID, forKey: LevelKey)
+        dict.setObject(eventsUpdateID, forKey: EventsUpdateKey)
         //writing to GameData.plist
         dict.writeToFile(path, atomically: false)
         let resultDictionary = NSMutableDictionary(contentsOfFile: path)

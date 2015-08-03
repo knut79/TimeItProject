@@ -38,6 +38,7 @@ enum periodType: Int
     }
 }
 
+
 enum eventType: Int
 {
     case singleYear = 0,periode

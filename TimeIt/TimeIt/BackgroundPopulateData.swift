@@ -10,6 +10,6 @@ import Foundation
 
 class BackgroundPopulateData: NSOperation {
     override func main() -> (){
-        DataHandler().populateData()
+        DataHandler().populateData(nil)
     }
 }

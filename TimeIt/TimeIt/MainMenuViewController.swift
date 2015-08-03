@@ -16,6 +16,7 @@ class MainMenuViewController: UIViewController, ADBannerViewDelegate {
     var backgroundView:UIView!
     var playButton:UIButton!
     var playButtonExstraLabel:UILabel!
+    var playButtonExstraLabel2:UILabel!
     var timelineButton:UIButton!
     var loadingDataView:UIView!
     var loadingDataLabel:UILabel!
@@ -27,7 +28,7 @@ class MainMenuViewController: UIViewController, ADBannerViewDelegate {
     var updateGlobalGameStats:Bool = false
     var newGameStatsValues:(Int,Int,Int)!
 
-    //let rangeSlider = RangeSlider(frame: CGRectZero)
+    let levelSlider = RangeSlider(frame: CGRectZero)
     
     
     var bannerView:ADBannerView?
@@ -51,12 +52,18 @@ class MainMenuViewController: UIViewController, ADBannerViewDelegate {
         //playButton.titleLabel?.textAlignment = NSTextAlignment.Center
         
         playButtonExstraLabel = UILabel(frame:CGRectZero)
-
-        playButtonExstraLabel.backgroundColor = playButton.backgroundColor
+        playButtonExstraLabel.backgroundColor = playButton.backgroundColor?.colorWithAlphaComponent(0)
         playButtonExstraLabel.textColor = UIColor.whiteColor()
         playButtonExstraLabel.font = UIFont.systemFontOfSize(12)
         playButtonExstraLabel.textAlignment = NSTextAlignment.Center
         playButton.addSubview(playButtonExstraLabel)
+
+        playButtonExstraLabel2 = UILabel(frame:CGRectZero)
+        playButtonExstraLabel2.backgroundColor = playButton.backgroundColor?.colorWithAlphaComponent(0)
+        playButtonExstraLabel2.textColor = UIColor.whiteColor()
+        playButtonExstraLabel2.font = UIFont.systemFontOfSize(12)
+        playButtonExstraLabel2.textAlignment = NSTextAlignment.Center
+        playButton.addSubview(playButtonExstraLabel2)
         
         timelineButton = UIButton(frame:CGRectZero)
         timelineButton.setTitle("Timeline", forState: UIControlState.Normal)
@@ -64,19 +71,13 @@ class MainMenuViewController: UIViewController, ADBannerViewDelegate {
         timelineButton.backgroundColor = UIColor.blueColor()
         view.addSubview(timelineButton)
         
-        /*
-        rangeSlider.addTarget(self, action: "rangeSliderValueChanged:", forControlEvents: .ValueChanged)
         
-        rangeSlider.maximumValue = 1850
-        rangeSlider.minimumValue = 1800
-        rangeSlider.typeValue = sliderType.justUpper
-        self.rangeSlider.curvaceousness = 0.0
-        view.addSubview(rangeSlider)
-        
-        rangeSlider.maximumValue = 2000
-        rangeSlider.minimumValue = 1950
-        rangeSlider.typeValue = sliderType.bothLowerAndUpper
-        */
+        levelSlider.addTarget(self, action: "rangeSliderValueChanged:", forControlEvents: .ValueChanged)
+        levelSlider.curvaceousness = 0.0
+        levelSlider.maximumValue = Double(maxLevel) + 0.5
+        levelSlider.minimumValue = Double(minLevel)
+        levelSlider.typeValue = sliderType.bothLowerAndUpper
+        view.addSubview(levelSlider)
         
         /*
         let backgroundOperation = BackgroundPopulateData()
@@ -96,18 +97,7 @@ class MainMenuViewController: UIViewController, ADBannerViewDelegate {
             self.rangeSlider.curvaceousness = 0.0
         }
         */
-        //test
-        /*
-        giveNoBonus(){ (value:Bool) in
-            println("outside 2")
-        }
-        
-        hardProcessingWithString("commands") {
-            (result: String) in
-            //println("got back: \(result)")
-            println("got back")
-        }
-        */
+
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -115,8 +105,8 @@ class MainMenuViewController: UIViewController, ADBannerViewDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
-        
-        if Int(datactrl.dataPopulatedID as! NSNumber) == 0
+
+        if Int(datactrl.dataPopulatedID as! NSNumber) <= 0
         {
             loadingDataLabel = UILabel(frame: CGRectMake(0, 0, 200, 50))
             loadingDataLabel.text = "Loading data.."
@@ -135,7 +125,7 @@ class MainMenuViewController: UIViewController, ADBannerViewDelegate {
             pulseAnimation.delegate = self
             loadingDataView.layer.addAnimation(pulseAnimation, forKey: "asd")
             
-            populateData({ () in
+            DataHandler().populateData({ () in
                 self.view.addSubview(self.playButton)
                 self.globalGameStats = GameStats(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width * 0.75, UIScreen.mainScreen().bounds.size.height * 0.08),okScore: Int(self.datactrl.okScoreID as! NSNumber),goodScore: Int(self.datactrl.goodScoreID as! NSNumber),loveScore: Int(self.datactrl.loveScoreID as! NSNumber))
                 self.view.addSubview(self.globalGameStats)
@@ -154,16 +144,11 @@ class MainMenuViewController: UIViewController, ADBannerViewDelegate {
         
         if updateGlobalGameStats
         {
-            que(){ () in
-                println("outside 2")
-            }
             globalGameStats.addOkPoints(newGameStatsValues.0, completion: { () in
                 self.globalGameStats.addGoodPoints(self.newGameStatsValues.1, completion: { () in
                     self.globalGameStats.addLovePoints(self.newGameStatsValues.2)
                 })
             })
-            
-            
             updateGlobalGameStats = false
             datactrl.updateGameData(newGameStatsValues.0,deltaGoodPoints: newGameStatsValues.1,deltaLovePoints: newGameStatsValues.2)
             datactrl.saveGameData()
@@ -176,9 +161,9 @@ class MainMenuViewController: UIViewController, ADBannerViewDelegate {
         bannerView?.frame = CGRectMake(0, UIScreen.mainScreen().bounds.size.height - 44, UIScreen.mainScreen().bounds.size.width, 44)
         
         loadingDataView?.frame =  CGRectMake(50, 50, 200, 50)
-        
-        playButton.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width / 2, UIScreen.mainScreen().bounds.size.height / 2)
-        playButton.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, UIScreen.mainScreen().bounds.size.height / 3)
+        let playbuttonWidth = UIScreen.mainScreen().bounds.size.width / 2
+        playButton.frame = CGRectMake((UIScreen.mainScreen().bounds.size.width / 2) - (playbuttonWidth / 2), UIScreen.mainScreen().bounds.size.height * 0.15,playbuttonWidth, UIScreen.mainScreen().bounds.size.height / 2)
+        //playButton.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, UIScreen.mainScreen().bounds.size.height / 3)
         
         let margin: CGFloat = 20.0
         let width = view.bounds.width - 2.0 * margin
@@ -201,47 +186,25 @@ class MainMenuViewController: UIViewController, ADBannerViewDelegate {
             
         }
 
+        let height:CGFloat = 31.0
+        let marginSlider: CGFloat = playButton.frame.minX
+        levelSlider.frame = CGRect(x:  marginSlider, y: timelineButton.frame.maxY  + margin, width: UIScreen.mainScreen().bounds.size.width - (marginSlider * 2), height: height)
         
-        playButtonExstraLabel.frame = CGRectMake(0, (playButton.frame.height / 2) + (playButton.frame.height / 6)  , playButton.frame.width, playButton.frame.height / 3)
+        playButtonExstraLabel.frame = CGRectMake(0, playButton.frame.height * 0.7   , playButton.frame.width, playButton.frame.height * 0.15)
         playButtonExstraLabel.text = "in \(orientationText) mode"
+        playButtonExstraLabel2.frame = CGRectMake(0, playButton.frame.height * 0.85   , playButton.frame.width, playButton.frame.height * 0.15)
+        playButtonExstraLabel2.text = "level \(Int(levelSlider.lowerValue)) - \(Int(levelSlider.upperValue))"
     }
-    
-    func populateData(completionClosure: (() -> (Void))?)
-    {
-        DataHandler().populateData()
-        completionClosure!()
-    }
-    
-    //test
-    
-    
-    func hardProcessingWithString(input: String, completion: (result: String) -> Void) {
-            //completion(result: "we finished!")
-        println("we finished!")
-        completion(result: "we finished!")
-    }
-    
-    func giveNoBonus(completionClosure: ((Bool) -> (Void))?)
-    {
-        println("inside 2")
-        completionClosure!(true)
-        //giveNoBonus(animateFromView,lastInChain: false)
-        
-    }
-    
-    func que(completion: (() -> (Void))?)
-    {
-        completion!()
-    }
-
+ 
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    func rangeSliderValueChanged(rangeSlider: RangeSlider) {
-        println("Range slider value changed: (\(Int(rangeSlider.lowerValue)) \(Int(rangeSlider.upperValue)))")
+    func rangeSliderValueChanged(slider: RangeSlider) {
+        //println("Range slider value changed: (\(Int(slider.lowerValue)) \(Int(slider.upperValue)))")
+        playButtonExstraLabel2.text = "level \(Int(slider.lowerValue)) - \(Int(slider.upperValue))"
     }
     
     func playAction()
@@ -256,11 +219,10 @@ class MainMenuViewController: UIViewController, ADBannerViewDelegate {
     
     override func prepareForSegue(segue: (UIStoryboardSegue!), sender: AnyObject!) {
         if (segue.identifier == "segueFromMainMenuToPlay") {
-            //var svc = segue!.destinationViewController as! FilepointListViewController
-            //svc.imagefile = currentImagefile
-            
+            var svc = segue!.destinationViewController as! PlayViewController
+            svc.levelLow = Int(levelSlider.lowerValue)
+            svc.levelHigh = Int(levelSlider.upperValue)
         }
-
     }
     
     

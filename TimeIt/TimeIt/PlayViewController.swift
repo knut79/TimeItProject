@@ -41,6 +41,9 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
 
     var bannerView:ADBannerView?
     
+    var levelHigh:Int = 1
+    var levelLow:Int = 1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,7 +56,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         
         // Do any additional setup after loading the view, typically from a nib.
         datactrl = DataHandler()
-        datactrl.fetchData()
+        datactrl.fetchData(levelLow,toLevel: levelHigh)
         datactrl.shuffleEvents()
         
         gameStats = GameStats(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width * 0.75, UIScreen.mainScreen().bounds.size.height * 0.08),okScore: 0,goodScore: 0,loveScore: 0)
@@ -382,6 +385,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             if periodsToLevelsFromEvent == nil
             {
                 println("Could not get periods to levels up for question \(currentQuestion.title)")
+                rightPeriodStrikes = 0
                 setNextQuestion()
             }
             else
