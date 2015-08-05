@@ -19,9 +19,15 @@ class DataHandler
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     var periodsItems:[Period]!
     var historicEventItems:[HistoricEvent]!
+    var todaysYear:Double!
     init()
     {
         loadGameData()
+        
+        let date = NSDate()
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components(NSCalendarUnit.CalendarUnitYear, fromDate: date)
+        todaysYear = Double(components.year)
         historicEventItems = []
         periodsItems = []
     }
@@ -30,7 +36,7 @@ class DataHandler
     {
 
         
-        let t1 = PeriodData(from: 1990, to: 2000)
+        let t1 = PeriodData(from: 1990, to: 9999)
         let t2 = PeriodData(from: 1980, to: 1990)
         let t3 = PeriodData(from: 1970, to: 1980)
         let t4 = PeriodData(from: 1960, to: 1970)
@@ -51,12 +57,13 @@ class DataHandler
         let t19 = PeriodData(from: 1810, to: 1820)
         let t20 = PeriodData(from: 1800, to: 1810)
         
-        let f1 = PeriodData(from: 1950, to: 2000,periods: [t1,t2,t3,t4,t5],timelineItem:true)
+        let f1 = PeriodData(from: 1950, to: 9999,periods: [t1,t2,t3,t4,t5],timelineItem:true)
         let f2 = PeriodData(from: 1900, to: 1950,periods: [t6,t7,t8,t9,t10],timelineItem:true)
         let f3 = PeriodData(from: 1850, to: 1900,periods: [t11,t12,t13,t14,t15])
         let f4 = PeriodData(from: 1800, to: 1850,periods: [t16,t17,t18,t19,t20])
         let f5 = PeriodData(from: 1750, to: 1800)
         let f6 = PeriodData(from: 1700, to: 1750)
+        
         let f7 = PeriodData(from: 1650, to: 1700)
         let f8 = PeriodData(from: 1600, to: 1650)
         let f9 = PeriodData(from: 1550, to: 1600)
@@ -73,7 +80,7 @@ class DataHandler
         let f20 = PeriodData(from: 1000, to: 1050)
  
         
-        let h1 = PeriodData(from: 1900, to: 2000, periods: [f1,f2])
+        let h1 = PeriodData(from: 1900, to: 9999, periods: [f1,f2])
         let h2 = PeriodData(from: 1800, to: 1900, periods: [f3,f4],timelineItem:true)
         let h3 = PeriodData(from: 1700, to: 1800, periods: [f5,f6],timelineItem:true)
         let h4 = PeriodData(from: 1600, to: 1700, periods: [f7,f8],timelineItem:true)
@@ -94,14 +101,14 @@ class DataHandler
         let h19 = PeriodData(from: 100, to: 200)
         let h20 = PeriodData(from: 0, to: 100)
         
-        let fh1 = PeriodData(from: 1500, to: 2000,periods:[h1,h2,h3,h4,h5])
+        let fh1 = PeriodData(from: 1500, to: 9999,periods:[h1,h2,h3,h4,h5])
         let fh2 = PeriodData(from: 1000, to: 1500,periods:[h6,h7,h8,h9,h10],timelineItem:true)
         let fh3 = PeriodData(from: 500, to: 1000,periods:[h11,h12,h13,h14,h15],timelineItem:true)
         let fh4 = PeriodData(from: 0, to: 500,periods:[h16,h17,h18,h19,h20],timelineItem:true)
         let fh5 = PeriodData(from: -500, to: 0)
         let fh6 = PeriodData(from: -1000, to: -500)
         
-        let mil1 = PeriodData(from: 1000, to: 2000,periods:[fh2,fh1])
+        let mil1 = PeriodData(from: 1000, to: 9999,periods:[fh2,fh1])
         let mil2 = PeriodData(from: 0, to: 1000,periods:[fh3,fh4])
         let mil3 = PeriodData(from: -1000, to: 0,periods:[fh5,fh6],timelineItem:true)
         
@@ -111,7 +118,7 @@ class DataHandler
         
 
         var id = 1
-        
+        /*
         newEvent(id++,title: "King David conquers Jerusalem", year:-990, type:periodType.fivehundred)
         newEvent(id++,title:"First Olympiad in Greece", year:-776, type:periodType.fivehundred)
         newEvent(id++,title:"Rome founded by Romulus", year:-753, type:periodType.fivehundred)
@@ -120,6 +127,7 @@ class DataHandler
         newEvent(id++,title:"Buddha born in India.", year:-563, type:periodType.fivehundred)
         newEvent(id++,title:"Confucius born in China", year:-551, type:periodType.fivehundred)
         newEvent(id++,title:"Roman calendar introduced", year:-535, type:periodType.fivehundred, text: "It had 10 months, with 304 days in a year that began in March.")
+        */
         /*
         newEvent(id++,title:"Pythagoras describes his theorem", year:-532, type:periodType.fivehundred,text:"Pythagoras of Crotona describes the relations between sides of right-angled triangle, and tone vibrations.")
         newEvent(id++,title:"Rome as a Republic founded", year:-500, type:periodType.fivehundred, text:"End of monarchy in Rome")
@@ -519,14 +527,15 @@ class DataHandler
         newEvent(id++,title:"Soviet–Afghan War", from:1979, to:1989, type:periodType.fifty)
         newEvent(id++,title:"The Korean War", from:1950, to:1953, type:periodType.ten)
         //_?
+
         newEvent(id++,title:"Vietnam War", from:1954,to:1975, type:periodType.ten)
-        newEvent(id++,title:"World population reaches the 6 billion mar", year:1999, type:periodType.ten)
+        newEvent(id++,title:"World population reaches the 6 billion mark", year:1999, type:periodType.ten)
         
         newEvent(id++,title:"Vladimir Putin elected President of Russia", year:2000, type:periodType.ten)
         newEvent(id++,title:"George W Bush defeats Al Gore to become US President", year:2000, type:periodType.ten)
-        */
         
-        /*
+        
+        
         newEvent(id++,title:"Wikipedia started", year:2001, type:periodType.ten)
         newEvent(id++,title:"September 11", year:2001, type:periodType.ten)
         newEvent(id++,title:"Euro banknotes and coins released", year:2002, type:periodType.ten)
@@ -537,7 +546,7 @@ class DataHandler
         newEvent(id++,title:"Apple launches the iPhone", year:2007, type:periodType.ten)
         newEvent(id++,title:"Dmitri Medvedev elected President of Russia", year:2008, type:periodType.ten)
         newEvent(id++,title:"", year:00, type:periodType.ten)
-    */
+*/
         
         /*
         newEvent(id++,title:"war (1918-1939)", from: 1918, to:1939, type:periodType.fifty,level: 1)
@@ -546,6 +555,9 @@ class DataHandler
         newEvent(id++,title:"old war (1918-1939)", from: -540, to:-300, type:periodType.fivehundred, text:"The best approach to add padding to a UILabel is to subclass UILabel and add an edgeInsets property. You then set the desired insets and the label will be drawn accordingly.",level: 3)
 */
 
+        newEvent(id++,title:"World population reaches the 6 billion mark", year:1999, type:periodType.ten)
+        newEvent(id++,title:"Dmitri Medvedev elected President of Russia", year:2008, type:periodType.ten)
+        newEvent(id++,title:"Confucius born in China", year:-551, type:periodType.fivehundred)
         println("populated new data")
 
         save()
@@ -628,6 +640,11 @@ class DataHandler
     {
         for periodData in dataToPopulate
         {
+            if periodData.from == 1000 && periodData.to == 1500
+            {
+                let h = 0
+            }
+            
             var period = Period.createInManagedObjectContext(self.managedObjectContext!, from: periodData.from, to:periodData.to, timelineItem:periodData.timeline)
             save()
             if let parent = parentPeriod
@@ -790,6 +807,11 @@ class DataHandler
         dict.writeToFile(path, atomically: false)
         let resultDictionary = NSMutableDictionary(contentsOfFile: path)
         println("Saved GameData.plist file is --> \(resultDictionary?.description)")
+    }
+    
+    func getMaxTimeLimit(year: Double) -> Double
+    {
+        return year > todaysYear ? todaysYear : year
     }
 }
 

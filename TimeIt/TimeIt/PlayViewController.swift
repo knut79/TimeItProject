@@ -425,6 +425,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         var buttonWidth = (xMaxBoundary - xMinBoundary) / CGFloat(periods.count)
         var x:CGFloat = xMinBoundary
         var collectionForRelation:[PeriodButton] = []
+        println(" number of periods \(periods.count)")
         for item in periods
         {
             var periodButton = PeriodButton(frame:CGRectMake(0, 0, buttonWidth,buttonHeight), level:level)
@@ -665,7 +666,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     
     func bonusQuestion(periodButton:PeriodButton)
     {
-        rangeSlider.maximumValue = Double(periodButton.period.toYear)
+        rangeSlider.maximumValue = datactrl.getMaxTimeLimit(Double(periodButton.period.toYear))
         rangeSlider.minimumValue = Double(periodButton.period.fromYear)
 
         if currentQuestion.type == Int16(eventType.singleYear.rawValue)

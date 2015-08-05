@@ -24,7 +24,9 @@ class Period: NSManagedObject {
         let newitem = NSEntityDescription.insertNewObjectForEntityForName("Period", inManagedObjectContext: moc) as! Period
         newitem.fromYear = Int16(from)
         newitem.toYear = Int16(to)
-        var diff = to - from
+        //HACK
+        let toHack = to > 2000 ? 2000 : to
+        var diff = toHack - from
         
         if(diff >= 1000)
         {
