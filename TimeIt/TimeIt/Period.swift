@@ -63,9 +63,20 @@ class Period: NSManagedObject {
         {
         get{
             let unaryFromYear = self.fromYear * -1
-            let unaryToYear = self.toYear * -1
+            
             let fyear = self.fromYear < 0 ? "\(unaryFromYear)BC" : "\(self.fromYear)"
-            let tyear = self.toYear < 0 ? "\(unaryToYear)BC" : "\(self.toYear)"
+            println("test from \(self.fromYear) to \(self.toYear)")
+            let tyear =  {() -> String in
+                if self.toYear >= 9999
+                {
+                    return "Now"
+                }
+                else
+                {
+                    let unaryToYear = self.toYear * -1
+                    return self.toYear < 0 ? "\(unaryToYear)BC" : "\(self.toYear)"
+                }
+            }()
             return "\(fyear) - \(tyear)"
         }
     }

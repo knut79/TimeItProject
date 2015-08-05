@@ -11,7 +11,7 @@ import CoreGraphics
 import QuartzCore
 import iAd
 
-class MainMenuViewController: UIViewController, ADBannerViewDelegate {
+class MainMenuViewController: UIViewController {//, ADBannerViewDelegate {
 
     var backgroundView:UIView!
     var playButton:UIButton!
@@ -41,7 +41,7 @@ class MainMenuViewController: UIViewController, ADBannerViewDelegate {
         bannerView = ADBannerView(frame: CGRectMake(0, UIScreen.mainScreen().bounds.size.height - 44, UIScreen.mainScreen().bounds.size.width, 44))
         //bannerView = ADBannerView(frame: CGRectZero)
         self.view.addSubview(bannerView!)
-        self.bannerView?.delegate = self
+        //self.bannerView?.delegate = self
         self.bannerView?.hidden = false
         
         // Do any additional setup after loading the view, typically from a nib.
@@ -193,7 +193,12 @@ class MainMenuViewController: UIViewController, ADBannerViewDelegate {
         playButtonExstraLabel.frame = CGRectMake(0, playButton.frame.height * 0.7   , playButton.frame.width, playButton.frame.height * 0.15)
         playButtonExstraLabel.text = "in \(orientationText) mode"
         playButtonExstraLabel2.frame = CGRectMake(0, playButton.frame.height * 0.85   , playButton.frame.width, playButton.frame.height * 0.15)
-        playButtonExstraLabel2.text = "level \(Int(levelSlider.lowerValue)) - \(Int(levelSlider.upperValue))"
+        playButtonExstraLabel2.text = "level \(Int(levelSlider.lowerValue)) - \(sliderUpperLevelText())"
+    }
+    
+    func sliderUpperLevelText() -> String
+    {
+        return Int(levelSlider.upperValue) > 3 ? "ridiculous" : "\(Int(levelSlider.upperValue))"
     }
  
 
@@ -204,7 +209,7 @@ class MainMenuViewController: UIViewController, ADBannerViewDelegate {
     
     func rangeSliderValueChanged(slider: RangeSlider) {
         //println("Range slider value changed: (\(Int(slider.lowerValue)) \(Int(slider.upperValue)))")
-        playButtonExstraLabel2.text = "level \(Int(slider.lowerValue)) - \(Int(slider.upperValue))"
+        playButtonExstraLabel2.text = "level \(Int(slider.lowerValue)) - \(sliderUpperLevelText())"
     }
     
     func playAction()

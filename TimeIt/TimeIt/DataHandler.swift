@@ -29,6 +29,7 @@ class DataHandler
     func populateData(completePopulating: (() -> (Void))?)
     {
 
+        
         let t1 = PeriodData(from: 1990, to: 2000)
         let t2 = PeriodData(from: 1980, to: 1990)
         let t3 = PeriodData(from: 1970, to: 1980)
@@ -119,6 +120,7 @@ class DataHandler
         newEvent(id++,title:"Buddha born in India.", year:-563, type:periodType.fivehundred)
         newEvent(id++,title:"Confucius born in China", year:-551, type:periodType.fivehundred)
         newEvent(id++,title:"Roman calendar introduced", year:-535, type:periodType.fivehundred, text: "It had 10 months, with 304 days in a year that began in March.")
+        /*
         newEvent(id++,title:"Pythagoras describes his theorem", year:-532, type:periodType.fivehundred,text:"Pythagoras of Crotona describes the relations between sides of right-angled triangle, and tone vibrations.")
         newEvent(id++,title:"Rome as a Republic founded", year:-500, type:periodType.fivehundred, text:"End of monarchy in Rome")
         newEvent(id++,title:"Socrates drink hemlock", year:-399, type:periodType.fivehundred, text:"Socrates is required to drink hemlock to end his life after being found guilty of corrupting the youth of Athens")
@@ -133,7 +135,8 @@ class DataHandler
         newEvent(id++,title:"Rule of Cleopatra in Egypt", from:-51, to: -30, type:periodType.fivehundred)
         newEvent(id++,title:"Julius Caesar assassinated", year:-44, type:periodType.fivehundred)
         newEvent(id++,title:"Solomon builds the Temple in Jerusalem", year:-950, type:periodType.fivehundred)
-        
+        */
+        /*
         newEvent(id++,title:"Tiberius becomes roman Emperor", year:14, type:periodType.hundred)
         newEvent(id++,title:"Nero becomes last Caesar", year:54, type:periodType.hundred)
         newEvent(id++,title:"First seismoscope developed in China", year:132, type:periodType.hundred)
@@ -442,21 +445,108 @@ class DataHandler
         newEvent(id++,title:"Nylon stocking introduced", year:1940, type:periodType.ten)
         newEvent(id++,title:"Japan’s attack on Pearl Harbor", year:1941, type:periodType.ten)
         newEvent(id++,title:"Allied D-Day landings at Normandy", year:1944, type:periodType.ten)
-        newEvent(id++,title:"", year:00, type:periodType.ten)
-        newEvent(id++,title:"", year:00, type:periodType.ten)
-        newEvent(id++,title:"", year:00, type:periodType.ten)
-        newEvent(id++,title:"", year:00, type:periodType.ten)
-        newEvent(id++,title:"", year:00, type:periodType.ten)
-        newEvent(id++,title:"", year:00, type:periodType.ten)
-        newEvent(id++,title:"", year:00, type:periodType.ten)
-        newEvent(id++,title:"", year:00, type:periodType.ten)
+        newEvent(id++,title:"World’s first nuclear reactor", year:1946, type:periodType.ten, text:"Opened in the USSR")
+        newEvent(id++,title:"First solid-body electric guitar is built by Les Paul", year:1947, type:periodType.ten)
+        newEvent(id++,title:"Kalashnikov invents the AK-47", year:1947, type:periodType.ten)
+        newEvent(id++,title:"Israel established", year:1948, type:periodType.ten)
+        newEvent(id++,title:"NATO founded", year:1949, type:periodType.ten)
+        newEvent(id++,title:"Republic of Ireland founded", year:1949, type:periodType.ten)
+        newEvent(id++,title:"The first Emmy is awarded", year:1949, type:periodType.ten)
+        newEvent(id++,title:"Chrysler introduces power steering", year:1951, type:periodType.ten)
+        newEvent(id++,title:"US sends 4 monkeys into the stratosphere", year:1951, type:periodType.ten)
+        newEvent(id++,title:"Velcro is patented", year:1951, type:periodType.ten)
+        newEvent(id++,title:" Sony invents pocket-sized transistor radio", year:1952, type:periodType.ten)
+        newEvent(id++,title:"Man reach summit of Mount Everes", year:1953, type:periodType.ten)
+        newEvent(id++,title:"Queen Elizabeth II crowned", year:1953, type:periodType.ten)
+        newEvent(id++,title:"Playboy magazine is launched", year:1953, type:periodType.ten)
+        newEvent(id++,title:"Dr Watson discovers the structure of DNA.", year:1953, type:periodType.ten)
+        newEvent(id++,title:"USSR launches the Sputnik satellite", year:1957, type:periodType.ten)
+        newEvent(id++,title:"Danish toymakers launches Lego", year:1958, type:periodType.ten)
+        newEvent(id++,title:"Skateboard invented", year:1958, type:periodType.ten)
+        newEvent(id++,title:"NASA founded", year:1958, type:periodType.ten)
+        newEvent(id++,title:"Fidel Castro takes power in Cuba", year:1959, type:periodType.ten)
+        newEvent(id++,title:"The Beatles form", year:1959, type:periodType.ten)
+        newEvent(id++,title:"Yuri Gagarin the first man in space", year:1961, type:periodType.ten)
+        newEvent(id++,title:"Dow Corp invent silicone breast implants", year:1962, type:periodType.ten)
+        newEvent(id++,title:"The Cuban crisis", year:1962, type:periodType.ten)
+        newEvent(id++,title:"President John F Kennedy assassinated.", year:1963, type:periodType.ten)
+        newEvent(id++,title:"Sikorsky becomes first woman in space", year:1963, type:periodType.ten)
+        newEvent(id++,title:"Che Guevara is shot dead by Bolivian troops", year:1967, type:periodType.ten)
+        newEvent(id++,title:"Bill Gates and Paul Allen use their first computer", year:1968, type:periodType.ten)
+        newEvent(id++,title:"Seiko launches the quartz wristwatch", year:1967, type:periodType.ten)
+        newEvent(id++,title:"First staging of the Superbowl", year:1967, type:periodType.ten)
+        newEvent(id++,title:"Dr Martin Luther King assassinated", year:1968, type:periodType.ten)
+        newEvent(id++,title:"Neil Armstrong is the first man on the moon", year:1969, type:periodType.ten)
+        newEvent(id++,title:"Yasser Arafat becomes leader of PLO", year:1969, type:periodType.ten)
+        newEvent(id++,title:"IBM introduces the floppy disk ", year:1970, type:periodType.ten)
+        newEvent(id++,title:"Texas Instruments launches the pocket calculator", year:1972, type:periodType.ten)
+        newEvent(id++,title:"Nike running shoes launched", year:1972, type:periodType.ten)
+        newEvent(id++,title:"Watergate scandal", year:1973, type:periodType.ten)
+        newEvent(id++,title:"Arab oil embargo brings Europe to its knees", year:1973, type:periodType.ten)
+        newEvent(id++,title:"Gillette introduces the disposable razor", year:1974, type:periodType.ten)
+        newEvent(id++,title:"GM introduces the catalytic converter", year:1974, type:periodType.ten)
+        newEvent(id++,title:"IBM launches the laser printer", year:1975, type:periodType.ten)
+        newEvent(id++,title:"Viking I lands on Mars", year:1976, type:periodType.ten)
+        newEvent(id++,title:"Apple computers founded", year:1976, type:periodType.ten)
+        newEvent(id++,title:"Apple II the first mass-produced home computer", year:1977, type:periodType.ten)
+        newEvent(id++,title:"Star Wars debuts", year:1977, type:periodType.ten)
+        newEvent(id++,title:"First arcade video game, Space Invaders", year:1978, type:periodType.ten)
+        newEvent(id++,title:"Nuclear accident at Three Mile Island, Pennsylvania", year:1979, type:periodType.ten)
+        newEvent(id++,title:"Russia invades Afghanistan", year:1979, type:periodType.ten)
+        newEvent(id++,title:"Philips invents the CD", year:1980, type:periodType.ten)
+        newEvent(id++,title:"John Lennon is shot by Mark Chapman", year:1980, type:periodType.ten)
+        newEvent(id++,title:"IBM launches their PC", year:1981, type:periodType.ten)
+        newEvent(id++,title:"PacMan hits the arcades", year:1981, type:periodType.ten)
+        newEvent(id++,title:"Shuttle Columbia launched", year:1981, type:periodType.ten)
+        newEvent(id++,title:"HIV virus identified", year:1983, type:periodType.ten)
+        newEvent(id++,title:"First commercial cell phone call", year:1983, type:periodType.ten)
+        newEvent(id++,title:"Farman discovers the hole in the ozone", year:1985, type:periodType.ten)
+        newEvent(id++,title:"Sinclair introduces the battery-operated car", year:1985, type:periodType.ten)
+        newEvent(id++,title:"Nuclear reactor explodes in Chernobyl, Ukraine", year:1986, type:periodType.ten)
+        newEvent(id++,title:"The Space Shuttle Challenger disaster", year:1986, type:periodType.ten)
+        newEvent(id++,title:"Soviet Union launches Mir space station", year:1986, type:periodType.ten)
+        newEvent(id++,title:"World population reaches 5 billion", year:1987, type:periodType.ten)
+        newEvent(id++,title:"Stock exchanges collapse on Black Monday", year:1987, type:periodType.ten)
+        newEvent(id++,title:"US introduces the F-117 stealth fighter", year:1988, type:periodType.ten)
+        newEvent(id++,title:"Exxon Valdes runs aground in Alaska", year:1989, type:periodType.ten)
+        newEvent(id++,title:"Berlin Wall comes down", year:1989, type:periodType.ten)
+        newEvent(id++,title:"Tim Berners-Lee develops the World Wide Web", year:1989, type:periodType.ten)
+        newEvent(id++,title:"Gulf War erupts as NATO defends Kuwait", year:1990, type:periodType.ten)
+        newEvent(id++,title:"Hubble space telescope launched", year:1990, type:periodType.ten)
+        newEvent(id++,title:"End of the Soviet Union", year:1991, type:periodType.ten)
+        newEvent(id++,title:"Roslin Institute in Scotland clones a sheep", year:1997, type:periodType.ten)
+        newEvent(id++,title:"The Bosnian War", from:1992, to:1995, type:periodType.ten)
+        newEvent(id++,title:"Soviet–Afghan War", from:1979, to:1989, type:periodType.fifty)
+        newEvent(id++,title:"The Korean War", from:1950, to:1953, type:periodType.ten)
+        //_?
+        newEvent(id++,title:"Vietnam War", from:1954,to:1975, type:periodType.ten)
+        newEvent(id++,title:"World population reaches the 6 billion mar", year:1999, type:periodType.ten)
+        
+        newEvent(id++,title:"Vladimir Putin elected President of Russia", year:2000, type:periodType.ten)
+        newEvent(id++,title:"George W Bush defeats Al Gore to become US President", year:2000, type:periodType.ten)
+        */
+        
+        /*
+        newEvent(id++,title:"Wikipedia started", year:2001, type:periodType.ten)
+        newEvent(id++,title:"September 11", year:2001, type:periodType.ten)
+        newEvent(id++,title:"Euro banknotes and coins released", year:2002, type:periodType.ten)
 
+        newEvent(id++,title:"Space Shuttle Columbia disintegrates over Texas", year:2003, type:periodType.ten)
+        newEvent(id++,title:"Facebook founded", year:2004, type:periodType.ten)
+        newEvent(id++,title:"YouTube launched", year:2005, type:periodType.ten)
+        newEvent(id++,title:"Apple launches the iPhone", year:2007, type:periodType.ten)
+        newEvent(id++,title:"Dmitri Medvedev elected President of Russia", year:2008, type:periodType.ten)
+        newEvent(id++,title:"", year:00, type:periodType.ten)
+    */
+        
         /*
         newEvent(id++,title:"war (1918-1939)", from: 1918, to:1939, type:periodType.fifty,level: 1)
         newEvent(id++,title:"Test between (1918-1960)", from: 1918, to:1960, type:periodType.fifty,text:"First record of an automatic instrument, an organ-building treatise called Banu Musa. First record of an automatic instrument, an organ-building treatise called Banu Musa.",level: 2)
         newEvent(id++,title:"Someone is born (1751)", year: 1751, type:periodType.fifty,level:2)
         newEvent(id++,title:"old war (1918-1939)", from: -540, to:-300, type:periodType.fivehundred, text:"The best approach to add padding to a UILabel is to subclass UILabel and add an edgeInsets property. You then set the desired insets and the label will be drawn accordingly.",level: 3)
-        */
+*/
+
+        println("populated new data")
 
         save()
         
@@ -466,13 +556,13 @@ class DataHandler
         completePopulating?()
     }
     
-    func newEvent(idForUpdate:Int,title:String, from: Int, to:Int, type:periodType, text:String = "", level:Int = 0, tags:String = "")
+    func newEvent(idForUpdate:Int,title:String, from: Int, to:Int, type:periodType, text:String = "", level:Int = 4, tags:String = "")
     {
         let q1 = HistoricEvent.createInManagedObjectContext(self.managedObjectContext!,idForUpdate:idForUpdate,  title:title, from: from, to:to, text:text, level:level)
         hookQuestionToPeriods(q1,type: type)
     }
     
-    func newEvent(idForUpdate:Int,title:String, year: Int, type:periodType, text:String = "", level:Int = 0, tags:String = "")
+    func newEvent(idForUpdate:Int,title:String, year: Int, type:periodType, text:String = "", level:Int = 4, tags:String = "")
     {
         let q1 = HistoricEvent.createInManagedObjectContext(self.managedObjectContext!,idForUpdate:idForUpdate,  title:title, year:year, text:text,level:level)
         hookQuestionToPeriods(q1,type: type)
@@ -592,7 +682,11 @@ class DataHandler
     func save() {
         var error : NSError?
         if(managedObjectContext!.save(&error) ) {
-            println(error?.localizedDescription)
+            if let err = error
+            {
+                println(err.localizedDescription)
+
+            }
         }
     }
     
@@ -605,9 +699,10 @@ class DataHandler
         //let sortDescriptor = NSSortDescriptor(key: "number", ascending: true)
         //fetchRequest.sortDescriptors = [sortDescriptor]
         
-        let predicate = NSPredicate(format: "periods.@count > 0 AND level >= \(fromLevel) AND level <= \(toLevel)") //!=NULL
+        
         //let predicate = NSPredicate(format: "titlenumber contains %@", "Worst")
         // Set the predicate on the fetch request
+        let predicate = NSPredicate(format: "periods.@count > 0 AND level >= \(fromLevel) AND level <= \(toLevel)")
         fetchEvents.predicate = predicate
         
         if let fetchResults = managedObjectContext!.executeFetchRequest(fetchEvents, error: nil) as? [HistoricEvent] {
