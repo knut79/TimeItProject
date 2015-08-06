@@ -28,7 +28,7 @@ class TimelineViewController: UIViewController,UIScrollViewDelegate {
         super.viewDidLoad()
         
         datactrl = DataHandler()
-        datactrl.fetchData(minLevel,toLevel: maxLevel)
+        datactrl.fetchData(fromLevel:minLevel,toLevel: maxLevel)
         
     }
     

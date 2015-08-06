@@ -11,15 +11,15 @@ import CoreData
 
 class HistoricEvent: NSManagedObject {
     
-    @NSManaged var toYear: Int16
-    @NSManaged var fromYear: Int16
+    @NSManaged var toYear: Int32
+    @NSManaged var fromYear: Int32
     @NSManaged var type: Int16
     @NSManaged var periods: NSSet
 
     @NSManaged var text: String
     @NSManaged var title: String
     
-    @NSManaged var okScore:Int16
+    @NSManaged var okScore:Int32
     @NSManaged var goodScore:Int16
     @NSManaged var loveScore:Int16
     
@@ -29,55 +29,78 @@ class HistoricEvent: NSManagedObject {
     @NSManaged var idForUpdate:Int16
 
     //added on picture with coordinates on parent filepoint
-    class func createInManagedObjectContext(moc: NSManagedObjectContext, idForUpdate:Int, title:String, from: Int, to:Int, text:String, level:Int) -> HistoricEvent{
+    class func createInManagedObjectContext(moc: NSManagedObjectContext, idForUpdate:Int, title:String, from: Int32, to:Int32, text:String, level:Int, tags:String) -> HistoricEvent{
         let newitem = NSEntityDescription.insertNewObjectForEntityForName("HistoricEvent", inManagedObjectContext: moc) as! HistoricEvent
-        newitem.fromYear = Int16(from)
-        newitem.toYear = Int16(to)
+        newitem.fromYear = Int32(from)
+        newitem.toYear = Int32(to)
         newitem.type = Int16(eventType.periode.rawValue)
         newitem.text = text
         newitem.title = title
         newitem.periods = NSMutableSet()
-        newitem.tags = ""
+        newitem.tags = tags
         newitem.level = Int16(level)
         newitem.idForUpdate = Int16(idForUpdate)
+        newitem.okScore = 0
+        newitem.goodScore = 0
+        newitem.loveScore = 0
         return newitem
     }
     
-    class func createInManagedObjectContext(moc: NSManagedObjectContext, idForUpdate:Int, title:String, year: Int, text:String, level:Int) -> HistoricEvent{
+    class func createInManagedObjectContext(moc: NSManagedObjectContext, idForUpdate:Int, title:String, year: Int32, text:String, level:Int, tags:String) -> HistoricEvent{
         let newitem = NSEntityDescription.insertNewObjectForEntityForName("HistoricEvent", inManagedObjectContext: moc) as! HistoricEvent
-        newitem.fromYear = Int16(year)
-        newitem.toYear = Int16(year)
+        newitem.fromYear = Int32(year)
+        newitem.toYear = Int32(year)
         newitem.type = Int16(eventType.singleYear.rawValue)
         newitem.text = text
         newitem.title = title
         newitem.periods = NSMutableSet()
-        newitem.tags = ""
+        newitem.tags = tags
         newitem.level = Int16(level)
         newitem.idForUpdate = Int16(idForUpdate)
+        newitem.okScore = 0
+        newitem.goodScore = 0
+        newitem.loveScore = 0
         return newitem
     }
+    
     
     var formattedToYear:String
     {
         get{
-            return self.toYear < 0 ? "\(self.toYear * -1)BC" : "\(self.toYear)"
+            if self.toYear < -1000
+            {
+                let value = (self.toYear / aMillion) * -1
+                return "\(value) m.y.a"
+            }
+            else
+            {
+                return self.toYear < 0 ? "\(self.toYear * -1)BC" : "\(self.toYear)"
+            }
         }
     }
     
     var formattedFromYear:String
         {
         get{
-            return self.fromYear < 0 ? "\(self.fromYear * -1)BC" : "\(self.fromYear)"
+            if self.fromYear < -1000
+            {
+                let value = (self.fromYear / aMillion) * -1
+                return "\(value) m.y.a"
+            }
+            else
+            {
+                return self.fromYear < 0 ? "\(self.fromYear * -1)BC" : "\(self.fromYear)"
+            }
         }
     }
     
     var formattedTime:String
         {
         get{
-            let unaryFromYear = self.fromYear * -1
-            let unaryToYear = self.toYear * -1
-            let fyear = self.fromYear < 0 ? "\(unaryFromYear)BC" : "\(self.fromYear)"
-            let tyear = self.toYear < 0 ? "\(unaryToYear)BC" : "\(self.toYear)"
+            //let unaryFromYear = self.fromYear * -1
+            //let unaryToYear = self.toYear * -1
+            let fyear = self.formattedFromYear
+            let tyear = self.formattedToYear
             return type == Int16(eventType.singleYear.rawValue) ? "\(fyear)" : "\(fyear) - \(tyear)"
         }
     }

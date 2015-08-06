@@ -36,6 +36,7 @@ class DataHandler
     {
 
         
+        
         let t1 = PeriodData(from: 1990, to: 9999)
         let t2 = PeriodData(from: 1980, to: 1990)
         let t3 = PeriodData(from: 1970, to: 1980)
@@ -107,9 +108,11 @@ class DataHandler
         let fh4 = PeriodData(from: 0, to: 500,periods:[h16,h17,h18,h19,h20],timelineItem:true)
         let fh5 = PeriodData(from: -500, to: 0)
         let fh6 = PeriodData(from: -1000, to: -500)
+        //let fh7 = PeriodData(from: minWayBack, to: maxWayBack)
         
         let mil1 = PeriodData(from: 1000, to: 9999,periods:[fh2,fh1])
         let mil2 = PeriodData(from: 0, to: 1000,periods:[fh3,fh4])
+        //let mil3 = PeriodData(from: minWayBack, to: 0,periods:[fh5,fh6,fh7],timelineItem:true)
         let mil3 = PeriodData(from: -1000, to: 0,periods:[fh5,fh6],timelineItem:true)
         
         var dataToPopulate = [mil3,mil2,mil1]
@@ -303,6 +306,9 @@ class DataHandler
         newEvent(id++,title:"The United Colonies changes name to The United States", year:1774, type:periodType.fifty)
         newEvent(id++,title:"Georges Louis Lesage patents the electric telegraph", year:1774, type:periodType.fifty)
         newEvent(id++,title:"Alexander Cummings invents the flush toilet", year:1775, type:periodType.fifty)
+        
+        
+        
         newEvent(id++,title:"Declaration of Independence by American colonies", year:1776, type:periodType.fifty)
         newEvent(id++,title:"Franz Mesmer uses hypnotism", year:1778, type:periodType.fifty, text:"It’s from his name we get the word mesmerized")
         newEvent(id++,title:"Elias Boudinot elected President of the US", year:1783, type:periodType.fifty)
@@ -534,8 +540,9 @@ class DataHandler
         newEvent(id++,title:"Vladimir Putin elected President of Russia", year:2000, type:periodType.ten)
         newEvent(id++,title:"George W Bush defeats Al Gore to become US President", year:2000, type:periodType.ten)
         
+        */
         
-        
+        /*
         newEvent(id++,title:"Wikipedia started", year:2001, type:periodType.ten)
         newEvent(id++,title:"September 11", year:2001, type:periodType.ten)
         newEvent(id++,title:"Euro banknotes and coins released", year:2002, type:periodType.ten)
@@ -545,21 +552,125 @@ class DataHandler
         newEvent(id++,title:"YouTube launched", year:2005, type:periodType.ten)
         newEvent(id++,title:"Apple launches the iPhone", year:2007, type:periodType.ten)
         newEvent(id++,title:"Dmitri Medvedev elected President of Russia", year:2008, type:periodType.ten)
-        newEvent(id++,title:"", year:00, type:periodType.ten)
-*/
+        newEvent(id++,title:"Obama becomes first black US President", year:2009, type:periodType.ten)
+        newEvent(id++,title:"Apple launches the iPad", year:2010, type:periodType.ten)
+        newEvent(id++,title:"Pope John Paul II dies", year:2005, type:periodType.ten)
+        newEvent(id++,title:"Arnold Schwarzenegger voted Governor of California", year:2003, type:periodType.ten)
+        newEvent(id++,title:"Concorde makes its last commercial flight", year:2003, type:periodType.ten)
+        newEvent(id++,title:"Battle of Kadesh", year:-1274, type:periodType.ten)
+
+
+        newEvent(id++,title:"Punic Wars between Rome and Carthage ", from:00 , to:00, type:periodType.ten)
+        newEvent(id++,title:"Julius Caesar's Gallic Wars", from:00 , to:00, type:periodType.ten)
+        newEvent(id++,title:"Vandal War", from:00 , to:00, type:periodType.ten)
+        newEvent(id++,title:"Saxon Wars", from:00 , to:00, type:periodType.ten)
+        newEvent(id++,title:"American Revolutionary War", from:1775 , to:1783, type:periodType.ten)
+        newEvent(id++,title:"Napoleonic Wars", from:1803 , to:1815, type:periodType.ten)
+        newEvent(id++,title:"The French Revolution ", from:1789 , to:1799, type:periodType.ten)
+        newEvent(id++,title:"American Civil War ", from:1861 , to:1865, type:periodType.ten)
+        newEvent(id++,title:"Boxer Rebellion", from:1899 , to:00, type:periodType.ten)
+        newEvent(id++,title:"", from:00 , to:00, type:periodType.ten)
+        */
         
+        /*
+        newEvent(id++,title:"Great Depression ", from:1929 , to:1939, type:periodType.ten)
+        newEvent(id++,title:"The Romanesque period", from:1000 , to:1199, type:periodType.fivehundred)
+        newEvent(id++,title:"The Gothic period", from:1150 , to:1450, type:periodType.fivehundred)
+        newEvent(id++,title:"The Humanism cultural period", from:1500 , to:1599, type:periodType.fivehundred)
+        newEvent(id++,title:"The European Renaissance", from:1300 , to:1699, type:periodType.fivehundred)
+        newEvent(id++,title:"Age of Enlightenment", from:1688, to:1789, type:periodType.ten)
+        newEvent(id++,title:"The period of Romanticism", from:1770, to:1830, type:periodType.ten)
+        newEvent(id++,title:"The period of Realism", from:1830, to:1905, type:periodType.ten)
+        newEvent(id++,title:"Art Nouveau ", from:1880, to:1905, type:periodType.ten)
+        newEvent(id++,title:"Period of Modernism", from:1880, to:1965, type:periodType.ten)
+        newEvent(id++,title:"Start of the Baroque", year:1500, type:periodType.ten)
+        
+        
+        
+        
+        
+        
+        newEvent(id++,title:"Napoleonic Wars", from:1803, to: 1815, type:periodType.ten)
+        newEvent(id++,title:"Russo-Persian War", from:1804 , to:1813, type:periodType.ten)
+        newEvent(id++,title:"Rum Rebellion", from:1808 , to:1810, type:periodType.ten)
+        newEvent(id++,title:"Spanish American wars of independence", from:1808, to: 1833, type:periodType.ten)
+        newEvent(id++,title:"Mexican War of Independence",from:1810 , to:1821 , type:periodType.ten)
+        newEvent(id++,title:"War of 1812",from:1812 , to:1815 , type:periodType.ten)
+        newEvent(id++,title:"Creek War", from:1813, to: 1814, type:periodType.ten)
+        newEvent(id++,title:"Seminole Wars", from:1817 , to:1858, type:periodType.ten)
+        newEvent(id++,title:"Zulu Wars of Conquest", from:1818, to: 1828, type:periodType.ten)
+        newEvent(id++,title:"Texasâ€“Indian wars", from:1820, to: 1875, type:periodType.ten)
+        newEvent(id++,title:"Greek War of Independence",from:1821, to: 1832 , type:periodType.ten)
+        newEvent(id++,title:"Comancheâ€“Mexico War",from:1821 , to:1848 , type:periodType.ten)
+        newEvent(id++,title:"Java War", from:1825 , to:1830, type:periodType.ten)
+        newEvent(id++,title:"Winnebago War", from:1827 , to:1827, type:periodType.ten)
+        newEvent(id++,title:"Black Hawk War", from:1832 , to:1832, type:periodType.ten)
+        newEvent(id++,title:"Texas Revolution", from:1835 , to:1836, type:periodType.ten)
+        newEvent(id++,title:"First Opium War", from:1839 , to:1842, type:periodType.ten)
+        newEvent(id++,title:"Navajo Wars",from:1846 , to:1864 , type:periodType.ten)
+        newEvent(id++,title:"Mexican-American War", from:1846, to: 1848, type:periodType.ten)
+        newEvent(id++,title:"Apache Wars", from:1849 , to:1924, type:periodType.ten)
+        newEvent(id++,title:"California Indian Wars",from:1850, to: 1865 , type:periodType.ten)
+        newEvent(id++,title:"Crimean War", from:1853 , to:1856, type:periodType.ten)
+        newEvent(id++,title:"American Civil War",from: 1861, to: 1865, type:periodType.ten)
+        newEvent(id++,title:"Snake War", from:1864 , to:1868, type:periodType.ten)
+        newEvent(id++,title:"Red Cloud's War",from:1866 , to:1868 , type:periodType.ten)
+        newEvent(id++,title:"Comanche Campaign",from:1867 , to:1875 , type:periodType.ten)
+        newEvent(id++,title:"Great Sioux War (Black Hills War)",from:1876, to: 1877 , type:periodType.ten)
+        newEvent(id++,title:"Nez Perce War", from:1877 , to:1877, type:periodType.ten)
+        newEvent(id++,title:"Cheyenne War",from:1878, to: 1879 , type:periodType.ten)
+        newEvent(id++,title:"Sheepeater Indian War",from:1879, to: 1879 , type:periodType.ten)
+        newEvent(id++,title:"Victorio's War",from:1879 , to:1880  , type:periodType.ten)
+        newEvent(id++,title:"Boxer Rebellion",from:1899 , to:1901, type:periodType.ten)
+        newEvent(id++,title:"Second Boer War", from:1899 , to:1902, type:periodType.ten)
+
+        newEvent(id++,title:"Russian Revolution", year:1905, type:periodType.ten)
+        newEvent(id++,title:"Mexican Revolution", from:1910 , to:1921, type:periodType.ten)
+        newEvent(id++,title:"World War I", from:1914 , to:1918, type:periodType.ten)
+        newEvent(id++,title:"Russian Civil War",from:1917 , to:1923 , type:periodType.ten)
+        newEvent(id++,title:"Turkish War of Independence",from:1919 , to:1923 , type:periodType.ten)
+        newEvent(id++,title:"Irish War of Independence", from:1919 , to:1921, type:periodType.ten)
+        newEvent(id++,title:"Chinese Civil War", from:1927 , to:1949, type:periodType.ten)
+        newEvent(id++,title:"Spanish Civil War", from:1936 , to:1939, type:periodType.ten)
+        newEvent(id++,title:"World War II", from:1939 , to:1945, type:periodType.ten)
+        newEvent(id++,title:"Greek Civil War", from:1946 , to:1949, type:periodType.ten)
+        newEvent(id++,title:"Arabâ€“Israeli War", from:1948 , to:1949, type:periodType.ten)
+        newEvent(id++,title:"Korean War", from:1950 , to:1953, type:periodType.ten)
+        newEvent(id++,title:"Mau Mau Uprising", from:1952 , to:1960, type:periodType.ten)
+        newEvent(id++,title:"Cuban Revolution",from:1953 , to:1959 , type:periodType.ten)
+        newEvent(id++,title:"Algerian War",from:1954 , to:1962 , type:periodType.ten)
+        newEvent(id++,title:"Vietnam War", from:1955, to: 1975, type:periodType.ten)
+        newEvent(id++,title:"Bay of Pigs Invasion", from:1961, to: 1961, type:periodType.ten)
+        newEvent(id++,title:"Soviet war in Afghanistan",from:1979 , to:1989 , type:periodType.ten)
+        newEvent(id++,title:"Iranâ€“Iraq War",from:1980 , to:1988 , type:periodType.ten)
+        newEvent(id++,title:"Falklands War", from:1982, to: 1982, type:periodType.ten)
+        newEvent(id++,title:"Gulf War", from:1990 , to:1991, type:periodType.ten)
+        newEvent(id++,title:"Croatian War of Independence", from:1991, to: 1995, type:periodType.ten)
+        newEvent(id++,title:"Bosnian War", from:1992 , to:1995, type:periodType.ten)
+        newEvent(id++,title:"Kosovo War", from:1998 , to:1999, type:periodType.ten)
+        */
+        
+        //TEST
         /*
         newEvent(id++,title:"war (1918-1939)", from: 1918, to:1939, type:periodType.fifty,level: 1)
         newEvent(id++,title:"Test between (1918-1960)", from: 1918, to:1960, type:periodType.fifty,text:"First record of an automatic instrument, an organ-building treatise called Banu Musa. First record of an automatic instrument, an organ-building treatise called Banu Musa.",level: 2)
         newEvent(id++,title:"Someone is born (1751)", year: 1751, type:periodType.fifty,level:2)
         newEvent(id++,title:"old war (1918-1939)", from: -540, to:-300, type:periodType.fivehundred, text:"The best approach to add padding to a UILabel is to subclass UILabel and add an edgeInsets property. You then set the desired insets and the label will be drawn accordingly.",level: 3)
-*/
+    */
 
+/*
         newEvent(id++,title:"World population reaches the 6 billion mark", year:1999, type:periodType.ten)
         newEvent(id++,title:"Dmitri Medvedev elected President of Russia", year:2008, type:periodType.ten)
         newEvent(id++,title:"Confucius born in China", year:-551, type:periodType.fivehundred)
+*/
+        newEvent(id++,title: "Triassic period", from:Int32(-248 * aMillion), to: Int32(-205 * aMillion), type:periodType.fivehundred,level:2)
+        newEvent(id++,title: "King David conquers Jerusalem", year:-990, type:periodType.fivehundred,level:2,tags:"#war")
+        newEvent(id++,title:"First Olympiad in Greece", year:-776, type:periodType.fivehundred,level:2,tags:"#war#curiosa")
+        
         println("populated new data")
 
+        
+        
         save()
         
         dataPopulatedID = 1
@@ -568,22 +679,22 @@ class DataHandler
         completePopulating?()
     }
     
-    func newEvent(idForUpdate:Int,title:String, from: Int, to:Int, type:periodType, text:String = "", level:Int = 4, tags:String = "")
+    func newEvent(idForUpdate:Int,title:String, from: Int32, to:Int32, type:periodType, text:String = "", level:Int = 4, tags:String = "")
     {
-        let q1 = HistoricEvent.createInManagedObjectContext(self.managedObjectContext!,idForUpdate:idForUpdate,  title:title, from: from, to:to, text:text, level:level)
+        let q1 = HistoricEvent.createInManagedObjectContext(self.managedObjectContext!,idForUpdate:idForUpdate,  title:title, from: from, to:to, text:text, level:level,tags:tags)
         hookQuestionToPeriods(q1,type: type)
     }
     
-    func newEvent(idForUpdate:Int,title:String, year: Int, type:periodType, text:String = "", level:Int = 4, tags:String = "")
+    func newEvent(idForUpdate:Int,title:String, year: Int32, type:periodType, text:String = "", level:Int = 4, tags:String = "")
     {
-        let q1 = HistoricEvent.createInManagedObjectContext(self.managedObjectContext!,idForUpdate:idForUpdate,  title:title, year:year, text:text,level:level)
+        let q1 = HistoricEvent.createInManagedObjectContext(self.managedObjectContext!,idForUpdate:idForUpdate,  title:title, year:year, text:text,level:level, tags:tags)
         hookQuestionToPeriods(q1,type: type)
     }
     
     func updateOkScore(historicEvent:HistoricEvent, deltaScore:Int)
     {
         //okScoreID = Int(okScoreID as! NSNumber) + deltaScore
-        historicEvent.okScore = historicEvent.okScore + Int16(deltaScore)
+        historicEvent.okScore = historicEvent.okScore + Int32(deltaScore)
         if historicEvent.okScore < 0
         {
             historicEvent.okScore = 0
@@ -640,7 +751,8 @@ class DataHandler
     {
         for periodData in dataToPopulate
         {
-            if periodData.from == 1000 && periodData.to == 1500
+            //test
+            if periodData.from == -1000 && periodData.to == 0
             {
                 let h = 0
             }
@@ -672,19 +784,20 @@ class DataHandler
     
     func hookQuestionToPeriods(question:HistoricEvent, type: periodType)
     {
-        println("try hookup event \(question.title) on periodType \(type.description)")
+        println("try hookup event \(question.title) \(question.fromYear) - \(question.toYear) on periodType \(type.description)")
         var found = false
         for period in periodsItems
         {
             if(period.type == Int16(type.rawValue))
             {
-                if((question.fromYear >= period.fromYear  && question.fromYear <= period.toYear)
-                    || (question.toYear <= period.toYear  && question.toYear >= period.fromYear))
+                //println("try period \(period.fromYear) on periodType \(period.toYear)")
+                if((question.fromYear >= period.fromYear  && question.fromYear <= Int32(period.toYear))
+                    || (question.toYear <= period.toYear  && Int32(question.toYear) >= period.fromYear))
                 {
                     found = true
                     question.addPeriod(period)
                     //period.addEvent(question)
-                    println("hooked up event \(question.title) on period \(period.fromYear) - \(period.toYear)")
+                    //println("hooked up event \(question.title) on period \(period.fromYear) - \(period.toYear)")
                 }
             }
         }
@@ -707,7 +820,7 @@ class DataHandler
         }
     }
     
-    func fetchData(fromLevel:Int,toLevel:Int) {
+    func fetchData(tags:String = "",fromLevel:Int,toLevel:Int) {
 
         // Create a new fetch request using the LogItem entity
         // eqvivalent to select * from Relation
@@ -717,9 +830,23 @@ class DataHandler
         //fetchRequest.sortDescriptors = [sortDescriptor]
         
         
+        let stringArray = tags.componentsSeparatedByString("#")
+        var predicateTags:String = ""
+        for item in stringArray
+        {
+            if item != ""
+            {
+                predicateTags = "\(predicateTags)|\(item)"
+            }
+        }
+        predicateTags.removeAtIndex(predicateTags.startIndex)
+        
         //let predicate = NSPredicate(format: "titlenumber contains %@", "Worst")
         // Set the predicate on the fetch request
-        let predicate = NSPredicate(format: "periods.@count > 0 AND level >= \(fromLevel) AND level <= \(toLevel)")
+        //let predicate = NSPredicate(format: "periods.@count > 0 AND level >= \(fromLevel) AND level <= \(toLevel)")
+        //let predicate = NSPredicate(format: "tags  MATCHES '.*(#war|#curiosa).*'")
+        let predicate = NSPredicate(format: "periods.@count > 0 AND tags  MATCHES '.*(\(predicateTags)).*'")
+        //let predicate = tags == "" ? NSPredicate(format: "periods.@count > 0 AND level >= \(fromLevel) AND level <= \(toLevel)") : NSPredicate(format: "ANY tags == \(tags)")
         fetchEvents.predicate = predicate
         
         if let fetchResults = managedObjectContext!.executeFetchRequest(fetchEvents, error: nil) as? [HistoricEvent] {

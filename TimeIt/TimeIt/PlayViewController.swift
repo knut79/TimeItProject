@@ -43,6 +43,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     
     var levelHigh:Int = 1
     var levelLow:Int = 1
+    var tags:String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,7 +57,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         
         // Do any additional setup after loading the view, typically from a nib.
         datactrl = DataHandler()
-        datactrl.fetchData(levelLow,toLevel: levelHigh)
+        datactrl.fetchData(tags: tags,fromLevel:levelLow,toLevel: levelHigh)
         datactrl.shuffleEvents()
         
         gameStats = GameStats(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width * 0.75, UIScreen.mainScreen().bounds.size.height * 0.08),okScore: 0,goodScore: 0,loveScore: 0)
@@ -354,29 +355,44 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                     
                     }, completion: { (value: Bool) in
                             self.questionLabel.center = self.originalCenterQueston
+                            self.index++
+                            self.loadQuestion()
                 })
-                
         })
-        index++
+    }
+    
+    func loadQuestion()
+    {
+        let readyToLayout: ([Period]) -> () = { (periods) -> () in
+            
+            if( periods.count > 0)
+            {
+                var xMaxBound:CGFloat = UIScreen.mainScreen().bounds.size.width
+                var xMinBound:CGFloat = 0
+                self.cleanUpButtons()
+                self.layoutButtons(nil,periods: periods, xMinBoundary: xMinBound, xMaxBoundary: xMaxBound,yBoundary: UIScreen.mainScreen().bounds.size.height / 2, level: 1)
+            }
+        }
+        var periodItemsOnTypeAndLevelDepth:[Period] = []
+
         
-        var tempPeriodItemsOnType:[Period] = []
-
-
         if rightPeriodStrikes >= 3
         {
             var periodsOneLevelFromEvent = ((currentQuestion.periods.allObjects as! [Period])[0] as Period).period?.sortedPeriods
             if periodsOneLevelFromEvent == nil
             {
                 println("Could not get periods one level up for question \(currentQuestion.title)")
-                setNextQuestion()
+                rightPeriodStrikes -= 2
+                self.loadQuestion()
             }
             else
             {
                 //show from 1000 year periods
                 for item in periodsOneLevelFromEvent!
                 {
-                    tempPeriodItemsOnType.append(item as! Period)
+                    periodItemsOnTypeAndLevelDepth.append(item as! Period)
                 }
+                readyToLayout(periodItemsOnTypeAndLevelDepth)
             }
         }
         else if rightPeriodStrikes >= 1
@@ -386,15 +402,16 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             {
                 println("Could not get periods to levels up for question \(currentQuestion.title)")
                 rightPeriodStrikes = 0
-                setNextQuestion()
+                self.loadQuestion()
             }
             else
             {
-            //show from 1000 year periods
+                //show from 1000 year periods
                 for item in periodsToLevelsFromEvent!
                 {
-                    tempPeriodItemsOnType.append(item as! Period)
+                    periodItemsOnTypeAndLevelDepth.append(item as! Period)
                 }
+                readyToLayout(periodItemsOnTypeAndLevelDepth)
             }
         }
         else
@@ -404,19 +421,13 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             {
                 if item.type == Int16(periodType.millenia.rawValue)
                 {
-                    tempPeriodItemsOnType.append(item)
+                    periodItemsOnTypeAndLevelDepth.append(item)
                 }
             }
+            readyToLayout(periodItemsOnTypeAndLevelDepth)
         }
-            
-        if( tempPeriodItemsOnType.count > 0)
-        {
-            var xMaxBound:CGFloat = UIScreen.mainScreen().bounds.size.width
-            var xMinBound:CGFloat = 0
-            cleanUpButtons()
-            layoutButtons(nil,periods: tempPeriodItemsOnType, xMinBoundary: xMinBound, xMaxBoundary: xMaxBound,yBoundary: UIScreen.mainScreen().bounds.size.height / 2, level: 1)
-        }
-        
+       
+
     }
     
     let defaultButtonHeight:CGFloat = 70
@@ -425,7 +436,6 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         var buttonWidth = (xMaxBoundary - xMinBoundary) / CGFloat(periods.count)
         var x:CGFloat = xMinBoundary
         var collectionForRelation:[PeriodButton] = []
-        println(" number of periods \(periods.count)")
         for item in periods
         {
             var periodButton = PeriodButton(frame:CGRectMake(0, 0, buttonWidth,buttonHeight), level:level)
@@ -483,11 +493,13 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             }
             
             sender.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, sender.center.y - 100)
+            //sender.layoutIfNeeded() ?? ()
             var x:CGFloat = 0
             var buttonWidth = UIScreen.mainScreen().bounds.size.width / CGFloat(sender.childButtons.count)
             for item in sender.childButtons
             {
                 item.frame = CGRectMake(0,0, buttonWidth, self.defaultButtonHeight)
+                item.insideLabel.center = item.center
                 item.backgroundColor = UIColor.greenColor()
                 item.center = CGPointMake(x + (item.frame.width/2), UIScreen.mainScreen().bounds.size.height / 2)
                 

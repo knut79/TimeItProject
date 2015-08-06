@@ -141,7 +141,7 @@ class RangeSlider: UIControl {
         return CGFloat(bounds.height)
     }
     
-    func higlightWindow(values:(Int16,Int16))
+    func higlightWindow(values:(Int32,Int32))
     {
         windowLayer.frame = bounds.rectByInsetting(dx: 0.0, dy: bounds.height / 3)
         windowLayer.valueLowerWindow = Double(values.0)

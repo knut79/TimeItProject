@@ -11,8 +11,8 @@ import CoreData
 
 class Period: NSManagedObject {
     
-    @NSManaged var toYear: Int16
-    @NSManaged var fromYear: Int16
+    @NSManaged var toYear: Int32
+    @NSManaged var fromYear: Int32
     @NSManaged var type: Int16
     @NSManaged var periods: NSSet
     @NSManaged var events: NSSet
@@ -20,15 +20,32 @@ class Period: NSManagedObject {
     @NSManaged var timelinePocket:Boolean
     
     //added on picture with coordinates on parent filepoint
-    class func createInManagedObjectContext(moc: NSManagedObjectContext, from: Int, to:Int, timelineItem:Bool) -> Period{
+    class func createInManagedObjectContext(moc: NSManagedObjectContext, from: Int32, to:Int32, timelineItem:Bool) -> Period{
         let newitem = NSEntityDescription.insertNewObjectForEntityForName("Period", inManagedObjectContext: moc) as! Period
-        newitem.fromYear = Int16(from)
-        newitem.toYear = Int16(to)
+        newitem.fromYear = Int32(from)
+        newitem.toYear = Int32(to)
         //HACK
+        /*
+        let toHack = {() -> Int32 in
+            if to < -1000
+            {
+                return -1000
+            }
+            else
+            {
+                return to > 2000 ? 2000 : to
+            }
+            }()
+        */
         let toHack = to > 2000 ? 2000 : to
-        var diff = toHack - from
-        
-        if(diff >= 1000)
+        let fromHack = from < -1000 ? -1000 : from
+        var diff = toHack - fromHack
+        //SUPERHACK
+        if from == minWayBack && to == maxWayBack
+        {
+            newitem.type = Int16(periodType.fivehundred.rawValue)
+        }
+        else if(diff >= 1000)
         {
             newitem.type = Int16(periodType.millenia.rawValue)
         }
@@ -52,6 +69,9 @@ class Period: NSManagedObject {
         {
             newitem.type = Int16(periodType.unvalid.rawValue)
         }
+        
+        
+        
         newitem.timelinePocket = timelineItem ? 1 : 0
         
         newitem.periods = NSMutableSet()
@@ -64,21 +84,39 @@ class Period: NSManagedObject {
     var formattedTime:String
         {
         get{
-            let unaryFromYear = self.fromYear * -1
             
-            let fyear = self.fromYear < 0 ? "\(unaryFromYear)BC" : "\(self.fromYear)"
-            println("test from \(self.fromYear) to \(self.toYear)")
+            
+            //let fyear = self.fromYear < 0 ? "\(unaryFromYear)BC" : "\(self.fromYear)"
             let tyear =  {() -> String in
-                if self.toYear >= 9999
+                if self.toYear > 2000
                 {
                     return "Now"
                 }
+                else if self.toYear < -1000
+                {
+                    let value = (self.toYear / aMillion) * -1
+                    return "\(value) m.y.a"
+                }
                 else
                 {
-                    let unaryToYear = self.toYear * -1
-                    return self.toYear < 0 ? "\(unaryToYear)BC" : "\(self.toYear)"
+                    return self.toYear < 0 ? "\(self.toYear * -1)BC" : "\(self.toYear)"
                 }
             }()
+            let fyear =  {() -> String in
+                if self.fromYear == minWayBack
+                {
+                    return "Way back"
+                }
+                else if self.fromYear < -1000
+                {
+                    let value = (self.fromYear / aMillion) * -1
+                    return "\(value) m.y.a"
+                }
+                else
+                {
+                    return self.fromYear < 0 ? "\(self.fromYear * -1)BC" : "\(self.fromYear)"
+                }
+                }()
             return "\(fyear) - \(tyear)"
         }
     }

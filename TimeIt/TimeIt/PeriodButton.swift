@@ -13,6 +13,7 @@ class PeriodButton:UIButton {
     var period:Period!
     var childButtons:[PeriodButton]!
     var level:Int!
+    var insideLabel:UILabel!
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -21,22 +22,30 @@ class PeriodButton:UIButton {
     init(frame: CGRect, level:Int) {
         super.init(frame: frame)
         
-        self.titleLabel!.numberOfLines = 1
-        self.titleLabel!.adjustsFontSizeToFitWidth = true
-        self.titleLabel?.lineBreakMode = NSLineBreakMode.ByClipping
+        let margin:CGFloat = 5
+        insideLabel = UILabel(frame: CGRectMake(margin, margin, frame.width - (margin * 2), frame.height - (margin * 2)))
+        
+
         
         self.backgroundColor = UIColor(red: 0.5, green: 0.9, blue: 0.5, alpha: 1.0)
         self.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         self.layer.borderColor = UIColor.grayColor().CGColor
         self.layer.borderWidth = 2.0;
         self.level = level
+        
+        insideLabel.numberOfLines = 1
+        insideLabel.adjustsFontSizeToFitWidth = true
+        insideLabel.lineBreakMode = NSLineBreakMode.ByClipping
+        insideLabel.textAlignment = NSTextAlignment.Center
+        insideLabel.backgroundColor = self.backgroundColor?.colorWithAlphaComponent(0)
+        self.addSubview(insideLabel)
     }
    
     func setPeriodAndTitle(periodParam:Period)
     {
         self.period = periodParam
         var title = period.formattedTime //"\(period.fromYear)-\(period.toYear)"
-        self.setTitle(title, forState: UIControlState.Normal)
+        insideLabel.text = title
     }
 
 }

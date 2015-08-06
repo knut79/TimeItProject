@@ -227,6 +227,7 @@ class MainMenuViewController: UIViewController {//, ADBannerViewDelegate {
             var svc = segue!.destinationViewController as! PlayViewController
             svc.levelLow = Int(levelSlider.lowerValue)
             svc.levelHigh = Int(levelSlider.upperValue)
+            svc.tags = "#war#curiosa"
         }
     }
     

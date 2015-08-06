@@ -10,13 +10,13 @@ import Foundation
 
 class PeriodData {
     
-    var from:Int
-    var to:Int
+    var from:Int32
+    var to:Int32
     var periods:[PeriodData]
     var questions:[QuestionData]
     var timeline:Bool
     
-    init(from:Int,to:Int,periods:[PeriodData],questions:[QuestionData], timelineItem:Bool = false)
+    init(from:Int32,to:Int32,periods:[PeriodData],questions:[QuestionData], timelineItem:Bool = false)
     {
         self.from = from
         self.to = to
@@ -25,7 +25,7 @@ class PeriodData {
         timeline = timelineItem
     }
     
-    init(from:Int,to:Int,periods:[PeriodData],timelineItem:Bool = false)
+    init(from:Int32,to:Int32,periods:[PeriodData],timelineItem:Bool = false)
     {
         self.from = from
         self.to = to
@@ -43,7 +43,7 @@ class PeriodData {
         self.questions = questions
     }
     */
-    init(from:Int,to:Int, timelineItem:Bool = false)
+    init(from:Int32,to:Int32, timelineItem:Bool = false)
     {
         self.from = from
         self.to = to
