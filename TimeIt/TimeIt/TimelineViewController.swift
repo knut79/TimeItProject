@@ -125,8 +125,7 @@ class TimelineViewController: UIViewController,UIScrollViewDelegate {
         
 
         
-        let smallButtonLength = UIScreen.mainScreen().bounds.size.height * 0.1
-        backButton.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - smallButtonLength, 0, smallButtonLength, smallButtonLength)
+        backButton.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - smallButtonSide, 0, smallButtonSide, smallButtonSide)
         backButton.backgroundColor = UIColor.whiteColor()
         backButton.layer.borderColor = UIColor.grayColor().CGColor
         backButton.layer.borderWidth = 1
@@ -136,7 +135,7 @@ class TimelineViewController: UIViewController,UIScrollViewDelegate {
         
         
         
-        zoomOutButton.frame = CGRectMake(backButton.frame.minX, backButton.frame.maxY + (margin / 2), smallButtonLength, smallButtonLength)
+        zoomOutButton.frame = CGRectMake(backButton.frame.minX, backButton.frame.maxY + (margin / 2), smallButtonSide, smallButtonSide)
 
         zoomOutButton.backgroundColor = UIColor.whiteColor()
         zoomOutButton.layer.borderColor = UIColor.grayColor().CGColor

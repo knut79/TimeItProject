@@ -95,7 +95,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         answerAnimationYellLabel.adjustsFontSizeToFitWidth = true
         answerAnimationYellLabel.alpha = 0
 
-        backButton.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width * 0.9, 0, UIScreen.mainScreen().bounds.size.width * 0.1, UIScreen.mainScreen().bounds.size.width * 0.1)
+        backButton.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - smallButtonSide, 0, smallButtonSide, smallButtonSide)
         backButton.backgroundColor = UIColor.whiteColor()
         backButton.layer.borderColor = UIColor.grayColor().CGColor
         backButton.layer.borderWidth = 1
@@ -425,6 +425,10 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             readyToLayout(periodItemsOnTypeAndLevelDepth)
         }
        
+        if let adview = bannerView
+        {
+            view.bringSubviewToFront(adview)
+        }
 
     }
     
@@ -442,10 +446,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             periodButton.setPeriodAndTitle(item as Period)
             buttonCollection.append(periodButton)
             collectionForRelation.append(periodButton)
-            println(" TEST1.1 \(yBoundary) \((periodButton.frame.height / 2))")
-            println(" TEST1.2 \(periodButton.frame.height)")
             periodButton.center = CGPointMake(x + (periodButton.frame.width/2), yBoundary + (periodButton.frame.height / 2))
-            println(" TEST1.3 \(periodButton.center.y)")
             
             if periodButton.frame.size.width < (UIScreen.mainScreen().bounds.size.width / 4)
             {

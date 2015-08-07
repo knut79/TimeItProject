@@ -21,3 +21,5 @@ let maxLevel:Int = 4
 let minWayBack:Int32 = -570000000
 let maxWayBack:Int32 = -1000000
 let aMillion:Int32 = 1000000
+
+let smallButtonSide:CGFloat = 32
