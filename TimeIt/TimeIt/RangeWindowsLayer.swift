@@ -11,8 +11,8 @@ import QuartzCore
 
 class RangeWindowsLayer: CALayer {
     weak var rangeSlider: RangeSlider?
-    var valueLowerWindow:Double = 0
-    var valueUpperWindow:Double = 0
+    var valueLowerWindow:Double?
+    var valueUpperWindow:Double?
     
     override func drawInContext(ctx: CGContext!) {
         if let slider = rangeSlider {
@@ -28,17 +28,17 @@ class RangeWindowsLayer: CALayer {
             
             //println("\(valueUpperPosition) ---test \(testValuePosition)")
             
-            if(valueLowerWindow > 0)
+            if(valueLowerWindow != nil)
             {
                 
-                let valuePosition = CGFloat(slider.positionForValue(valueLowerWindow))
+                let valuePosition = CGFloat(slider.positionForValue(valueLowerWindow!))
                 renderPosition(ctx,valuePosition: valuePosition)
 
             }
             
-            if(valueUpperWindow > 0)
+            if(valueUpperWindow != nil)
             {
-                let valuePosition = CGFloat(slider.positionForValue(valueUpperWindow))
+                let valuePosition = CGFloat(slider.positionForValue(valueUpperWindow!))
                 renderPosition(ctx,valuePosition: valuePosition)
             }
             

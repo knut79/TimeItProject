@@ -259,6 +259,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         rangeMinLabel.textColor = UIColor.blackColor()
         rangeButton.layer.borderColor = UIColor.redColor().CGColor
         rangeButton.setTitle(rangeBaileOutText, forState: UIControlState.Normal)
+        rangeSlider.setNeedsDisplay()
     }
     
     var currentQuestion:HistoricEvent!
@@ -323,7 +324,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         self.view.addSubview(rangeSlider)
         
         setAlphaOnRangeItems(0)
-
+        rangeSlider.setNeedsDisplay()
 
     }
     
@@ -333,8 +334,6 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         rangeMaxLabel.alpha = value
         rangeButton.alpha = value
         rangeSlider.alpha = value
-        
-        rangeSlider.setNeedsDisplay()
     }
     
     
@@ -705,6 +704,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         rangeSlider.maximumValue = datactrl.getMaxTimeLimit(Double(periodButton.period.toYear))
         rangeSlider.minimumValue = Double(periodButton.period.fromYear)
 
+        println("rangeslider max \(rangeSlider.maximumValue) min \(rangeSlider.minimumValue)")
         if currentQuestion.type == Int16(eventType.singleYear.rawValue)
         {
             rangeSlider.typeValue = sliderType.single
@@ -732,6 +732,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                 rangeSlider.typeValue = sliderType.bothLowerAndUpper
             }
         }
+        self.rangeSlider.setNeedsDisplay()
 
         UIView.animateWithDuration(1.0, animations: { () -> Void in
             
@@ -743,6 +744,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             self.setAlphaOnRangeItems(1)
             
             }, completion: { (value: Bool) in
+                
                 self.cleanUpButtons()
         })
     }

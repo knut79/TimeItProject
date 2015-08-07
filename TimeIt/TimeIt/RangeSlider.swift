@@ -141,18 +141,18 @@ class RangeSlider: UIControl {
         return CGFloat(bounds.height)
     }
     
-    func higlightWindow(values:(Int32,Int32))
+    func higlightWindow(values:(Int32?,Int32?))
     {
         windowLayer.frame = bounds.rectByInsetting(dx: 0.0, dy: bounds.height / 3)
-        windowLayer.valueLowerWindow = Double(values.0)
-        windowLayer.valueUpperWindow = Double(values.1)
+        windowLayer.valueLowerWindow = values.0 == nil ? nil : Double(values.0!)
+        windowLayer.valueUpperWindow = values.1 == nil ? nil : Double(values.1!)
         if typeValue == sliderType.justUpper
         {
-            windowLayer.valueLowerWindow = Double(0)
+            windowLayer.valueLowerWindow = nil
         }
         else if typeValue == sliderType.justLower || typeValue == sliderType.single
         {
-            windowLayer.valueUpperWindow = 0
+            windowLayer.valueUpperWindow = nil
         }
         
         windowLayer.setNeedsDisplay()
