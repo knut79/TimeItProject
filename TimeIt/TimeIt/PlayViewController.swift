@@ -442,7 +442,10 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             periodButton.setPeriodAndTitle(item as Period)
             buttonCollection.append(periodButton)
             collectionForRelation.append(periodButton)
+            println(" TEST1.1 \(yBoundary) \((periodButton.frame.height / 2))")
+            println(" TEST1.2 \(periodButton.frame.height)")
             periodButton.center = CGPointMake(x + (periodButton.frame.width/2), yBoundary + (periodButton.frame.height / 2))
+            println(" TEST1.3 \(periodButton.center.y)")
             
             if periodButton.frame.size.width < (UIScreen.mainScreen().bounds.size.width / 4)
             {
@@ -499,13 +502,19 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             sender.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, sender.center.y - 100)
             //sender.layoutIfNeeded() ?? ()
             var x:CGFloat = 0
-            var buttonWidth = UIScreen.mainScreen().bounds.size.width / CGFloat(sender.childButtons.count)
+            let vertialHorizontalMargin:CGFloat = 2
+            var buttonWidth = (UIScreen.mainScreen().bounds.size.width - (vertialHorizontalMargin * (CGFloat(sender.childButtons.count) - 1))) / CGFloat(sender.childButtons.count)
+            //var buttonWidth = UIScreen.mainScreen().bounds.size.width / CGFloat(sender.childButtons.count)
             for item in sender.childButtons
             {
+                
                 item.frame = CGRectMake(0,0, buttonWidth, self.defaultButtonHeight)
                 item.insideLabel.center = item.center
                 item.backgroundColor = UIColor.greenColor()
-                item.center = CGPointMake(x + (item.frame.width/2), UIScreen.mainScreen().bounds.size.height / 2)
+                println(" TEST2.1 \(self.questionLabel.frame.maxY) \((item.frame.height / 2))")
+                println(" TEST2.2 \(item.frame.height)")
+                item.center = CGPointMake(x + (item.frame.width/2), self.questionLabel.frame.maxY +  (item.frame.height / 2))
+                println(" TEST2.3 \(item.center.y)")
                 
                 //var childX:CGFloat = oldParentX
                 var childButtonWidth = item.frame.size.width / CGFloat(item.childButtons.count)
@@ -517,7 +526,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                     childX += childItem.frame.width
                 }
                 
-                x += item.frame.width
+                x += item.frame.width + vertialHorizontalMargin
             }
             
             }, completion: { (value: Bool) in
@@ -1052,7 +1061,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             tempPeriodItems.append(item as! Period)
         }
         
-        var yBound =  UIScreen.mainScreen().bounds.size.height / 2
+        var yBound =  questionLabel.frame.maxY
         var xMaxBound:CGFloat = UIScreen.mainScreen().bounds.size.width - 0
         var xMinBound:CGFloat = 0
         
