@@ -17,6 +17,8 @@
 		72CD2A7A1B6A3A9000EB539B /* TimelineEventLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD2A791B6A3A9000EB539B /* TimelineEventLabel.swift */; };
 		72CD2A821B6BE89100EB539B /* RangeWindowsLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD2A811B6BE89100EB539B /* RangeWindowsLayer.swift */; };
 		72CD2A841B6D6C3200EB539B /* EventInfoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD2A831B6D6C3200EB539B /* EventInfoLabel.swift */; };
+		72D52EBB1B73B98E0073AD0A /* TagCheckScrollview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D52EBA1B73B98E0073AD0A /* TagCheckScrollview.swift */; };
+		72D52EBD1B73B9B00073AD0A /* TagCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D52EBC1B73B9B00073AD0A /* TagCheckView.swift */; };
 		72ED61101B52762800EFEE45 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72ED610F1B52762800EFEE45 /* AppDelegate.swift */; };
 		72ED61131B52762800EFEE45 /* TimeIt.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 72ED61111B52762800EFEE45 /* TimeIt.xcdatamodeld */; };
 		72ED61151B52762800EFEE45 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72ED61141B52762800EFEE45 /* MainMenuViewController.swift */; };
@@ -57,6 +59,8 @@
 		72CD2A791B6A3A9000EB539B /* TimelineEventLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineEventLabel.swift; sourceTree = "<group>"; };
 		72CD2A811B6BE89100EB539B /* RangeWindowsLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeWindowsLayer.swift; sourceTree = "<group>"; };
 		72CD2A831B6D6C3200EB539B /* EventInfoLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventInfoLabel.swift; sourceTree = "<group>"; };
+		72D52EBA1B73B98E0073AD0A /* TagCheckScrollview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCheckScrollview.swift; sourceTree = "<group>"; };
+		72D52EBC1B73B9B00073AD0A /* TagCheckView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCheckView.swift; sourceTree = "<group>"; };
 		72ED610A1B52762800EFEE45 /* TimeIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		72ED610E1B52762800EFEE45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		72ED610F1B52762800EFEE45 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -124,6 +128,16 @@
 			name = Timeline;
 			sourceTree = "<group>";
 		};
+		72D52EB91B73B9700073AD0A /* MainMenu */ = {
+			isa = PBXGroup;
+			children = (
+				72ED61141B52762800EFEE45 /* MainMenuViewController.swift */,
+				72D52EBA1B73B98E0073AD0A /* TagCheckScrollview.swift */,
+				72D52EBC1B73B9B00073AD0A /* TagCheckView.swift */,
+			);
+			name = MainMenu;
+			sourceTree = "<group>";
+		};
 		72ED61011B52762700EFEE45 = {
 			isa = PBXGroup;
 			children = (
@@ -146,11 +160,11 @@
 		72ED610C1B52762800EFEE45 /* TimeIt */ = {
 			isa = PBXGroup;
 			children = (
+				72D52EB91B73B9700073AD0A /* MainMenu */,
 				72CD2A781B6A287200EB539B /* Timeline */,
 				72CD2A771B6A283600EB539B /* Play */,
 				72ED61361B53005000EFEE45 /* DataClasses */,
 				72ED610F1B52762800EFEE45 /* AppDelegate.swift */,
-				72ED61141B52762800EFEE45 /* MainMenuViewController.swift */,
 				72ED61161B52762800EFEE45 /* Main.storyboard */,
 				72ED61191B52762800EFEE45 /* Images.xcassets */,
 				72ED611B1B52762800EFEE45 /* LaunchScreen.xib */,
@@ -304,6 +318,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				72CD2A7A1B6A3A9000EB539B /* TimelineEventLabel.swift in Sources */,
+				72D52EBD1B73B9B00073AD0A /* TagCheckView.swift in Sources */,
 				72ED61331B52932A00EFEE45 /* PlayViewController.swift in Sources */,
 				72CD2A6F1B64457800EB539B /* RangeSlider.swift in Sources */,
 				72ED613E1B558B2600EFEE45 /* PeriodButton.swift in Sources */,
@@ -322,6 +337,7 @@
 				72CD2A731B644FF500EB539B /* RangeSliderTrackLayer.swift in Sources */,
 				72ED613C1B53441E00EFEE45 /* DataPlaceholder.swift in Sources */,
 				72ED61461B59EFDF00EFEE45 /* StaticValues.swift in Sources */,
+				72D52EBB1B73B98E0073AD0A /* TagCheckScrollview.swift in Sources */,
 				72ED61381B53006900EFEE45 /* Period.swift in Sources */,
 				72ED61131B52762800EFEE45 /* TimeIt.xcdatamodeld in Sources */,
 			);

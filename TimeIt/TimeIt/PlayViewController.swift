@@ -43,7 +43,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     
     var levelHigh:Int = 1
     var levelLow:Int = 1
-    var tags:String = ""
+    var tags:[String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,12 +115,13 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         
         
 
+        
+        view.addSubview(questionLabel)
+        view.addSubview(timelineScrollView)
+        view.addSubview(gameStats)
+        view.addSubview(answerAnimationLabel)
+        view.addSubview(answerAnimationYellLabel)
         view.addSubview(backButton)
-        self.view.addSubview(questionLabel)
-        self.view.addSubview(timelineScrollView)
-        self.view.addSubview(gameStats)
-        self.view.addSubview(answerAnimationLabel)
-        self.view.addSubview(answerAnimationYellLabel)
 
         
         startPlay()
@@ -168,10 +169,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
 
-    
     func rangeSliderValueChanged(rangeSlider: RangeSlider) {
         
         if rangeReset
@@ -370,7 +368,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                 var xMaxBound:CGFloat = UIScreen.mainScreen().bounds.size.width
                 var xMinBound:CGFloat = 0
                 self.cleanUpButtons()
-                self.layoutButtons(nil,periods: periods, xMinBoundary: xMinBound, xMaxBoundary: xMaxBound,yBoundary: UIScreen.mainScreen().bounds.size.height / 2, level: 1)
+                self.layoutButtons(nil,periods: periods, xMinBoundary: xMinBound, xMaxBoundary: xMaxBound,yBoundary: self.questionLabel.frame.maxY, level: 1)
             }
         }
         var periodItemsOnTypeAndLevelDepth:[Period] = []
@@ -433,20 +431,18 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     let defaultButtonHeight:CGFloat = 70
     func layoutButtons(parentButton:PeriodButton?, periods:[Period],xMinBoundary:CGFloat, xMaxBoundary:CGFloat, yBoundary:CGFloat, buttonHeight:CGFloat = 70,level:Int)
     {
-        var buttonWidth = (xMaxBoundary - xMinBoundary) / CGFloat(periods.count)
+        let vertialHorizontalMargin:CGFloat = 2
+        var buttonWidth = (xMaxBoundary - xMinBoundary - (vertialHorizontalMargin * (CGFloat(periods.count) - 1))) / CGFloat(periods.count)
         var x:CGFloat = xMinBoundary
         var collectionForRelation:[PeriodButton] = []
         for item in periods
         {
             var periodButton = PeriodButton(frame:CGRectMake(0, 0, buttonWidth,buttonHeight), level:level)
-            //periodButton.titleLabel!.minimumFontSize = 5
-
-
             periodButton.addTarget(self, action: "periodSelected:", forControlEvents: .TouchUpInside)
             periodButton.setPeriodAndTitle(item as Period)
             buttonCollection.append(periodButton)
             collectionForRelation.append(periodButton)
-            periodButton.center = CGPointMake(x + (periodButton.frame.width/2), yBoundary)
+            periodButton.center = CGPointMake(x + (periodButton.frame.width/2), yBoundary + (periodButton.frame.height / 2))
             
             if periodButton.frame.size.width < (UIScreen.mainScreen().bounds.size.width / 4)
             {
@@ -465,9 +461,17 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             {
                 tempPeriodItemsOnType.append(item as! Period)
             }
-            layoutButtons(periodButton,periods: tempPeriodItemsOnType, xMinBoundary: x, xMaxBoundary: x + periodButton.frame.size.width, yBoundary: yBoundary + periodButton.frame.size.height, buttonHeight: buttonHeight / 2 , level: level + 1)
-            
-             x += periodButton.frame.width
+            let newYBoundary = yBoundary + periodButton.frame.size.height + vertialHorizontalMargin
+            //TODO: dont display over bannerview
+            /*
+            println(" test check these values \(UIScreen.mainScreen().bounds.size.height - bannerView!.frame.height) \(newYBoundary)")
+            if bannerView == nil || (UIScreen.mainScreen().bounds.size.height - bannerView!.frame.height) < (newYBoundary + (buttonHeight / 2))
+            {
+                layoutButtons(periodButton,periods: tempPeriodItemsOnType, xMinBoundary: x, xMaxBoundary: x + periodButton.frame.size.width, yBoundary: newYBoundary, buttonHeight: buttonHeight / 2 , level: level + 1)
+            }
+            */
+            layoutButtons(periodButton,periods: tempPeriodItemsOnType, xMinBoundary: x, xMaxBoundary: x + periodButton.frame.size.width, yBoundary: newYBoundary, buttonHeight: buttonHeight / 2 , level: level + 1)
+             x += periodButton.frame.width + vertialHorizontalMargin
         }
         
         if parentButton != nil
@@ -547,7 +551,6 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                 else
                 {
                     found = buttonInButtonHirarcy(button, buttonHirarcy: childButton)
-
                 }
                 if found
                 {
@@ -1050,7 +1053,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         }
         
         var yBound =  UIScreen.mainScreen().bounds.size.height / 2
-        var xMaxBound:CGFloat = UIScreen.mainScreen().bounds.size.width
+        var xMaxBound:CGFloat = UIScreen.mainScreen().bounds.size.width - 0
         var xMinBound:CGFloat = 0
         
         cleanUpButtons()

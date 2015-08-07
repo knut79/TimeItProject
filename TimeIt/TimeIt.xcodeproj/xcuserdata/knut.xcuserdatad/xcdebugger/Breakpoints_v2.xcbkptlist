@@ -9,45 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimeIt/DataHandler.swift"
-            timestampString = "460514128.47171"
+            filePath = "TimeIt/PlayViewController.swift"
+            timestampString = "460659080.074806"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
-            landmarkName = "populateData(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimeIt/Period.swift"
-            timestampString = "460517487.861909"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
-            landmarkName = "Period"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimeIt/DataHandler.swift"
-            timestampString = "460562150.581723"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "757"
-            endingLineNumber = "757"
-            landmarkName = "savePeriodesFromCollection(_:parentPeriod:)"
+            startingLineNumber = "469"
+            endingLineNumber = "469"
+            landmarkName = "layoutButtons(_:periods:xMinBoundary:xMaxBoundary:yBoundary:buttonHeight:level:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -58,150 +26,60 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TimeIt/PlayViewController.swift"
-            timestampString = "460566276.340308"
+            timestampString = "460658024.254825"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "681"
-            endingLineNumber = "681"
-            landmarkName = "bonusQuestion(_:)"
+            startingLineNumber = "440"
+            endingLineNumber = "440"
+            landmarkName = "layoutButtons(_:periods:xMinBoundary:xMaxBoundary:yBoundary:buttonHeight:level:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimeIt/DataHandler.swift"
-            timestampString = "460500390.035987"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "30"
-            endingLineNumber = "30"
-            landmarkName = "init()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            scope = "0"
-            stopOnStyle = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimeIt/DataHandler.swift"
-            timestampString = "460562150.581723"
+            filePath = "TimeIt/PlayViewController.swift"
+            timestampString = "460659284.92153"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "667"
-            endingLineNumber = "667"
-            landmarkName = "populateData(_:)"
+            startingLineNumber = "501"
+            endingLineNumber = "501"
+            landmarkName = "periodSelected(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimeIt/Period.swift"
-            timestampString = "460517487.861909"
+            filePath = "TimeIt/PlayViewController.swift"
+            timestampString = "460659285.748191"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "createInManagedObjectContext(_:from:to:timelineItem:)"
+            startingLineNumber = "500"
+            endingLineNumber = "500"
+            landmarkName = "periodSelected(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimeIt/DataHandler.swift"
-            timestampString = "460562150.581723"
+            filePath = "TimeIt/PlayViewController.swift"
+            timestampString = "460659286.330227"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "668"
-            endingLineNumber = "668"
-            landmarkName = "populateData(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimeIt/Period.swift"
-            timestampString = "460550558.823474"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
-            landmarkName = "createInManagedObjectContext(_:from:to:timelineItem:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimeIt/DataHandler.swift"
-            timestampString = "460565261.034389"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "850"
-            endingLineNumber = "850"
-            landmarkName = "fetchData(tags:fromLevel:toLevel:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimeIt/DataHandler.swift"
-            timestampString = "460565261.034389"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "862"
-            endingLineNumber = "862"
-            landmarkName = "fetchData(tags:fromLevel:toLevel:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimeIt/DataHandler.swift"
-            timestampString = "460565261.034389"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "847"
-            endingLineNumber = "847"
-            landmarkName = "fetchData(tags:fromLevel:toLevel:)"
+            startingLineNumber = "499"
+            endingLineNumber = "499"
+            landmarkName = "periodSelected(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

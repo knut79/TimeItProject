@@ -820,7 +820,7 @@ class DataHandler
         }
     }
     
-    func fetchData(tags:String = "",fromLevel:Int,toLevel:Int) {
+    func fetchData(tags:[String] = [],fromLevel:Int,toLevel:Int) {
 
         // Create a new fetch request using the LogItem entity
         // eqvivalent to select * from Relation
@@ -830,22 +830,25 @@ class DataHandler
         //fetchRequest.sortDescriptors = [sortDescriptor]
         
         
-        let stringArray = tags.componentsSeparatedByString("#")
+        //let stringArray = tags.componentsSeparatedByString("#")
         var predicateTags:String = ""
-        for item in stringArray
+        if tags.count > 0
         {
-            if item != ""
+            for item in tags
             {
-                predicateTags = "\(predicateTags)|\(item)"
+                if item != ""
+                {
+                    predicateTags = "\(predicateTags)|\(item)"
+                }
             }
+            predicateTags.removeAtIndex(predicateTags.startIndex)
         }
-        predicateTags.removeAtIndex(predicateTags.startIndex)
-        
         //let predicate = NSPredicate(format: "titlenumber contains %@", "Worst")
         // Set the predicate on the fetch request
         //let predicate = NSPredicate(format: "periods.@count > 0 AND level >= \(fromLevel) AND level <= \(toLevel)")
         //let predicate = NSPredicate(format: "tags  MATCHES '.*(#war|#curiosa).*'")
-        let predicate = NSPredicate(format: "periods.@count > 0 AND tags  MATCHES '.*(\(predicateTags)).*'")
+        
+        let predicate = NSPredicate(format: "periods.@count > 0 AND level >= \(fromLevel) AND level <= \(toLevel) AND tags  MATCHES '.*(\(predicateTags)).*'")
         //let predicate = tags == "" ? NSPredicate(format: "periods.@count > 0 AND level >= \(fromLevel) AND level <= \(toLevel)") : NSPredicate(format: "ANY tags == \(tags)")
         fetchEvents.predicate = predicate
         

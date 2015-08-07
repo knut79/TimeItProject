@@ -11,16 +11,20 @@ import CoreGraphics
 import QuartzCore
 import iAd
 
-class MainMenuViewController: UIViewController {//, ADBannerViewDelegate {
+class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerViewDelegate {
 
+    
     var backgroundView:UIView!
     var playButton:UIButton!
     var playButtonExstraLabel:UILabel!
     var playButtonExstraLabel2:UILabel!
     var timelineButton:UIButton!
+    var selectFilterTypeButton:UIButton!
     var loadingDataView:UIView!
     var loadingDataLabel:UILabel!
     var datactrl:DataHandler!
+    var tagsScrollViewEnableBackground:UIView!
+    var tagsScrollView:TagCheckScrollView!
     
     let queue = NSOperationQueue()
     
@@ -29,6 +33,7 @@ class MainMenuViewController: UIViewController {//, ADBannerViewDelegate {
     var newGameStatsValues:(Int,Int,Int)!
 
     let levelSlider = RangeSlider(frame: CGRectZero)
+    var tags:[String] = []
     
     
     var bannerView:ADBannerView?
@@ -48,9 +53,8 @@ class MainMenuViewController: UIViewController {//, ADBannerViewDelegate {
         playButton = UIButton(frame:CGRectZero)
         playButton.addTarget(self, action: "playAction", forControlEvents: UIControlEvents.TouchUpInside)
         playButton.backgroundColor = UIColor.blueColor()
-        //playButton.titleLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        //playButton.titleLabel?.textAlignment = NSTextAlignment.Center
-        
+        playButton.setTitle("Play", forState: UIControlState.Normal)
+
         playButtonExstraLabel = UILabel(frame:CGRectZero)
         playButtonExstraLabel.backgroundColor = playButton.backgroundColor?.colorWithAlphaComponent(0)
         playButtonExstraLabel.textColor = UIColor.whiteColor()
@@ -79,6 +83,14 @@ class MainMenuViewController: UIViewController {//, ADBannerViewDelegate {
         levelSlider.typeValue = sliderType.bothLowerAndUpper
         view.addSubview(levelSlider)
         
+        selectFilterTypeButton = UIButton(frame: CGRectZero)
+        //⬅️➡️
+        selectFilterTypeButton.setTitle("📋", forState: UIControlState.Normal)
+        selectFilterTypeButton.addTarget(self, action: "swichFilterType", forControlEvents: UIControlEvents.TouchUpInside)
+        selectFilterTypeButton.backgroundColor = UIColor.blackColor()
+        //selectFilterTypeButton.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0)
+        view.addSubview(selectFilterTypeButton)
+
         /*
         let backgroundOperation = BackgroundPopulateData()
         
@@ -161,39 +173,43 @@ class MainMenuViewController: UIViewController {//, ADBannerViewDelegate {
         bannerView?.frame = CGRectMake(0, UIScreen.mainScreen().bounds.size.height - 44, UIScreen.mainScreen().bounds.size.width, 44)
         
         loadingDataView?.frame =  CGRectMake(50, 50, 200, 50)
-        let playbuttonWidth = UIScreen.mainScreen().bounds.size.width / 2
-        playButton.frame = CGRectMake((UIScreen.mainScreen().bounds.size.width / 2) - (playbuttonWidth / 2), UIScreen.mainScreen().bounds.size.height * 0.15,playbuttonWidth, UIScreen.mainScreen().bounds.size.height / 2)
-        //playButton.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, UIScreen.mainScreen().bounds.size.height / 3)
+
         
         let margin: CGFloat = 20.0
         let width = view.bounds.width - 2.0 * margin
-        //rangeSlider.frame = CGRect(x:  margin, y: (UIScreen.mainScreen().bounds.size.height - topLayoutGuide.length) - (margin * 3) ,
-        //    width: width, height: 31.0)
         
         
         
-        var orientation = UIDevice.currentDevice().orientation
+        let orientation = UIDevice.currentDevice().orientation
         var orientationText = orientation.isLandscape ? "landscape" : "portrait"
-        playButton.setTitle("Play", forState: UIControlState.Normal)
-        timelineButton.frame = CGRectMake(playButton.frame.minX, playButton.frame.maxY + (margin / 2), UIScreen.mainScreen().bounds.size.width / 2, playButton.frame.height * 0.25)
         
-        if orientation == UIDeviceOrientation.Portrait || orientation == UIDeviceOrientation.PortraitUpsideDown
+        var playbuttonWidth = UIScreen.mainScreen().bounds.size.width / 2
+        var playbuttonHeight = UIScreen.mainScreen().bounds.size.height / 2
+        if orientation == UIDeviceOrientation.LandscapeLeft || orientation == UIDeviceOrientation.LandscapeRight
         {
-            
+            playbuttonWidth = UIScreen.mainScreen().bounds.size.width * 0.7
+            playbuttonHeight = UIScreen.mainScreen().bounds.size.height * 0.33
         }
-        else
-        {
-            
-        }
+
+        playButton.frame = CGRectMake((UIScreen.mainScreen().bounds.size.width / 2) - (playbuttonWidth / 2), UIScreen.mainScreen().bounds.size.height * 0.15,playbuttonWidth, playbuttonHeight)
+        
+        timelineButton.frame = CGRectMake(playButton.frame.minX, playButton.frame.maxY + (margin / 2), playbuttonWidth, playButton.frame.height * 0.25)
 
         let height:CGFloat = 31.0
         let marginSlider: CGFloat = playButton.frame.minX
         levelSlider.frame = CGRect(x:  marginSlider, y: timelineButton.frame.maxY  + margin, width: UIScreen.mainScreen().bounds.size.width - (marginSlider * 2), height: height)
         
+        //levelSlider.transform = CGAffineTransformScale(levelSlider.transform, 0.3, 0.3)
+        
         playButtonExstraLabel.frame = CGRectMake(0, playButton.frame.height * 0.7   , playButton.frame.width, playButton.frame.height * 0.15)
         playButtonExstraLabel.text = "in \(orientationText) mode"
         playButtonExstraLabel2.frame = CGRectMake(0, playButton.frame.height * 0.85   , playButton.frame.width, playButton.frame.height * 0.15)
         playButtonExstraLabel2.text = "level \(Int(levelSlider.lowerValue)) - \(sliderUpperLevelText())"
+        
+        selectFilterTypeButton.frame = CGRectMake(levelSlider.frame.maxX, levelSlider.frame.minY, UIScreen.mainScreen().bounds.size.width * 0.1, levelSlider.frame.height)
+        
+        closeTagCheckView()
+
     }
     
     func sliderUpperLevelText() -> String
@@ -227,7 +243,7 @@ class MainMenuViewController: UIViewController {//, ADBannerViewDelegate {
             var svc = segue!.destinationViewController as! PlayViewController
             svc.levelLow = Int(levelSlider.lowerValue)
             svc.levelHigh = Int(levelSlider.upperValue)
-            svc.tags = "#war#curiosa"
+            svc.tags = self.tags
         }
     }
     
@@ -244,6 +260,69 @@ class MainMenuViewController: UIViewController {//, ADBannerViewDelegate {
         self.bannerView?.hidden = true
     }
 
+    //MARK: TagCheckViewProtocol
+    var listClosed = true
+    func closeTagCheckView()
+    {
+        if listClosed
+        {
+            return
+        }
+        let rightLocation = tagsScrollView.center
+        UIView.animateWithDuration(0.25, animations: { () -> Void in
+            
+            self.tagsScrollView.transform = CGAffineTransformScale(self.tagsScrollView.transform, 0.1, 0.1)
+            
+            self.tagsScrollView.center = self.selectFilterTypeButton.center
+            }, completion: { (value: Bool) in
+                self.tagsScrollView.transform = CGAffineTransformScale(self.tagsScrollView.transform, 0.1, 0.1)
+                self.tagsScrollView.alpha = 0
+                self.tagsScrollView.center = rightLocation
+                self.listClosed = true
+                self.tagsScrollViewEnableBackground.removeFromSuperview()
+        })
+    }
+    
+    func reloadMarks(tags:[String])
+    {
+        self.tags = tags
+    }
+    
+    func swichFilterType()
+    {
+        let bannerViewHeight = bannerView != nil ? bannerView!.frame.height : 0
+        tagsScrollViewEnableBackground = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height - bannerViewHeight))
+        tagsScrollViewEnableBackground.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
+        var scrollViewWidth = UIScreen.mainScreen().bounds.size.width * 0.6
+        let orientation = UIDevice.currentDevice().orientation
+        if orientation == UIDeviceOrientation.LandscapeLeft || orientation == UIDeviceOrientation.LandscapeRight
+        {
+            scrollViewWidth = UIScreen.mainScreen().bounds.size.width / 2
+        }
+        tagsScrollView = TagCheckScrollView(frame: CGRectMake((UIScreen.mainScreen().bounds.size.width / 2) - (scrollViewWidth / 2) , UIScreen.mainScreen().bounds.size.height / 4, scrollViewWidth, UIScreen.mainScreen().bounds.size.height / 2))
+        
+        tagsScrollView.delegate = self
+        tagsScrollView.alpha = 0
+        tagsScrollViewEnableBackground.addSubview(tagsScrollView!)
+        view.addSubview(tagsScrollViewEnableBackground)
+        
+        let rightLocation = tagsScrollView.center
+        tagsScrollView.transform = CGAffineTransformScale(tagsScrollView.transform, 0.1, 0.1)
+        self.tagsScrollView.alpha = 1
+        tagsScrollView.center = selectFilterTypeButton.center
+        UIView.animateWithDuration(0.25, animations: { () -> Void in
+            
+            self.tagsScrollView.transform = CGAffineTransformIdentity
+            
+            self.tagsScrollView.center = rightLocation
+            }, completion: { (value: Bool) in
+                self.tagsScrollView.transform = CGAffineTransformIdentity
+                self.tagsScrollView.alpha = 1
+                self.tagsScrollView.center = rightLocation
+                self.listClosed = false
+        })
+        
+    }
 
 }
 
