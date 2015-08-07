@@ -242,6 +242,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             }
             if rangeSlider.typeValue != sliderType.justLower
             {
+                println(" test formattedUpperValue \(rangeSlider.formattedUpperValue)")
                 rangeMaxLabel.text = rangeSlider.formattedUpperValue //"\(Int(rangeSlider.upperValue))"
             }
         }

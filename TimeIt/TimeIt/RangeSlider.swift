@@ -51,8 +51,9 @@ class RangeSlider: UIControl {
             }
             else
             {
-                upperValue = Double((maximumValue - minimumValue) * 0.75) + minimumValue
                 lowerValue = Double((maximumValue - minimumValue) * 0.25) + minimumValue
+                upperValue = Double((maximumValue - minimumValue) * 0.75) + minimumValue
+                
             }
             updateLayerFrames()
         }
@@ -72,6 +73,7 @@ class RangeSlider: UIControl {
     
     var lowerValue: Double = 0.2 {
         didSet {
+            /*
             if typeValue == sliderType.bothLowerAndUpper
             {
                 if lowerValue >= upperValue
@@ -79,12 +81,14 @@ class RangeSlider: UIControl {
                     lowerValue = upperValue - 1
                 }
             }
+            */
             updateLayerFrames()
         }
     }
     
     var upperValue: Double = 0.8 {
         didSet {
+            /*
             if typeValue == sliderType.bothLowerAndUpper
             {
                 if upperValue <= lowerValue
@@ -92,6 +96,7 @@ class RangeSlider: UIControl {
                     upperValue = lowerValue + 1
                 }
             }
+            */
             updateLayerFrames()
         }
     }

@@ -9,13 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimeIt/PlayViewController.swift"
-            timestampString = "460680498.807395"
+            filePath = "TimeIt/RangeSlider.swift"
+            timestampString = "460683381.523048"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "669"
-            endingLineNumber = "669"
-            landmarkName = "wrongAnswerGiven(_:)"
+            startingLineNumber = "216"
+            endingLineNumber = "216"
+            landmarkName = "updateLayerFrames()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,107 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TimeIt/PlayViewController.swift"
-            timestampString = "460680498.807395"
+            timestampString = "460682216.363942"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "670"
-            endingLineNumber = "670"
-            landmarkName = "wrongAnswerGiven(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimeIt/PlayViewController.swift"
-            timestampString = "460680498.807395"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "682"
-            endingLineNumber = "682"
-            landmarkName = "wrongAnswerGiven(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimeIt/PlayViewController.swift"
-            timestampString = "460681535.676125"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "942"
-            endingLineNumber = "942"
-            landmarkName = "giveNoBonus(_:completionClosure:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimeIt/PlayViewController.swift"
-            timestampString = "460681535.676125"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "943"
-            endingLineNumber = "943"
-            landmarkName = "giveNoBonus(_:completionClosure:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimeIt/PlayViewController.swift"
-            timestampString = "460681535.676125"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "944"
-            endingLineNumber = "944"
-            landmarkName = "giveNoBonus(_:completionClosure:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimeIt/PlayViewController.swift"
-            timestampString = "460680498.807395"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "333"
-            endingLineNumber = "333"
-            landmarkName = "setAlphaOnRangeItems(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimeIt/PlayViewController.swift"
-            timestampString = "460680556.923302"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "704"
-            endingLineNumber = "704"
+            startingLineNumber = "705"
+            endingLineNumber = "705"
             landmarkName = "bonusQuestion(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -138,11 +42,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TimeIt/PlayViewController.swift"
-            timestampString = "460680676.921936"
+            timestampString = "460682216.363942"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "732"
-            endingLineNumber = "732"
+            startingLineNumber = "246"
+            endingLineNumber = "246"
+            landmarkName = "rangeSliderValueChanged(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TimeIt/PlayViewController.swift"
+            timestampString = "460682216.363942"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "727"
+            endingLineNumber = "727"
             landmarkName = "bonusQuestion(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -154,12 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TimeIt/PlayViewController.swift"
-            timestampString = "460681535.676125"
+            timestampString = "460682062.838501"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "747"
-            endingLineNumber = "747"
-            landmarkName = "bonusQuestion(_:)"
+            startingLineNumber = "234"
+            endingLineNumber = "234"
+            landmarkName = "rangeSliderValueChanged(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -170,13 +90,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TimeIt/RangeSlider.swift"
-            timestampString = "460680982.72417"
+            timestampString = "460683381.523048"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "146"
-            endingLineNumber = "146"
-            landmarkName = "higlightWindow(_:)"
-            landmarkType = "5">
+            startingLineNumber = "114"
+            endingLineNumber = "114"
+            landmarkName = "RangeSlider"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -185,14 +105,14 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimeIt/RangeWindowsLayer.swift"
-            timestampString = "460681125.706279"
+            filePath = "TimeIt/RangeSlider.swift"
+            timestampString = "460682990.96089"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
-            landmarkName = "drawInContext(_:)"
-            landmarkType = "5">
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "RangeSlider"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -201,14 +121,30 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimeIt/RangeWindowsLayer.swift"
-            timestampString = "460681151.507321"
+            filePath = "TimeIt/RangeSlider.swift"
+            timestampString = "460683381.523048"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "renderPosition(_:valuePosition:)"
-            landmarkType = "5">
+            startingLineNumber = "96"
+            endingLineNumber = "96"
+            landmarkName = "RangeSlider"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TimeIt/RangeSlider.swift"
+            timestampString = "460683276.002845"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "RangeSlider"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
