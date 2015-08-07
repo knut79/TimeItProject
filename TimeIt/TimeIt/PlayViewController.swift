@@ -680,7 +680,8 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             {
                 button.alpha = 0
             }
-            self.answerAnimationLabel.transform = CGAffineTransformScale(self.answerAnimationLabel.transform, 2, 2)
+            let scale = UIScreen.mainScreen().bounds.size.width / self.answerAnimationLabel.frame.width
+            self.answerAnimationLabel.transform = CGAffineTransformScale(self.answerAnimationLabel.transform, scale, scale)
             //self.answerAnimationLabel.center = CGPointMake(self.answerAnimationLabel.center.x, self.answerAnimationLabel.center.y - self.answerAnimationLabel.frame.height )
             self.answerAnimationLabel.center = CGPointMake(self.answerAnimationLabel.center.x, self.answerAnimationLabel.frame.height / 2)
             }, completion: { (value: Bool) in
@@ -935,11 +936,13 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         
         answerAnimationLabel.alpha = 1
         //animate zoominrect
+        
         UIView.animateWithDuration(1.0, animations: { () -> Void in
             
             //self.answerAnimationLabel.center = CGPointMake(self.answerAnimationLabel.center.x, self.answerAnimationLabel.center.y - 100)
             self.answerAnimationLabel.center = CGPointMake(UIScreen.mainScreen().bounds.width / 2, self.answerAnimationLabel.center.y - 100)
-            self.answerAnimationLabel.transform = CGAffineTransformScale(self.answerAnimationLabel.transform, 2, 2)
+            let scale = UIScreen.mainScreen().bounds.size.width / self.answerAnimationLabel.frame.width
+            self.answerAnimationLabel.transform = CGAffineTransformScale(self.answerAnimationLabel.transform, scale, scale)
             }, completion: { (value: Bool) in
                 
                 UIView.animateWithDuration(1.0, animations: { () -> Void in

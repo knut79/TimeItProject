@@ -663,9 +663,14 @@ class DataHandler
         newEvent(id++,title:"Dmitri Medvedev elected President of Russia", year:2008, type:periodType.ten)
         newEvent(id++,title:"Confucius born in China", year:-551, type:periodType.fivehundred)
 */
-        newEvent(id++,title: "Triassic period", from:Int32(-248 * aMillion), to: Int32(-205 * aMillion), type:periodType.fivehundred,level:2)
-        newEvent(id++,title: "King David conquers Jerusalem", year:-990, type:periodType.fivehundred,level:2,tags:"#war")
-        newEvent(id++,title:"First Olympiad in Greece", year:-776, type:periodType.fivehundred,level:2,tags:"#war#curiosa")
+        //newEvent(id++,title: "Triassic period", from:Int32(-248 * aMillion), to: Int32(-205 * aMillion), type:periodType.fivehundred,level:2)
+        
+        //newEvent(id++,title: "In the old days", from:-990, to: -800, type:periodType.fivehundred,level:2)
+        //newEvent(id++,title: "In the old days SPLIT", from:-990, to: 500, type:periodType.fivehundred,level:2)
+        
+        newEvent(id++,title: "new days", from:990, to: 1000, type:periodType.fivehundred,level:2)
+        //newEvent(id++,title: "King David conquers Jerusalem", year:-990, type:periodType.fivehundred,level:2,tags:"#war")
+        //newEvent(id++,title:"First Olympiad in Greece", year:-776, type:periodType.fivehundred,level:2,tags:"#war#curiosa")
         
         println("populated new data")
 
