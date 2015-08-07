@@ -632,27 +632,36 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         answerAnimationLabel.text = "\(points)"
         self.answerAnimationLabel.alpha = 0
 
-
-        UIView.animateWithDuration(1.0, animations: { () -> Void in
-            //self.answerAnimationLabel.center = self.gameStats.okPointsView.center
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            
+            periodButton.alpha = 0
             self.answerAnimationLabel.alpha = 1
-            self.answerAnimationLabel.center = self.gameStats.okPointsView.center
-            self.answerAnimationLabel.transform = CGAffineTransformScale(self.answerAnimationLabel.transform, 1.2, 1.2)
+            
             }, completion: { (value: Bool) in
                 
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
-
-                    self.answerAnimationLabel.alpha = 0
+                UIView.animateWithDuration(1.0, delay: 0.0, options:UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+                    //self.answerAnimationLabel.center = self.gameStats.okPointsView.center
                     
+                    self.answerAnimationLabel.center = self.gameStats.okPointsView.center
+                    self.answerAnimationLabel.transform = CGAffineTransformScale(self.answerAnimationLabel.transform, 1.2, 1.2)
                     }, completion: { (value: Bool) in
                         
-                        self.answerAnimationLabel.transform = CGAffineTransformIdentity
-                        self.gameStats.addOkPoints(points)
-                        self.datactrl.updateOkScore(self.currentQuestion, deltaScore:points)
-                        self.answerAnimationLabel.alpha = 0
-                        completion?()
+                        UIView.animateWithDuration(0.2, animations: { () -> Void in
+                            
+                            self.answerAnimationLabel.alpha = 0
+                            
+                            }, completion: { (value: Bool) in
+                                
+                                self.answerAnimationLabel.transform = CGAffineTransformIdentity
+                                self.gameStats.addOkPoints(points)
+                                self.datactrl.updateOkScore(self.currentQuestion, deltaScore:points)
+                                self.answerAnimationLabel.alpha = 0
+                                completion?()
+                        })
                 })
         })
+
+
     }
     
     func wrongAnswerGiven(periodButton:PeriodButton)
@@ -665,20 +674,21 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         answerAnimationLabel.text = "😫 \(currentQuestion.formattedTime)"
         answerAnimationLabel.alpha = 1
         //animate zoominrect
-        UIView.animateWithDuration(1.0, animations: { () -> Void in
+        UIView.animateWithDuration(1.0, delay: 0.0, options:UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
             
             for button:UIButton in self.buttonCollection
             {
                 button.alpha = 0
             }
             self.answerAnimationLabel.transform = CGAffineTransformScale(self.answerAnimationLabel.transform, 2, 2)
-            self.answerAnimationLabel.center = CGPointMake(self.answerAnimationLabel.center.x, self.answerAnimationLabel.center.y - self.answerAnimationLabel.frame.height )
+            //self.answerAnimationLabel.center = CGPointMake(self.answerAnimationLabel.center.x, self.answerAnimationLabel.center.y - self.answerAnimationLabel.frame.height )
+            self.answerAnimationLabel.center = CGPointMake(self.answerAnimationLabel.center.x, self.answerAnimationLabel.frame.height / 2)
             }, completion: { (value: Bool) in
-                
-                UIView.animateWithDuration(1.0, animations: { () -> Void in
+
+                UIView.animateWithDuration(1.0, delay: 0.0, options:UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
                     self.answerAnimationLabel.transform = CGAffineTransformScale(self.answerAnimationLabel.transform, 0.5, 0.5)
                     self.answerAnimationLabel.alpha = 0
-                    }, completion: { (value: Bool) in
+                    } , completion: { (value: Bool) in
                         self.answerAnimationLabel.transform = CGAffineTransformIdentity
                         self.gameStats.subtractOkPoints(points)
                         self.datactrl.updateOkScore(self.currentQuestion, deltaScore:points * -1)

@@ -87,8 +87,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         //⬅️➡️
         selectFilterTypeButton.setTitle("📋", forState: UIControlState.Normal)
         selectFilterTypeButton.addTarget(self, action: "swichFilterType", forControlEvents: UIControlEvents.TouchUpInside)
-        selectFilterTypeButton.backgroundColor = UIColor.blackColor()
-        //selectFilterTypeButton.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0)
+        selectFilterTypeButton.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0)
         view.addSubview(selectFilterTypeButton)
 
         /*
