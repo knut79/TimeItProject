@@ -668,7 +668,19 @@ class DataHandler
         //newEvent(id++,title: "In the old days", from:-990, to: -800, type:periodType.fivehundred,level:2)
         //newEvent(id++,title: "In the old days SPLIT", from:-990, to: 500, type:periodType.fivehundred,level:2)
         
-        newEvent(id++,title: "new days", from:990, to: 1000, type:periodType.fivehundred,level:2)
+        //pass newEvent(id++,title: "old days -700 -300", from:-700, to: -300, type:periodType.fivehundred,level:2)
+        newEvent(id++,title: "old days -600 -540", from:-600, to: -540, type:periodType.fivehundred,level:2)
+        //newEvent(id++,title: "old days 900 1000", from:900, to: 1000, type:periodType.fivehundred,level:2)
+        //newEvent(id++,title: "new days 900 997", from:900, to: 997, type:periodType.fivehundred,level:2)
+        //newEvent(id++,title: "new days 1523 1540", from:1513, to: 1540, type:periodType.fifty,level:2)
+        
+        
+        //1 negative values
+        
+        //2 widow not displayed on single values , at least negative ones
+        
+        //3nobs disappear when single value is run first then a double
+        
         //newEvent(id++,title: "King David conquers Jerusalem", year:-990, type:periodType.fivehundred,level:2,tags:"#war")
         //newEvent(id++,title:"First Olympiad in Greece", year:-776, type:periodType.fivehundred,level:2,tags:"#war#curiosa")
         

@@ -84,7 +84,6 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         view.addSubview(levelSlider)
         
         selectFilterTypeButton = UIButton(frame: CGRectZero)
-        //⬅️➡️
         selectFilterTypeButton.setTitle("📋", forState: UIControlState.Normal)
         selectFilterTypeButton.addTarget(self, action: "swichFilterType", forControlEvents: UIControlEvents.TouchUpInside)
         selectFilterTypeButton.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0)
@@ -108,15 +107,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
             self.rangeSlider.curvaceousness = 0.0
         }
         */
-
-    }
-    
-    override func prefersStatusBarHidden() -> Bool {
-        return true
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-
+        
         if Int(datactrl.dataPopulatedID as! NSNumber) <= 0
         {
             loadingDataLabel = UILabel(frame: CGRectMake(0, 0, 200, 50))
@@ -135,7 +126,19 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
             pulseAnimation.repeatCount = 100
             pulseAnimation.delegate = self
             loadingDataView.layer.addAnimation(pulseAnimation, forKey: "asd")
-            
+        }
+
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+
+        if Int(datactrl.dataPopulatedID as! NSNumber) <= 0
+        {
+
             DataHandler().populateData({ () in
                 self.view.addSubview(self.playButton)
                 self.globalGameStats = GameStats(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width * 0.75, UIScreen.mainScreen().bounds.size.height * 0.08),okScore: Int(self.datactrl.okScoreID as! NSNumber),goodScore: Int(self.datactrl.goodScoreID as! NSNumber),loveScore: Int(self.datactrl.loveScoreID as! NSNumber))
@@ -148,6 +151,9 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         }
         else
         {
+            //self.loadingDataView.alpha = 0
+            //self.loadingDataView.layer.removeAllAnimations()
+            
             self.view.addSubview(self.playButton)
             globalGameStats = GameStats(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width * 0.75, UIScreen.mainScreen().bounds.size.height * 0.08),okScore: Int(datactrl.okScoreID as! NSNumber),goodScore: Int(datactrl.goodScoreID as! NSNumber),loveScore: Int(datactrl.loveScoreID as! NSNumber))
             self.view.addSubview(globalGameStats)
