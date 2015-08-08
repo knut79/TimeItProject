@@ -253,6 +253,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     func resetRange()
     {
         setAlphaOnRangeItems(0)
+        
         rangeReset = true
         rangeMaxLabel.text = ""
         rangeMaxLabel.textColor = UIColor.blackColor()
@@ -260,7 +261,8 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         rangeMinLabel.textColor = UIColor.blackColor()
         rangeButton.layer.borderColor = UIColor.redColor().CGColor
         rangeButton.setTitle(rangeBaileOutText, forState: UIControlState.Normal)
-        rangeSlider.setNeedsDisplay()
+        rangeSlider.resetWindows()
+        //rangeSlider.setNeedsDisplay()
     }
     
     var currentQuestion:HistoricEvent!
@@ -914,8 +916,22 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
 
     func giveNoBonus(animateFromView:UIView ,completionClosure: (() -> (Void))? )
     {
-        rangeSlider.higlightWindow((currentQuestion.fromYear,currentQuestion.toYear))
 
+        if animateFromView == rangeMinLabel
+        {
+            rangeSlider.higlightLowerWindow(currentQuestion.fromYear)
+        }
+        else if animateFromView == rangeMaxLabel
+        {
+            rangeSlider.higlightUpperWindow(currentQuestion.toYear)
+        }
+        else
+        {
+            rangeSlider.higlightWindows((currentQuestion.fromYear,currentQuestion.toYear))
+            //rangeSlider.higlightUpperWindow(currentQuestion.toYear)
+            //rangeSlider.higlightLowerWindow(currentQuestion.fromYear)
+        }
+        
         answerAnimationLabel.textColor = self.rangeReset ? UIColor.blackColor() : UIColor.redColor()
         answerAnimationLabel.center = animateFromView.center
         self.view.bringSubviewToFront(answerAnimationLabel)
@@ -999,7 +1015,21 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             return ""
         }()
         
-        rangeSlider.higlightWindow((currentQuestion.fromYear,currentQuestion.toYear))
+        if animateFromView == rangeMinLabel
+        {
+            rangeSlider.higlightLowerWindow(currentQuestion.fromYear)
+        }
+        else if animateFromView == rangeMaxLabel
+        {
+            rangeSlider.higlightUpperWindow(currentQuestion.toYear)
+        }
+        else
+        {
+            rangeSlider.higlightWindows((currentQuestion.fromYear,currentQuestion.toYear))
+            //rangeSlider.higlightLowerWindow(currentQuestion.fromYear)
+            //rangeSlider.higlightUpperWindow(currentQuestion.toYear)
+        }
+
         
         answerAnimationLabel.textColor = UIColor.greenColor()
         self.view.bringSubviewToFront(answerAnimationLabel)

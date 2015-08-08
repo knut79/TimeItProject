@@ -658,18 +658,18 @@ class DataHandler
         newEvent(id++,title:"old war (1918-1939)", from: -540, to:-300, type:periodType.fivehundred, text:"The best approach to add padding to a UILabel is to subclass UILabel and add an edgeInsets property. You then set the desired insets and the label will be drawn accordingly.",level: 3)
     */
 
-/*
+
         newEvent(id++,title:"World population reaches the 6 billion mark", year:1999, type:periodType.ten)
         newEvent(id++,title:"Dmitri Medvedev elected President of Russia", year:2008, type:periodType.ten)
         newEvent(id++,title:"Confucius born in China", year:-551, type:periodType.fivehundred)
-*/
+
         //newEvent(id++,title: "Triassic period", from:Int32(-248 * aMillion), to: Int32(-205 * aMillion), type:periodType.fivehundred,level:2)
         
         //newEvent(id++,title: "In the old days", from:-990, to: -800, type:periodType.fivehundred,level:2)
-        //newEvent(id++,title: "In the old days SPLIT", from:-990, to: 500, type:periodType.fivehundred,level:2)
+        newEvent(id++,title: "In the old days SPLIT", from:-990, to: 500, type:periodType.millenia,level:2)
         
         //pass newEvent(id++,title: "old days -700 -300", from:-700, to: -300, type:periodType.fivehundred,level:2)
-        newEvent(id++,title: "old days -600 -540", from:-600, to: -540, type:periodType.fivehundred,level:2)
+        newEvent(id++,title: "old days -600 -540", from:-950, to: -540, type:periodType.fivehundred,level:2)
         //newEvent(id++,title: "old days 900 1000", from:900, to: 1000, type:periodType.fivehundred,level:2)
         //newEvent(id++,title: "new days 900 997", from:900, to: 997, type:periodType.fivehundred,level:2)
         //newEvent(id++,title: "new days 1523 1540", from:1513, to: 1540, type:periodType.fifty,level:2)

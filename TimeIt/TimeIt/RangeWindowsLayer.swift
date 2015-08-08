@@ -11,8 +11,13 @@ import QuartzCore
 
 class RangeWindowsLayer: CALayer {
     weak var rangeSlider: RangeSlider?
-    var valueLowerWindow:Double?
-    var valueUpperWindow:Double?
+
+    var value:Double?{
+        didSet {
+            let h = 0
+        }
+    }
+
     
     override func drawInContext(ctx: CGContext!) {
         if let slider = rangeSlider {
@@ -23,24 +28,21 @@ class RangeWindowsLayer: CALayer {
             //let lowerValuePosition = CGFloat(slider.positionForValue(slider.lowerValue + 1))
             //let upperValuePosition = CGFloat(slider.positionForValue(slider.lowerValue - 1))
             //let valuePosition = CGFloat(slider.positionForValue(slider.lowerValue))
-            let testValuePosition = CGFloat(slider.positionForValue(slider.lowerValue))
+            
+            
+            //let testValuePosition = CGFloat(slider.positionForValue(slider.lowerValue))
             
             
             //println("\(valueUpperPosition) ---test \(testValuePosition)")
             
-            if(valueLowerWindow != nil)
+            if(value != nil)
             {
                 
-                let valuePosition = CGFloat(slider.positionForValue(valueLowerWindow!))
+                let valuePosition = CGFloat(slider.positionForValue(value!))
                 renderPosition(ctx,valuePosition: valuePosition)
 
             }
-            
-            if(valueUpperWindow != nil)
-            {
-                let valuePosition = CGFloat(slider.positionForValue(valueUpperWindow!))
-                renderPosition(ctx,valuePosition: valuePosition)
-            }
+
             
         }
     }

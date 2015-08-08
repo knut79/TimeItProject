@@ -22,7 +22,8 @@ class RangeSlider: UIControl {
     let trackLayer = RangeSliderTrackLayer()
     let lowerThumbLayer = RangeSliderThumbLayer()
     let upperThumbLayer = RangeSliderThumbLayer()
-    let windowLayer = RangeWindowsLayer()
+    let lowerWindowLayer = RangeWindowsLayer()
+    let upperWindowLayer = RangeWindowsLayer()
     
     var defaultTrackHighlightTintColor:UIColor = UIColor(red: 0.0, green: 0.45, blue: 0.94, alpha: 1.0)
     
@@ -146,24 +147,93 @@ class RangeSlider: UIControl {
         return CGFloat(bounds.height)
     }
     
-    func higlightWindow(values:(Int32?,Int32?))
+    func higlightUpperWindow(value:Int32?)
     {
-        windowLayer.frame = bounds.rectByInsetting(dx: 0.0, dy: bounds.height / 3)
-        windowLayer.valueLowerWindow = values.0 == nil ? nil : Double(values.0!)
-        windowLayer.valueUpperWindow = values.1 == nil ? nil : Double(values.1!)
+        //updateLayerFrames()
+        upperWindowLayer.frame = bounds.rectByInsetting(dx: 0.0, dy: bounds.height / 3)
+        upperWindowLayer.value = value == nil ? nil : Double(value!)
         if typeValue == sliderType.justUpper
         {
-            windowLayer.valueLowerWindow = nil
+            lowerWindowLayer.value = nil
         }
         else if typeValue == sliderType.justLower || typeValue == sliderType.single
         {
-            windowLayer.valueUpperWindow = nil
+            upperWindowLayer.value = nil
         }
-        
-        windowLayer.setNeedsDisplay()
+        /*
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        //lowerWindowLayer.value = nil
+        lowerWindowLayer.setNeedsDisplay()
+        //updateLayerFrames()
+        upperWindowLayer.setNeedsDisplay()
+        CATransaction.commit()
+        */
+        updateLayerFrames()
+        //upperWindowLayer.value = nil
 
     }
     
+    func higlightLowerWindow(value:Int32?)
+    {
+        
+        lowerWindowLayer.frame = bounds.rectByInsetting(dx: 0.0, dy: bounds.height / 3)
+        lowerWindowLayer.value = value == nil ? nil : Double(value!)
+        if typeValue == sliderType.justUpper
+        {
+            lowerWindowLayer.value = nil
+        }
+        if typeValue == sliderType.justLower || typeValue == sliderType.single
+        {
+            upperWindowLayer.value = nil
+        }
+        /*
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        //upperWindowLayer.value = nil
+        upperWindowLayer.setNeedsDisplay()
+        //updateLayerFrames()
+        lowerWindowLayer.setNeedsDisplay()
+        //upperWindowLayer.setNeedsDisplay()
+        CATransaction.commit()
+        */
+        updateLayerFrames()
+        //lowerWindowLayer.value = nil
+    }
+    
+    
+    func resetWindows()
+    {
+        lowerWindowLayer.value = nil
+        upperWindowLayer.value = nil
+        updateLayerFrames()
+    }
+    
+    
+    func higlightWindows(values:(Int32?,Int32?))
+    {
+        upperWindowLayer.frame = bounds.rectByInsetting(dx: 0.0, dy: bounds.height / 3)
+        lowerWindowLayer.frame = bounds.rectByInsetting(dx: 0.0, dy: bounds.height / 3)
+        lowerWindowLayer.value = values.0 == nil ? nil : Double(values.0!)
+        upperWindowLayer.value = values.1 == nil ? nil : Double(values.1!)
+        if typeValue == sliderType.justUpper
+        {
+            lowerWindowLayer.value = nil
+        }
+        else if typeValue == sliderType.justLower || typeValue == sliderType.single
+        {
+            upperWindowLayer.value = nil
+        }
+        
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        upperWindowLayer.setNeedsDisplay()
+        lowerWindowLayer.setNeedsDisplay()
+        CATransaction.commit()
+        lowerWindowLayer.value = nil
+        upperWindowLayer.value = nil
+        
+    }
     
 
     override init(frame: CGRect) {
@@ -173,9 +243,13 @@ class RangeSlider: UIControl {
         trackLayer.contentsScale = UIScreen.mainScreen().scale
         layer.addSublayer(trackLayer)
         
-        windowLayer.rangeSlider = self
-        windowLayer.contentsScale = UIScreen.mainScreen().scale
-        layer.addSublayer(windowLayer)
+        lowerWindowLayer.rangeSlider = self
+        lowerWindowLayer.contentsScale = UIScreen.mainScreen().scale
+        layer.addSublayer(lowerWindowLayer)
+        
+        upperWindowLayer.rangeSlider = self
+        upperWindowLayer.contentsScale = UIScreen.mainScreen().scale
+        layer.addSublayer(upperWindowLayer)
         
         lowerThumbLayer.rangeSlider = self
         lowerThumbLayer.contentsScale = UIScreen.mainScreen().scale
@@ -213,8 +287,8 @@ class RangeSlider: UIControl {
     func updateLayerFrames() {
 
         
-        windowLayer.valueLowerWindow = 0
-        windowLayer.valueUpperWindow = 0
+       // upperWindowLayer.value = nil
+        //lowerWindowLayer.value = nil
         
         CATransaction.begin()
         CATransaction.setDisableActions(true)
@@ -224,8 +298,11 @@ class RangeSlider: UIControl {
         trackLayer.frame = bounds.rectByInsetting(dx: 0.0, dy: bounds.height / 3)
         trackLayer.setNeedsDisplay()
         
-        windowLayer.frame = bounds.rectByInsetting(dx: 0.0, dy: bounds.height / 3)
-        windowLayer.setNeedsDisplay()
+        lowerWindowLayer.frame = bounds.rectByInsetting(dx: 0.0, dy: bounds.height / 3)
+        lowerWindowLayer.setNeedsDisplay()
+        
+        upperWindowLayer.frame = bounds.rectByInsetting(dx: 0.0, dy: bounds.height / 3)
+        upperWindowLayer.setNeedsDisplay()
         
         let lowerThumbCenter = CGFloat(positionForValue(lowerValue))
         
