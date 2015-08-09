@@ -36,6 +36,25 @@ enum periodType: Int
             return "not valid"
         }
     }
+    
+    var years: Int {
+        switch self {
+        case .millenia:
+            return 1000
+        case .fivehundred:
+            return 500
+        case .hundred:
+            return 100
+        case .fifty:
+            return 50
+        case .ten:
+            return 10
+        case .five:
+            return 5
+        default:
+            return 0
+        }
+    }
 }
 
 
