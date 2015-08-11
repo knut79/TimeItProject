@@ -162,9 +162,8 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         if updateGlobalGameStats
         {
             globalGameStats.addOkPoints(newGameStatsValues.0, completion: { () in
-                self.globalGameStats.addGoodPoints(self.newGameStatsValues.1, completion: { () in
                     self.globalGameStats.addLovePoints(self.newGameStatsValues.2)
-                })
+                
             })
             updateGlobalGameStats = false
             datactrl.updateGameData(newGameStatsValues.0,deltaGoodPoints: newGameStatsValues.1,deltaLovePoints: newGameStatsValues.2)
@@ -219,7 +218,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
     
     func sliderUpperLevelText() -> String
     {
-        return Int(levelSlider.upperValue) > 3 ? "ridiculous" : "\(Int(levelSlider.upperValue))"
+        return Int(levelSlider.upperValue) > 2 ? "ridiculous" : "\(Int(levelSlider.upperValue))"
     }
  
 
@@ -273,19 +272,43 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         {
             return
         }
-        let rightLocation = tagsScrollView.center
-        UIView.animateWithDuration(0.25, animations: { () -> Void in
+        
+        if self.tags.count < 3
+        {
+            var numberPrompt = UIAlertController(title: "Pick 3",
+                message: "Select at least 3 tags",
+                preferredStyle: .Alert)
             
-            self.tagsScrollView.transform = CGAffineTransformScale(self.tagsScrollView.transform, 0.1, 0.1)
+            var numberTextField: UITextField?
             
-            self.tagsScrollView.center = self.selectFilterTypeButton.center
-            }, completion: { (value: Bool) in
+            numberPrompt.addAction(UIAlertAction(title: "Ok",
+                style: .Default,
+                handler: { (action) -> Void in
+                    
+            }))
+            
+            
+            self.presentViewController(numberPrompt,
+                animated: true,
+                completion: nil)
+        }
+        else
+        {
+
+            let rightLocation = tagsScrollView.center
+            UIView.animateWithDuration(0.25, animations: { () -> Void in
+                
                 self.tagsScrollView.transform = CGAffineTransformScale(self.tagsScrollView.transform, 0.1, 0.1)
-                self.tagsScrollView.alpha = 0
-                self.tagsScrollView.center = rightLocation
-                self.listClosed = true
-                self.tagsScrollViewEnableBackground.removeFromSuperview()
-        })
+                
+                self.tagsScrollView.center = self.selectFilterTypeButton.center
+                }, completion: { (value: Bool) in
+                    self.tagsScrollView.transform = CGAffineTransformScale(self.tagsScrollView.transform, 0.1, 0.1)
+                    self.tagsScrollView.alpha = 0
+                    self.tagsScrollView.center = rightLocation
+                    self.listClosed = true
+                    self.tagsScrollViewEnableBackground.removeFromSuperview()
+            })
+        }
     }
     
     func reloadMarks(tags:[String])

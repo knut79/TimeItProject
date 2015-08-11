@@ -14,9 +14,12 @@ class GameStats:UIView {
     var okPointsView:UIView!
     var okPoints:Int!
     var okPointsLabel:UILabel!
-    var goodPointsView:UIView!
+    
     var goodPoints:Int!
+    /*
+    var goodPointsView:UIView!
     var goodPointsLabel:UILabel!
+    */
     var lovePointsView:UIView!
     var lovePoints:Int!
     var lovePointsLabel:UILabel!
@@ -52,6 +55,7 @@ class GameStats:UIView {
         self.addSubview(okPointsView)
         
         
+        /*
         goodPointsView = UIView(frame: CGRectMake(okPointsView.frame.maxX, marginTop, labelWidth, frame.height - marginTop))
         goodPointsLabel = UILabel(frame: CGRectMake(0, 0, labelWidth, frame.height - marginTop))
         goodPointsLabel.textAlignment = NSTextAlignment.Center
@@ -60,8 +64,9 @@ class GameStats:UIView {
         goodPointsLabel.text = "\(self.goodPoints) 😀"
         goodPointsView.addSubview(goodPointsLabel)
         self.addSubview(goodPointsView)
+        */
         
-        lovePointsView = UIView(frame: CGRectMake(goodPointsView.frame.maxX, marginTop, labelWidth, frame.height - marginTop))
+        lovePointsView = UIView(frame: CGRectMake(okPointsView.frame.maxX, marginTop, labelWidth, frame.height - marginTop))
         lovePointsLabel = UILabel(frame: CGRectMake(0, 0, labelWidth, frame.height - marginTop))
         lovePointsLabel.textAlignment = NSTextAlignment.Center
         lovePointsLabel.textColor = UIColor.blackColor()
@@ -89,10 +94,8 @@ class GameStats:UIView {
         {
             return true
         }
-        if goodPoints > 0
-        {
-            return true
-        }
+        
+        
         if lovePoints > 0
         {
             return true
@@ -123,9 +126,10 @@ class GameStats:UIView {
         }
     }
 
-
+/*
     func addGoodPoints(points:Int,completion: (() -> (Void))? = nil)
     {
+        
         if points <= 0
         {
             completion?()
@@ -144,7 +148,9 @@ class GameStats:UIView {
                 completion?()
             })
         }
+
     }
+    */
     
     func addLovePoints(points:Int)
     {
@@ -184,23 +190,25 @@ class GameStats:UIView {
         })
     }
     
-    func subtractOkPoints(var points:Int)
+    func subtractOkPoints(let points:Int)
     {
         if self.okPoints <= 0
         {
             return
         }
         
+        var positiveNegativePoints = points < 0 ? points * -1 : points
+        
         okPointsView.layer.removeAllAnimations()
-        var deltaPoints = points - self.okPoints!
-        self.okPoints! -= points
+        var deltaPoints = positiveNegativePoints - self.okPoints!
+        self.okPoints! -= positiveNegativePoints
         if( okPoints < 0)
         {
             okPoints = 0
-            points = deltaPoints
+            positiveNegativePoints = deltaPoints
         }
         
-        animationLabel.text = "-\(points)"
+        animationLabel.text = "-\(positiveNegativePoints)"
         self.okPointsLabel.text = "\(self.okPoints!) 😌"
         animateSubractPoints(okPointsView,completion: {() -> Void in
             
@@ -209,6 +217,7 @@ class GameStats:UIView {
 
     }
     
+    /*
     func subtractGoodPoints(var points:Int)
     {
         if self.goodPoints <= 0
@@ -233,6 +242,7 @@ class GameStats:UIView {
         
         animationLabel.transform = CGAffineTransformScale(animationLabel.transform, 1.5, 1.5)
     }
+    */
     
     func animateSubractPoints(animateView:UIView,completion: (() -> Void)?)
     {

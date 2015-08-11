@@ -45,6 +45,11 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     var levelLow:Int = 1
     var tags:[String] = []
     
+    let noBonusSubtractOkPoints:Int = -50
+    let bonusPoints10PercentWindow = 75
+    let bonusPoints20PercentWindow = 100
+    let bonusPointsPerfect = 125
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -641,6 +646,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             self.timelineScrollView.zoomToRect(CGRectMake(xPos - rectangleWidth, yPosForceBottomOfScroll , rectangleWidth * 3, self.timelineScrollView.frame.height), animated: true)
             
             self.timelineView.animateTimelinePocket(periodButton.period, scale:self.timelineScrollView.zoomScale)
+            self.datactrl.updateGoodScore(self.currentQuestion, deltaScore:1)
             self.bonusQuestion(periodButton)
         })
  
@@ -773,6 +779,9 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         })
     }
     
+
+    
+    
     func bonusAction(sender:UIButton)
     {
         //if rangeReset is true no year values are set
@@ -799,8 +808,8 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                 else
                 {
                     giveNoBonus(rangeMinLabel, completionClosure: { () in
-                        self.gameStats.subtractGoodPoints(1)
-                        self.datactrl.updateGoodScore(self.currentQuestion, deltaScore: -1)
+                        self.gameStats.subtractOkPoints(self.noBonusSubtractOkPoints)
+                        //self.datactrl.updateGoodScore(self.currentQuestion, deltaScore: -1)
                         self.resetRange()
                         self.setNextQuestion()
                     })
@@ -817,8 +826,8 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                 else
                 {
                     giveNoBonus(sender,completionClosure: { () in
-                        self.gameStats.subtractGoodPoints(1)
-                        self.datactrl.updateGoodScore(self.currentQuestion, deltaScore: -1)
+                        self.gameStats.subtractOkPoints(self.noBonusSubtractOkPoints)
+                        //self.datactrl.updateGoodScore(self.currentQuestion, deltaScore: 1)
                         self.resetRange()
                         self.setNextQuestion()
                     })
@@ -836,8 +845,8 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                 else
                 {
                     giveNoBonus(sender, completionClosure: { () in
-                        self.gameStats.subtractGoodPoints(1)
-                        self.datactrl.updateGoodScore(self.currentQuestion, deltaScore: -1)
+                        self.gameStats.subtractOkPoints(self.noBonusSubtractOkPoints)
+                        //self.datactrl.updateGoodScore(self.currentQuestion, deltaScore: -1)
                         self.resetRange()
                         self.setNextQuestion()
                     })
@@ -861,8 +870,8 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                 {
                     giveBonus(pointsLower, animateFromView: rangeMinLabel, completionClosure: { () in
                         self.giveNoBonus(self.rangeMaxLabel, completionClosure: { () in
-                            self.gameStats.subtractGoodPoints(1)
-                            self.datactrl.updateGoodScore(self.currentQuestion, deltaScore: -1)
+                            self.gameStats.subtractOkPoints(self.noBonusSubtractOkPoints)
+                            //self.datactrl.updateGoodScore(self.currentQuestion, deltaScore: -1)
                             self.resetRange()
                             self.setNextQuestion()
                         })
@@ -872,7 +881,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                 else if selectedBits == 2
                 {
                     giveNoBonus(rangeMinLabel, completionClosure: { () in
-                        self.gameStats.subtractGoodPoints(1)
+                        self.gameStats.subtractOkPoints(self.noBonusSubtractOkPoints)
                         self.datactrl.updateGoodScore(self.currentQuestion, deltaScore: -1)
                         self.giveBonus(pointsUpper, animateFromView: self.rangeMaxLabel, completionClosure: { () in
                             self.resetRange()
@@ -895,7 +904,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                 if (pointsUpper + pointsLower) <= 0
                 {
                     giveNoBonus(sender, completionClosure: { () in
-                        
+                        self.gameStats.subtractOkPoints(self.noBonusSubtractOkPoints * 2)
                         self.resetRange()
                         self.setNextQuestion()
                     })
@@ -918,19 +927,19 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         let withinLower20 = valueGiven >= (Int(questionValue + lastRightPeriodButtonClicked.period.lowPercentHalfWindow()))
         if valueGiven == questionValue
         {
-            return 3
+            return bonusPointsPerfect
         }
         else if withinUpper10 && withinLower10
         {
-            return 2
+            return bonusPoints10PercentWindow
         }
         else if withinLower20 && withinUpper20
         {
-            return 1
+            return bonusPoints20PercentWindow
         }
         else
         {
-            return 0
+            return noBonusSubtractOkPoints
         }
     }
     
@@ -1004,15 +1013,15 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
 
         let lovePoint = points == 3
         let percentString:String = {() -> String in
-            if points == 1
+            if points == self.bonusPoints20PercentWindow
             {
                 return "\(Int(highPercentWindow * 100))% window"
             }
-            else if points == 2
+            else if points == self.bonusPoints10PercentWindow
             {
                 return "\(Int(lowPercentWindow * 100))% window"
             }
-            else if points == 3
+            else if points == self.bonusPointsPerfect
             {
                 return "Perfect"
             }
@@ -1021,17 +1030,17 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         }()
         
         let iconString = {() -> String in
-            if points == 1
+            if points == self.bonusPoints20PercentWindow
             {
-                return "😀"
+                return "\(self.bonusPoints20PercentWindow)x😌"
             }
-            else if points == 2
+            else if points == self.bonusPoints10PercentWindow
             {
-                return "😀😀"
+                return "\(self.bonusPoints10PercentWindow)x😌"
             }
-            else if points == 3
+            else if points == self.bonusPointsPerfect
             {
-                return "😍"
+                return "\(self.bonusPointsPerfect)x😌 1x😍"
             }
             return ""
         }()
@@ -1069,7 +1078,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             var xPos = self.timelineView.getXPosOfTimelineItem(self.lastRightPeriodButtonClicked.period)
             var yPosForceBottomOfScroll:CGFloat = 9999 //self.timelineScrollView.contentOffset.y + self.timelineScrollView.frame.height
             self.timelineScrollView.zoomToRect(CGRectMake(xPos - rectangleWidth, yPosForceBottomOfScroll , rectangleWidth * 3, self.timelineScrollView.frame.height), animated: true)
-            let xOffset = lovePoint ? self.gameStats.lovePointsView.center.x : self.gameStats.goodPointsView.center.x
+            let xOffset = lovePoint ? ((self.gameStats.lovePointsView.center.x + self.gameStats.okPointsView.center.x) / 2) : self.gameStats.okPointsView.center.x
             self.answerAnimationLabel.center =  CGPointMake(xOffset,self.gameStats.center.y )
             self.answerAnimationLabel.alpha = 1
             self.answerAnimationLabel.transform = CGAffineTransformScale(self.answerAnimationLabel.transform, 1.5, 1.5)
@@ -1096,12 +1105,14 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                         if lovePoint
                         {
                             self.gameStats.addLovePoints(1)
+                            self.gameStats.addOkPoints(points)
                             self.datactrl.updateLoveScore(self.currentQuestion, deltaScore:1)
+                            self.datactrl.updateOkScore(self.currentQuestion, deltaScore:points)
                         }
                         else
                         {
-                            self.gameStats.addGoodPoints(points)
-                            self.datactrl.updateGoodScore(self.currentQuestion, deltaScore:points)
+                            self.gameStats.addOkPoints(points)
+                            self.datactrl.updateOkScore(self.currentQuestion, deltaScore:points)
                         }
                         
                         self.timelineView.setNeedsDisplay()

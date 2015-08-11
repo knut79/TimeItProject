@@ -26,6 +26,7 @@ class TagCheckScrollView: UIView , UIScrollViewDelegate, TagCheckItemProtocol{
     var scrollView:UIScrollView!
     var closeButton:UIButton!
     var delegate:TagCheckViewProtocol!
+    var selectedInfoLabel:UILabel!
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -36,6 +37,8 @@ class TagCheckScrollView: UIView , UIScrollViewDelegate, TagCheckItemProtocol{
         super.init(frame: frame)
         tags = []
         tagCheckItems = []
+        
+        
         
         closeButton = UIButton(frame: CGRectMake(frame.width - 40, 0, 40, 40))
         closeButton.setTitle("❌", forState: UIControlState.Normal)
@@ -58,9 +61,15 @@ class TagCheckScrollView: UIView , UIScrollViewDelegate, TagCheckItemProtocol{
         tags.append("#science")
         tags.append("#discovery")
         tags.append("#invention")
+        tags.append("#sport")
         tags.append("#miscellaneous")
         
         let itemheight:CGFloat = 40
+        
+        selectedInfoLabel = UILabel(frame: CGRectMake(0, 0, self.frame.width - closeButton.frame.width, itemheight))
+        selectedInfoLabel.textAlignment = NSTextAlignment.Center
+        selectedInfoLabel.text = ""
+        /*
         let unselectBoxButton = UIButton(frame: CGRectMake(0, 0, itemheight, itemheight))
         unselectBoxButton.setTitle("◽️", forState: UIControlState.Normal)
         unselectBoxButton.addTarget(self, action: "unselectAllTags", forControlEvents: UIControlEvents.TouchUpInside)
@@ -70,10 +79,10 @@ class TagCheckScrollView: UIView , UIScrollViewDelegate, TagCheckItemProtocol{
         
         scrollView.addSubview(unselectBoxButton)
         scrollView.addSubview(unselectTitleLabel)
-        
+        */
         
         var contentHeight:CGFloat = 0
-        var i:CGFloat = 1
+        var i:CGFloat = 0
         for tagItem in tags
         {
             let newTagCheckItem = TagCheckView(frame: CGRectMake(0, itemheight * i, self.frame.width, itemheight), tagTitle: tagItem)
@@ -85,7 +94,9 @@ class TagCheckScrollView: UIView , UIScrollViewDelegate, TagCheckItemProtocol{
         }
         
         scrollView.contentSize = CGSizeMake(scrollView.frame.width, contentHeight)
+        self.addSubview(selectedInfoLabel)
         self.addSubview(closeButton)
+        
     }
     
     func unselectAllTags()
@@ -100,7 +111,10 @@ class TagCheckScrollView: UIView , UIScrollViewDelegate, TagCheckItemProtocol{
     
     func checkChanged()
     {
-        delegate.reloadMarks(getTagsAsArray())
+        let selectedTags = getTagsAsArray()
+        delegate.reloadMarks(selectedTags)
+        
+        selectedInfoLabel.text = "\(selectedTags.count) tags selected"
     }
     
     func getTagsAsArray() -> [String]
@@ -131,6 +145,8 @@ class TagCheckScrollView: UIView , UIScrollViewDelegate, TagCheckItemProtocol{
     
     func closeAction()
     {
+
         delegate!.closeTagCheckView()
+
     }
 }
