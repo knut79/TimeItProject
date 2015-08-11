@@ -285,7 +285,7 @@ class TimelineViewController: UIViewController,UIScrollViewDelegate {
         var collectionOfNotRightAnswQuestions:[HistoricEvent] = []
         for eventItem in period.events
         {
-            if (eventItem as! HistoricEvent).okScore > 0
+            if (eventItem as! HistoricEvent).goodScore > 0
             {
                 collectionOfRightAnsweredQuestions.append(eventItem as! HistoricEvent)
             }
@@ -306,7 +306,7 @@ class TimelineViewController: UIViewController,UIScrollViewDelegate {
         {
             for eventItem in periodItem.events
             {
-                if (eventItem as! HistoricEvent).okScore > 0
+                if (eventItem as! HistoricEvent).goodScore > 0
                 {
                     collectionRight.append(eventItem as! HistoricEvent)
                 }
