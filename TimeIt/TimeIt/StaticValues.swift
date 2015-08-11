@@ -16,7 +16,7 @@ let lowPercentWindow = 0.1
 let highPercentWindow = 0.2
 
 let minLevel:Int = 1
-let maxLevel:Int = 4
+let maxLevel:Int = 3
 
 let minWayBack:Int32 = -570000000
 let maxWayBack:Int32 = -1000000

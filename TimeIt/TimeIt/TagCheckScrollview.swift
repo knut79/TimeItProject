@@ -53,13 +53,12 @@ class TagCheckScrollView: UIView , UIScrollViewDelegate, TagCheckItemProtocol{
         self.layer.borderColor = UIColor.blackColor().CGColor
         self.layer.borderWidth = 2.0
         
-        
-        tags.append("#periods")
+        tags.append("#war")
         tags.append("#headOfState")
         tags.append("#science")
-        tags.append("#war")
-        tags.append("#discoveries")
-        tags.append("#curiosa")
+        tags.append("#discovery")
+        tags.append("#invention")
+        tags.append("#miscellaneous")
         
         let itemheight:CGFloat = 40
         let unselectBoxButton = UIButton(frame: CGRectMake(0, 0, itemheight, itemheight))

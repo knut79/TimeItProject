@@ -492,6 +492,14 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         //animate!!!
         var orgPoint = sender.center
         self.view.bringSubviewToFront(sender)
+        
+        //test
+        for item in sender.childButtons
+        {
+            
+            item.insideLabel.alpha = 0
+        }
+        //end test
         UIView.animateWithDuration(0.50, animations: { () -> Void in
             
             for item in self.buttonCollection
@@ -512,12 +520,10 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             {
                 
                 item.frame = CGRectMake(0,0, buttonWidth, self.defaultButtonHeight)
-                item.insideLabel.center = item.center
+                //item.insideLabel.center = item.center
                 item.backgroundColor = UIColor.greenColor()
-                println(" TEST2.1 \(self.questionLabel.frame.maxY) \((item.frame.height / 2))")
-                println(" TEST2.2 \(item.frame.height)")
                 item.center = CGPointMake(x + (item.frame.width/2), self.questionLabel.frame.maxY +  (item.frame.height / 2))
-                println(" TEST2.3 \(item.center.y)")
+
                 
                 //var childX:CGFloat = oldParentX
                 var childButtonWidth = item.frame.size.width / CGFloat(item.childButtons.count)
@@ -534,9 +540,24 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             
             }, completion: { (value: Bool) in
                 
+                //test
+                for item in sender.childButtons
+                {
+                    
+                    item.insideLabel.center = item.center
+                }
+                //end test
+                
             //animate button desolvement
             UIView.animateWithDuration(0.25, animations: { () -> Void in
 
+                //test
+                for item in sender.childButtons
+                {
+                    
+                    item.insideLabel.alpha = 1
+                }
+                //end test
                 sender.alpha = 0
                 }, completion: { (value: Bool) in
                     self.periodSelectedFinalize(sender)
