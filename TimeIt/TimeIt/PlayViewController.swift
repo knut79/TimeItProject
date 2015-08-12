@@ -113,7 +113,8 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         questionLabel.font = UIFont.boldSystemFontOfSize(25)
         questionLabel.numberOfLines = 1
         questionLabel.adjustsFontSizeToFitWidth = true
-        questionLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        questionLabel.baselineAdjustment = UIBaselineAdjustment.AlignCenters
+        questionLabel.lineBreakMode = NSLineBreakMode.ByClipping //NSLineBreakMode.ByWordWrapping
         originalCenterQueston = questionLabel.center
         //originalCenterQueston = CGPointMake(UIScreen.mainScreen().bounds.width / 2, UIScreen.mainScreen().bounds.height * 0.15)
         //questionLabel.center = originalCenterQueston
@@ -247,7 +248,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             }
             if rangeSlider.typeValue != sliderType.justLower
             {
-                println(" test formattedUpperValue \(rangeSlider.formattedUpperValue)")
+                //println(" test formattedUpperValue \(rangeSlider.formattedUpperValue)")
                 rangeMaxLabel.text = rangeSlider.formattedUpperValue //"\(Int(rangeSlider.upperValue))"
             }
         }
@@ -498,13 +499,6 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         var orgPoint = sender.center
         self.view.bringSubviewToFront(sender)
         
-        //test
-        for item in sender.childButtons
-        {
-            
-            item.insideLabel.alpha = 0
-        }
-        //end test
         UIView.animateWithDuration(0.50, animations: { () -> Void in
             
             for item in self.buttonCollection
@@ -525,12 +519,13 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             {
                 
                 item.frame = CGRectMake(0,0, buttonWidth, self.defaultButtonHeight)
-                //item.insideLabel.center = item.center
+                item.insideLabel.center = item.center
                 item.backgroundColor = UIColor.greenColor()
                 item.center = CGPointMake(x + (item.frame.width/2), self.questionLabel.frame.maxY +  (item.frame.height / 2))
 
                 
                 //var childX:CGFloat = oldParentX
+                /*
                 var childButtonWidth = item.frame.size.width / CGFloat(item.childButtons.count)
                 var childX:CGFloat = item.frame.minX
                 for childItem in item.childButtons
@@ -539,19 +534,14 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                     childItem.center = CGPointMake(childX + (childItem.frame.width/2), (UIScreen.mainScreen().bounds.size.height / 2) + item.frame.height)
                     childX += childItem.frame.width
                 }
+                */
                 
                 x += item.frame.width + vertialHorizontalMargin
             }
             
             }, completion: { (value: Bool) in
                 
-                //test
-                for item in sender.childButtons
-                {
-                    
-                    item.insideLabel.center = item.center
-                }
-                //end test
+
                 
             //animate button desolvement
             UIView.animateWithDuration(0.25, animations: { () -> Void in
