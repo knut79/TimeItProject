@@ -85,7 +85,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         
         selectFilterTypeButton = UIButton(frame: CGRectZero)
         selectFilterTypeButton.setTitle("📋", forState: UIControlState.Normal)
-        selectFilterTypeButton.addTarget(self, action: "swichFilterType", forControlEvents: UIControlEvents.TouchUpInside)
+        selectFilterTypeButton.addTarget(self, action: "openFilterList", forControlEvents: UIControlEvents.TouchUpInside)
         selectFilterTypeButton.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0)
         view.addSubview(selectFilterTypeButton)
 
@@ -140,9 +140,8 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         {
 
             DataHandler().populateData({ () in
-                self.view.addSubview(self.playButton)
-                self.globalGameStats = GameStats(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width * 0.75, UIScreen.mainScreen().bounds.size.height * 0.08),okScore: Int(self.datactrl.okScoreID as! NSNumber),goodScore: Int(self.datactrl.goodScoreID as! NSNumber),loveScore: Int(self.datactrl.loveScoreID as! NSNumber))
-                self.view.addSubview(self.globalGameStats)
+                self.setupAfterPopulateData()
+                
                 self.loadingDataView.alpha = 0
                 self.loadingDataView.layer.removeAllAnimations()
             })
@@ -151,12 +150,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         }
         else
         {
-            //self.loadingDataView.alpha = 0
-            //self.loadingDataView.layer.removeAllAnimations()
-            
-            self.view.addSubview(self.playButton)
-            globalGameStats = GameStats(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width * 0.75, UIScreen.mainScreen().bounds.size.height * 0.08),okScore: Int(datactrl.okScoreID as! NSNumber),goodScore: Int(datactrl.goodScoreID as! NSNumber),loveScore: Int(datactrl.loveScoreID as! NSNumber))
-            self.view.addSubview(globalGameStats)
+            setupAfterPopulateData()
         }
         
         if updateGlobalGameStats
@@ -169,6 +163,14 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
             datactrl.updateGameData(newGameStatsValues.0,deltaGoodPoints: newGameStatsValues.1,deltaLovePoints: newGameStatsValues.2)
             datactrl.saveGameData()
         }
+    }
+    
+    func setupAfterPopulateData()
+    {
+        self.view.addSubview(self.playButton)
+        globalGameStats = GameStats(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width * 0.75, UIScreen.mainScreen().bounds.size.height * 0.08),okScore: Int(datactrl.okScoreID as! NSNumber),goodScore: Int(datactrl.goodScoreID as! NSNumber),loveScore: Int(datactrl.loveScoreID as! NSNumber))
+        self.view.addSubview(globalGameStats)
+        setupCheckboxView()
     }
     
     
@@ -306,7 +308,8 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
                     self.tagsScrollView.alpha = 0
                     self.tagsScrollView.center = rightLocation
                     self.listClosed = true
-                    self.tagsScrollViewEnableBackground.removeFromSuperview()
+                    self.tagsScrollViewEnableBackground.alpha = 0
+                    //self.tagsScrollViewEnableBackground.removeFromSuperview()
             })
         }
     }
@@ -316,11 +319,12 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         self.tags = tags
     }
     
-    func swichFilterType()
+    func setupCheckboxView()
     {
         let bannerViewHeight = bannerView != nil ? bannerView!.frame.height : 0
         tagsScrollViewEnableBackground = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height - bannerViewHeight))
         tagsScrollViewEnableBackground.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.5)
+        tagsScrollViewEnableBackground.alpha = 0
         var scrollViewWidth = UIScreen.mainScreen().bounds.size.width * 0.6
         let orientation = UIDevice.currentDevice().orientation
         if orientation == UIDeviceOrientation.LandscapeLeft || orientation == UIDeviceOrientation.LandscapeRight
@@ -333,13 +337,18 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         tagsScrollView.alpha = 0
         tagsScrollViewEnableBackground.addSubview(tagsScrollView!)
         view.addSubview(tagsScrollViewEnableBackground)
+    }
+    
+    func openFilterList()
+    {
+        
         
         let rightLocation = tagsScrollView.center
         tagsScrollView.transform = CGAffineTransformScale(tagsScrollView.transform, 0.1, 0.1)
         self.tagsScrollView.alpha = 1
         tagsScrollView.center = selectFilterTypeButton.center
         UIView.animateWithDuration(0.25, animations: { () -> Void in
-            
+            self.tagsScrollViewEnableBackground.alpha = 1
             self.tagsScrollView.transform = CGAffineTransformIdentity
             
             self.tagsScrollView.center = rightLocation

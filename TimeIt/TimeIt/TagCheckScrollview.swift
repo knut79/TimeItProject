@@ -35,7 +35,7 @@ class TagCheckScrollView: UIView , UIScrollViewDelegate, TagCheckItemProtocol{
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        tags = []
+        self.tags = []
         tagCheckItems = []
         
         
@@ -56,6 +56,7 @@ class TagCheckScrollView: UIView , UIScrollViewDelegate, TagCheckItemProtocol{
         self.layer.borderColor = UIColor.blackColor().CGColor
         self.layer.borderWidth = 2.0
         
+        
         tags.append("#war")
         tags.append("#headOfState")
         tags.append("#science")
@@ -64,11 +65,12 @@ class TagCheckScrollView: UIView , UIScrollViewDelegate, TagCheckItemProtocol{
         tags.append("#sport")
         tags.append("#miscellaneous")
         
+        
         let itemheight:CGFloat = 40
         
         selectedInfoLabel = UILabel(frame: CGRectMake(0, 0, self.frame.width - closeButton.frame.width, itemheight))
         selectedInfoLabel.textAlignment = NSTextAlignment.Center
-        selectedInfoLabel.text = ""
+        selectedInfoLabel.text = "\(tags.count) tags selected"
         /*
         let unselectBoxButton = UIButton(frame: CGRectMake(0, 0, itemheight, itemheight))
         unselectBoxButton.setTitle("◽️", forState: UIControlState.Normal)
@@ -111,10 +113,12 @@ class TagCheckScrollView: UIView , UIScrollViewDelegate, TagCheckItemProtocol{
     
     func checkChanged()
     {
+
         let selectedTags = getTagsAsArray()
-        delegate.reloadMarks(selectedTags)
-        
+       // delegate.reloadMarks(selectedTags)
+       
         selectedInfoLabel.text = "\(selectedTags.count) tags selected"
+
     }
     
     func getTagsAsArray() -> [String]
@@ -145,7 +149,12 @@ class TagCheckScrollView: UIView , UIScrollViewDelegate, TagCheckItemProtocol{
     
     func closeAction()
     {
-
+        
+        let selectedTags = getTagsAsArray()
+        delegate.reloadMarks(selectedTags)
+        
+        selectedInfoLabel.text = "\(selectedTags.count) tags selected"
+        
         delegate!.closeTagCheckView()
 
     }
