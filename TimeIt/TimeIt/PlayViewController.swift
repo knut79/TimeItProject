@@ -628,7 +628,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     func rightAnswerGiven(periodButton:PeriodButton)
     {
         lastRightPeriodButtonClicked = periodButton
-        rightPeriodStrikes = rightPeriodStrikes + 1
+        rightPeriodStrikes =  rightPeriodStrikes >= 3 ? 3 : rightPeriodStrikes + 1
         
         animateRightPeriod(periodButton, completion: {() -> Void in
             var xPos = self.timelineView.getXPosOfTimelineItem(periodButton.period)
@@ -686,7 +686,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     func wrongAnswerGiven(periodButton:PeriodButton)
     {
         let points = periodButton.level * 3
-        rightPeriodStrikes = 0
+        rightPeriodStrikes = rightPeriodStrikes <= 0 ? 0 : rightPeriodStrikes - 1
         answerAnimationLabel.textColor = UIColor.redColor()
         answerAnimationLabel.center = periodButton.center
         self.view.bringSubviewToFront(answerAnimationLabel)

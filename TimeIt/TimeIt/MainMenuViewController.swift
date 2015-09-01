@@ -53,6 +53,8 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         playButton = UIButton(frame:CGRectZero)
         playButton.addTarget(self, action: "playAction", forControlEvents: UIControlEvents.TouchUpInside)
         playButton.backgroundColor = UIColor.blueColor()
+        playButton.layer.cornerRadius = 5
+        playButton.layer.masksToBounds = true
         playButton.setTitle("Play", forState: UIControlState.Normal)
 
         playButtonExstraLabel = UILabel(frame:CGRectZero)
@@ -73,6 +75,8 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         timelineButton.setTitle("Timeline", forState: UIControlState.Normal)
         timelineButton.addTarget(self, action: "timelineAction", forControlEvents: UIControlEvents.TouchUpInside)
         timelineButton.backgroundColor = UIColor.blueColor()
+        timelineButton.layer.cornerRadius = 5
+        timelineButton.layer.masksToBounds = true
         view.addSubview(timelineButton)
         
         

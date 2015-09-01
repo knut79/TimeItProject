@@ -367,7 +367,11 @@ class DataHandler
         
         //SCIENCE ,tags:"#science"
         
-        
+        newEvent(id++,title:"Isaac Newtown is born", year:1642, type:periodType.ten,text: "",level:2,tags:"#science")
+        newEvent(id++,title:"Galileo Galilei is born in Piza", year:1564, type:periodType.ten,text: "",level:2,tags:"#science")
+        newEvent(id++,title:"Nicolaus Copernicus is born in Polen", year:1473, type:periodType.ten,text: "",tags:"#science")
+        newEvent(id++,title:"René Descartes is born in France", year:1596, type:periodType.ten,text: "",tags:"#science")
+        newEvent(id++,title:"James Maxwell, electromagnetisms father is born", year:1831, type:periodType.ten,text: "",tags:"#science")
         
         newEvent(id++,title:"Aristotle writes Meteorologica", year:-990, type:periodType.ten,text: "The first book on weather.",tags:"#science")
         newEvent(id++,title:"Musa al-Kwarizmi born in Baghdad", year:780, type:periodType.ten, text:"He introduced Hindu-Arabic numerals in his book Kitab al-jabr wa al-mugabalah.",tags:"#science")
@@ -536,7 +540,7 @@ class DataHandler
         newEvent(id++,title:"Volkswagen Beetle is launched", year:1936, type:periodType.ten,tags:"#invention")
         newEvent(id++,title:"Heinrich Focke creates the first successful helicopter", year:1936, type:periodType.ten,level:2,tags:"#invention")
         newEvent(id++,title:"Supermarket trolleys introduced in Oklahoma", year:1938, type:periodType.ten,tags:"#invention")
-        newEvent(id++,title:"Maiden flight of pressurized airliner", year:00, type:periodType.ten, text:"Boeing Stratoliner",level:2,tags:"#invention")
+        newEvent(id++,title:"Maiden flight of pressurized airliner", year:1938, type:periodType.ten, text:"Boeing Stratoliner",level:2,tags:"#invention")
         newEvent(id++,title:"Nylon stocking introduced", year:1940, type:periodType.ten,tags:"#invention")
         newEvent(id++,title:"First solid-body electric guitar is built by Les Paul", year:1947, type:periodType.ten,tags:"#invention")
         newEvent(id++,title:"Kalashnikov invents the AK-47", year:1947, type:periodType.ten,tags:"#invention")
@@ -568,6 +572,10 @@ class DataHandler
         newEvent(id++,title:"Apple launches the iPad", year:2010, type:periodType.ten,tags:"#invention")
         
         //HEAD OF STATE
+        newEvent(id++,title:"Abraham Lincolns Gettysburg Address (Speech)", year:1865,type:periodType.ten,level:2,tags:"#headOfState")
+        newEvent(id++,title:"Abraham Lincoln is elected US president", year:1861,type:periodType.ten,level:2,tags:"#headOfState")
+        newEvent(id++,title:"Richard Nixon is elected US president", year:1969,type:periodType.ten,level:2,tags:"#headOfState")
+        
         newEvent(id++,title:"Babylon ruled by Nebuchadnezzar", from: -605, to: -562, type:periodType.hundred,level:2,tags:"#headOfState")
         newEvent(id++,title:"Rome founded by Romulus", year:-753, type:periodType.ten,tags:"#headOfState")
         newEvent(id++,title:"Alexander the Great rule Macedonia", from:-336 , to:-323, type:periodType.fifty,level:1,tags:"#headOfState")
@@ -727,6 +735,10 @@ class DataHandler
         newEvent(id++,title:"Mexican Revolution", from:1910 , to:1921, type:periodType.fifty,tags:"#war")
         newEvent(id++,title:"French Revolution", from:1789, to:1799, type:periodType.ten,level:1,tags:"#war")
         
+        newEvent(id++,title:"Napoleonic Wars", from:1803, to: 1815, type:periodType.ten,level:2,tags:"#war")
+        newEvent(id++,title:"Year of the Soccer War or 100 Hour War", year:1969, type:periodType.ten,level:2,tags:"#war")
+
+        
         //NOT USED
         /*
         newEvent(id++,title:"Napoleonic Wars", from:1803, to: 1815, type:periodType.ten)
@@ -797,10 +809,10 @@ class DataHandler
         //newEvent(id++,title: "Triassic period", from:Int32(-248 * aMillion), to: Int32(-205 * aMillion), type:periodType.fivehundred,level:2)
         
         //newEvent(id++,title: "In the old days", from:-990, to: -800, type:periodType.fivehundred,level:2)
-        newEvent(id++,title: "In the old days SPLIT", from:-990, to: 500, type:periodType.fivehundred,level:2)
+        //newEvent(id++,title: "In the old days SPLIT", from:-990, to: 500, type:periodType.fivehundred,level:2)
         
         //pass newEvent(id++,title: "old days -700 -300", from:-700, to: -300, type:periodType.fivehundred,level:2)
-        newEvent(id++,title: "old days -600 -540", from:-950, to: -540, type:periodType.fivehundred,level:2)
+        //newEvent(id++,title: "old days -600 -540", from:-950, to: -540, type:periodType.fivehundred,level:2)
         //newEvent(id++,title: "old days 900 1000", from:900, to: 1000, type:periodType.fivehundred,level:2)
         //newEvent(id++,title: "new days 900 997", from:900, to: 997, type:periodType.fivehundred,level:2)
         //newEvent(id++,title: "new days 1523 1540", from:1513, to: 1540, type:periodType.fifty,level:2)
