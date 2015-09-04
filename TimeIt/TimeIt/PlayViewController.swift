@@ -241,7 +241,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     func animateTimeupMinusPoints()
     {
 
-        var button = {() -> PeriodButton? in
+        var button = {() -> UIButton? in
             for item in self.buttonCollection
             {
                 if self.isOnRightTrack(item.period)
@@ -249,46 +249,65 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                     return item
                 }
             }
-            return nil
+            return self.rangeButton
         }()
         
-        var label = UILabel(frame: CGRectMake(0, 0, 100, 40))
-        label.textAlignment = NSTextAlignment.Center
-        label.font = UIFont.boldSystemFontOfSize(20)
-        label.adjustsFontSizeToFitWidth = true
-        label.backgroundColor = UIColor.clearColor()
-        label.text = "\(self.currentQuestion.formattedTime)😕"
-
-        label.center = questionLabel.center //button!.center
-        label.transform = CGAffineTransformScale(label.transform, 0.1, 0.1)
-        self.view.addSubview(label)
+        var yearlabel = UILabel(frame: CGRectMake(0, 0, 100, 40))
+        yearlabel.textAlignment = NSTextAlignment.Center
+        yearlabel.font = UIFont.boldSystemFontOfSize(20)
+        yearlabel.adjustsFontSizeToFitWidth = true
+        yearlabel.backgroundColor = UIColor.clearColor()
+        yearlabel.text = "\(self.currentQuestion.formattedTime)😕"
+        yearlabel.center = questionLabel.center //button!.center
+        yearlabel.transform = CGAffineTransformScale(yearlabel.transform, 0.1, 0.1)
+        self.view.addSubview(yearlabel)
         
-        var pulseAnimation:CABasicAnimation = CABasicAnimation(keyPath: "opacity");
-        pulseAnimation.duration = 0.3
-        pulseAnimation.toValue = NSNumber(float: 0.3)
-        pulseAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        pulseAnimation.autoreverses = true;
-        pulseAnimation.repeatCount = 5
-        pulseAnimation.delegate = self
-        button!.layer.addAnimation(pulseAnimation, forKey: "minusPointsAnimation")
+        let minusPoints = 3
+        var minusPointslabel = UILabel(frame: CGRectMake(0, 0, 60, 40))
+        minusPointslabel.textAlignment = NSTextAlignment.Center
+        minusPointslabel.font = UIFont.boldSystemFontOfSize(20)
+        minusPointslabel.backgroundColor = UIColor.clearColor()
+        minusPointslabel.text = "-\(minusPoints)"
+        minusPointslabel.center = questionLabel.center //button!.center
+        minusPointslabel.transform = CGAffineTransformScale(minusPointslabel.transform, 0.1, 0.1)
+        self.view.addSubview(minusPointslabel)
         
+        if let item = button
+        {
+            if self.rangeButton !=  item
+            {
+                var pulseAnimation:CABasicAnimation = CABasicAnimation(keyPath: "opacity");
+                pulseAnimation.duration = 0.3
+                pulseAnimation.toValue = NSNumber(float: 0.3)
+                pulseAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+                pulseAnimation.autoreverses = true;
+                pulseAnimation.repeatCount = 5
+                pulseAnimation.delegate = self
+                item.layer.addAnimation(pulseAnimation, forKey: "minusPointsAnimation")
+            }
+        }
         UIView.animateWithDuration(2, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
             
             //button?.transform = CGAffineTransformScale(button!.transform, 2, 2)
 
-            label.transform = CGAffineTransformIdentity
-            label.transform = CGAffineTransformScale(label.transform, 2, 2)
-            label.frame.offset(dx: 0, dy: button!.frame.height * -1)
+            yearlabel.transform = CGAffineTransformIdentity
+            yearlabel.transform = CGAffineTransformScale(yearlabel.transform, 2, 2)
+            yearlabel.frame.offset(dx: 0, dy: button!.frame.height * -1)
+            
+            minusPointslabel.transform = CGAffineTransformIdentity
+            minusPointslabel.center = self.gameStats.okPointsView.center
            
             }, completion: { (value: Bool) in
-                self.gameStats.subtractOkPoints(3)
+                self.gameStats.subtractOkPoints(minusPoints)
                 UIView.animateWithDuration(1, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
-                    label.transform = CGAffineTransformIdentity
-                    label.alpha = 0
+                    yearlabel.transform = CGAffineTransformIdentity
+                    yearlabel.alpha = 0
+                    minusPointslabel.alpha = 0
                     
                     }, completion: { (value: Bool) in
                         button?.layer.removeAllAnimations()
-                        label.removeFromSuperview()
+                        yearlabel.removeFromSuperview()
+                        minusPointslabel.removeFromSuperview()
                         self.setNextQuestion()
                 })
 
@@ -654,19 +673,6 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                 item.insideLabel.center = item.center
                 item.backgroundColor = UIColor.greenColor()
                 item.center = CGPointMake(x + (item.frame.width/2), self.questionLabel.frame.maxY +  (item.frame.height / 2))
-
-                
-                //var childX:CGFloat = oldParentX
-                /*
-                var childButtonWidth = item.frame.size.width / CGFloat(item.childButtons.count)
-                var childX:CGFloat = item.frame.minX
-                for childItem in item.childButtons
-                {
-                    childItem.frame = CGRectMake(0,0, childButtonWidth, self.defaultButtonHeight / 2)
-                    childItem.center = CGPointMake(childX + (childItem.frame.width/2), (UIScreen.mainScreen().bounds.size.height / 2) + item.frame.height)
-                    childX += childItem.frame.width
-                }
-                */
                 
                 x += item.frame.width + vertialHorizontalMargin
             }
@@ -906,6 +912,8 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     
     func bonusAction(sender:UIButton)
     {
+        clock.alpha = 0
+        clock.stop()
         //if rangeReset is true no year values are set
         if rangeReset
         {
