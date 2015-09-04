@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TimeIt/PlayViewController.swift"
-            timestampString = "461031606.924193"
+            timestampString = "463023417.198726"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "522"
-            endingLineNumber = "522"
-            landmarkName = "periodSelected(_:)"
+            startingLineNumber = "262"
+            endingLineNumber = "262"
+            landmarkName = "animateTimeupMinusPoints()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimeIt/DataHandler.swift"
-            timestampString = "462767561.762776"
+            filePath = "TimeIt/PlayViewController.swift"
+            timestampString = "463023417.198726"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "703"
-            endingLineNumber = "703"
-            landmarkName = "populateData(_:)"
+            startingLineNumber = "263"
+            endingLineNumber = "263"
+            landmarkName = "animateTimeupMinusPoints()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,13 +41,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimeIt/GameStats.swift"
-            timestampString = "461015920.044462"
+            filePath = "TimeIt/PlayViewController.swift"
+            timestampString = "463023417.198726"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202"
-            landmarkName = "subtractOkPoints(_:)"
+            startingLineNumber = "264"
+            endingLineNumber = "264"
+            landmarkName = "animateTimeupMinusPoints()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -57,45 +57,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TimeIt/TagCheckScrollview.swift"
-            timestampString = "461634321.024203"
+            filePath = "TimeIt/PlayViewController.swift"
+            timestampString = "463023197.734311"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
-            landmarkName = "closeAction()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimeIt/MainMenuViewController.swift"
-            timestampString = "462768734.089007"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "282"
-            endingLineNumber = "282"
-            landmarkName = "closeTagCheckView()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TimeIt/MainMenuViewController.swift"
-            timestampString = "462768734.089007"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "323"
-            endingLineNumber = "323"
-            landmarkName = "reloadMarks(_:)"
+            startingLineNumber = "845"
+            endingLineNumber = "845"
+            landmarkName = "wrongAnswerGiven(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -9,7 +9,7 @@
 import UIKit
 import iAd
 
-class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelegate, ADBannerViewDelegate{
+class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelegate, ADBannerViewDelegate, ClockProtocol{
     
     var buttonPool:[UIButton]!
     
@@ -45,6 +45,9 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     var levelLow:Int = 1
     var tags:[String] = []
     
+    var clock:ClockView!
+    var orgClockCenter:CGPoint!
+    
     let noBonusSubtractOkPoints:Int = -50
     let bonusPoints10PercentWindow = 75
     let bonusPoints20PercentWindow = 100
@@ -55,7 +58,6 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         
         self.canDisplayBannerAds = true
         bannerView = ADBannerView(frame: CGRectMake(0, UIScreen.mainScreen().bounds.size.height - 44, UIScreen.mainScreen().bounds.size.width, 44))
-        //bannerView = ADBannerView(frame: CGRectZero)
         self.view.addSubview(bannerView!)
         self.bannerView?.delegate = self
         self.bannerView?.hidden = false
@@ -65,7 +67,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         datactrl.fetchData(tags: tags,fromLevel:levelLow,toLevel: levelHigh)
         datactrl.shuffleEvents()
         
-        gameStats = GameStats(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width * 0.75, UIScreen.mainScreen().bounds.size.height * 0.08),okScore: 0,goodScore: 0,loveScore: 0)
+        gameStats = GameStats(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width * 0.5, UIScreen.mainScreen().bounds.size.height * 0.08),okScore: 0,goodScore: 0,loveScore: 0)
         
         //timelineScrollView = UIScrollView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height * 0.20))
         timelineScrollView = UIScrollView(frame: CGRectMake(0, gameStats.frame.maxY, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height * 0.20))
@@ -119,7 +121,10 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         //originalCenterQueston = CGPointMake(UIScreen.mainScreen().bounds.width / 2, UIScreen.mainScreen().bounds.height * 0.15)
         //questionLabel.center = originalCenterQueston
         
-        
+        clock = ClockView(frame: CGRectMake(0, 0, gameStats.frame.height * 1.2, gameStats.frame.height * 1.2))
+        orgClockCenter = CGPointMake(10 + gameStats.frame.maxX + (self.clock.frame.width / 2),10 + (self.clock.frame.height / 2))
+        clock.center = orgClockCenter
+        clock.delegate = self
 
         
         view.addSubview(questionLabel)
@@ -128,6 +133,8 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         view.addSubview(answerAnimationLabel)
         view.addSubview(answerAnimationYellLabel)
         view.addSubview(backButton)
+        view.addSubview(clock)
+        
 
         
         startPlay()
@@ -166,6 +173,127 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         return timelineView
     }
     
+    func timeup()
+    {
+        println("timeup")
+        
+        for item in self.buttonCollection
+        {
+            item.userInteractionEnabled = false
+            /*
+            if !self.buttonInButtonHirarcy(item,buttonHirarcy: sender)
+            {
+                item.alpha = 0
+            }
+            */
+        }
+        animateTimeup()
+    
+        
+    }
+    
+    func animateTimeup()
+    {
+        //_? is this ok
+        view.bringSubviewToFront(clock)
+        UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            
+            self.clock.center = CGPointMake(UIScreen.mainScreen().bounds.width / 2, UIScreen.mainScreen().bounds.height / 2)
+            self.clock.transform = CGAffineTransformScale(self.clock.transform, 3, 3)
+            
+            }, completion: { (value: Bool) in
+                var label = UILabel(frame: CGRectMake(0, 0, 100, 40))
+                label.textAlignment = NSTextAlignment.Center
+                label.font = UIFont.boldSystemFontOfSize(20)
+                label.adjustsFontSizeToFitWidth = true
+                label.backgroundColor = UIColor.clearColor()
+                label.text = "Time is up"
+                label.alpha = 1
+                label.center = self.clock.center
+                label.transform = CGAffineTransformScale(label.transform, 0.1, 0.1)
+                self.view.addSubview(label)
+                
+                UIView.animateWithDuration(1, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+                    
+                    self.clock.transform = CGAffineTransformScale(self.clock.transform, 7, 7)
+                    
+                    label.transform = CGAffineTransformIdentity
+                    label.transform = CGAffineTransformScale(label.transform, 4, 4)
+                    
+                    }, completion: { (value: Bool) in
+                        
+                        UIView.animateWithDuration(1, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+                            
+                            self.clock.alpha = 0
+                            label.alpha = 0
+                            
+                            }, completion: { (value: Bool) in
+                                label.removeFromSuperview()
+                                
+                                //animate showing answer and give some minuspoints
+                                self.animateTimeupMinusPoints()
+                                
+                        })
+                })
+        })
+    }
+    
+    func animateTimeupMinusPoints()
+    {
+
+        var button = {() -> PeriodButton? in
+            for item in self.buttonCollection
+            {
+                if self.isOnRightTrack(item.period)
+                {
+                    return item
+                }
+            }
+            return nil
+        }()
+        
+        var label = UILabel(frame: CGRectMake(0, 0, 100, 40))
+        label.textAlignment = NSTextAlignment.Center
+        label.font = UIFont.boldSystemFontOfSize(20)
+        label.adjustsFontSizeToFitWidth = true
+        label.backgroundColor = UIColor.clearColor()
+        label.text = "\(self.currentQuestion.formattedTime)😕"
+
+        label.center = questionLabel.center //button!.center
+        label.transform = CGAffineTransformScale(label.transform, 0.1, 0.1)
+        self.view.addSubview(label)
+        
+        var pulseAnimation:CABasicAnimation = CABasicAnimation(keyPath: "opacity");
+        pulseAnimation.duration = 0.3
+        pulseAnimation.toValue = NSNumber(float: 0.3)
+        pulseAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        pulseAnimation.autoreverses = true;
+        pulseAnimation.repeatCount = 5
+        pulseAnimation.delegate = self
+        button!.layer.addAnimation(pulseAnimation, forKey: "minusPointsAnimation")
+        
+        UIView.animateWithDuration(2, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+            
+            //button?.transform = CGAffineTransformScale(button!.transform, 2, 2)
+
+            label.transform = CGAffineTransformIdentity
+            label.transform = CGAffineTransformScale(label.transform, 2, 2)
+            label.frame.offset(dx: 0, dy: button!.frame.height * -1)
+           
+            }, completion: { (value: Bool) in
+                self.gameStats.subtractOkPoints(3)
+                UIView.animateWithDuration(1, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: { () -> Void in
+                    label.transform = CGAffineTransformIdentity
+                    label.alpha = 0
+                    
+                    }, completion: { (value: Bool) in
+                        button?.layer.removeAllAnimations()
+                        label.removeFromSuperview()
+                        self.setNextQuestion()
+                })
+
+        })
+    }
     /*
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView {
         return timelineView
@@ -276,6 +404,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     var index = 0
     func startPlay()
     {
+
         
         buttonCollection = []
         
@@ -363,6 +492,13 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                             self.questionLabel.center = self.originalCenterQueston
                             self.index++
                             self.loadQuestion()
+                        
+                            self.clock.transform = CGAffineTransformIdentity
+                            self.clock.center = self.orgClockCenter
+                            self.clock.alpha = 1
+                            self.clock.stop()
+                            self.clock.start(10.0)
+                        
                 })
         })
     }
@@ -474,14 +610,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                 tempPeriodItemsOnType.append(item as! Period)
             }
             let newYBoundary = yBoundary + periodButton.frame.size.height + vertialHorizontalMargin
-            //TODO: dont display over bannerview
-            /*
-            println(" test check these values \(UIScreen.mainScreen().bounds.size.height - bannerView!.frame.height) \(newYBoundary)")
-            if bannerView == nil || (UIScreen.mainScreen().bounds.size.height - bannerView!.frame.height) < (newYBoundary + (buttonHeight / 2))
-            {
-                layoutButtons(periodButton,periods: tempPeriodItemsOnType, xMinBoundary: x, xMaxBoundary: x + periodButton.frame.size.width, yBoundary: newYBoundary, buttonHeight: buttonHeight / 2 , level: level + 1)
-            }
-            */
+
             layoutButtons(periodButton,periods: tempPeriodItemsOnType, xMinBoundary: x, xMaxBoundary: x + periodButton.frame.size.width, yBoundary: newYBoundary, buttonHeight: buttonHeight / 2 , level: level + 1)
              x += periodButton.frame.width + vertialHorizontalMargin
         }
@@ -495,6 +624,9 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     
     func periodSelected(sender: PeriodButton)
     {
+        self.clock.restart(10.0)
+        self.clock.alpha = 1
+        
         //animate!!!
         var orgPoint = sender.center
         self.view.bringSubviewToFront(sender)

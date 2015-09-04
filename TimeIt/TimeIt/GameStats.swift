@@ -16,10 +16,7 @@ class GameStats:UIView {
     var okPointsLabel:UILabel!
     
     var goodPoints:Int!
-    /*
-    var goodPointsView:UIView!
-    var goodPointsLabel:UILabel!
-    */
+
     var lovePointsView:UIView!
     var lovePoints:Int!
     var lovePointsLabel:UILabel!
@@ -44,27 +41,15 @@ class GameStats:UIView {
         self.lovePoints = loveScore
         let marginLeft:CGFloat = 10
         let marginTop:CGFloat = 10
-        let labelWidth = (frame.width - marginLeft) / 3
+        let labelWidth = (frame.width - marginLeft) / 2
         okPointsView = UIView(frame: CGRectMake(marginLeft, marginTop, labelWidth, frame.height - marginTop))
         okPointsLabel = UILabel(frame: CGRectMake(0, 0, labelWidth, frame.height - marginTop))
         okPointsLabel.textAlignment = NSTextAlignment.Center
         okPointsLabel.textColor = UIColor.blackColor()
-        //okPointsLabel.backgroundColor = UIColor.greenColor()
         okPointsLabel.text = "\(self.okPoints) 😌"
         okPointsView.addSubview(okPointsLabel)
         self.addSubview(okPointsView)
-        
-        
-        /*
-        goodPointsView = UIView(frame: CGRectMake(okPointsView.frame.maxX, marginTop, labelWidth, frame.height - marginTop))
-        goodPointsLabel = UILabel(frame: CGRectMake(0, 0, labelWidth, frame.height - marginTop))
-        goodPointsLabel.textAlignment = NSTextAlignment.Center
-        goodPointsLabel.textColor = UIColor.blackColor()
-        //goodPointsLabel.backgroundColor = UIColor.greenColor()
-        goodPointsLabel.text = "\(self.goodPoints) 😀"
-        goodPointsView.addSubview(goodPointsLabel)
-        self.addSubview(goodPointsView)
-        */
+
         
         lovePointsView = UIView(frame: CGRectMake(okPointsView.frame.maxX, marginTop, labelWidth, frame.height - marginTop))
         lovePointsLabel = UILabel(frame: CGRectMake(0, 0, labelWidth, frame.height - marginTop))

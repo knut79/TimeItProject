@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>D4C708D2-CA4D-437A-BF92-DBB637B542DE</string>
 	<key>IDESourceControlProjectName</key>
-	<string>TimeIt</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>7435B501986C5D91AB2CCCFCBE73A547C19530E6</key>
 		<string>https://github.com/knut79/TimeItProject.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>TimeIt/TimeIt.xcodeproj</string>
+	<string>TimeIt/TimeIt.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>7435B501986C5D91AB2CCCFCBE73A547C19530E6</key>

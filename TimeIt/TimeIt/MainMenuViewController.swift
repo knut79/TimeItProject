@@ -46,7 +46,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         bannerView = ADBannerView(frame: CGRectMake(0, UIScreen.mainScreen().bounds.size.height - 44, UIScreen.mainScreen().bounds.size.width, 44))
         //bannerView = ADBannerView(frame: CGRectZero)
         self.view.addSubview(bannerView!)
-        //self.bannerView?.delegate = self
+        self.bannerView?.delegate = self
         self.bannerView?.hidden = false
         
         // Do any additional setup after loading the view, typically from a nib.
@@ -172,7 +172,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
     func setupAfterPopulateData()
     {
         self.view.addSubview(self.playButton)
-        globalGameStats = GameStats(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width * 0.75, UIScreen.mainScreen().bounds.size.height * 0.08),okScore: Int(datactrl.okScoreID as! NSNumber),goodScore: Int(datactrl.goodScoreID as! NSNumber),loveScore: Int(datactrl.loveScoreID as! NSNumber))
+        globalGameStats = GameStats(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width * 0.5, UIScreen.mainScreen().bounds.size.height * 0.08),okScore: Int(datactrl.okScoreID as! NSNumber),goodScore: Int(datactrl.goodScoreID as! NSNumber),loveScore: Int(datactrl.loveScoreID as! NSNumber))
         self.view.addSubview(globalGameStats)
         setupCheckboxView()
     }
