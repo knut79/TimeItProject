@@ -313,7 +313,6 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
                     self.tagsScrollView.center = rightLocation
                     self.listClosed = true
                     self.tagsScrollViewEnableBackground.alpha = 0
-                    //self.tagsScrollViewEnableBackground.removeFromSuperview()
             })
         }
     }

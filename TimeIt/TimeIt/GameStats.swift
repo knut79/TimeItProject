@@ -111,31 +111,7 @@ class GameStats:UIView {
         }
     }
 
-/*
-    func addGoodPoints(points:Int,completion: (() -> (Void))? = nil)
-    {
-        
-        if points <= 0
-        {
-            completion?()
-        }
-        else
-        {
-            goodPointsView.layer.removeAllAnimations()
-            goodPoints! += points
-            
-            animationLabel.text = "+\(points)"
-            
-            animateAddPoints(goodPointsView,completion: {() -> Void in
-                
-                self.goodPointsLabel.text = "\(self.goodPoints!) 😀"
-                self.animateView(self.goodPointsView)
-                completion?()
-            })
-        }
 
-    }
-    */
     
     func addLovePoints(points:Int)
     {
