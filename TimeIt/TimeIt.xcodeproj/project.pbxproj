@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		728BAEE01BB2CF0C00BD4DB4 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728BAEDF1BB2CF0B00BD4DB4 /* Colors.swift */; };
+		728BAEE21BB2CF3D00BD4DB4 /* HolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728BAEE11BB2CF3D00BD4DB4 /* HolderView.swift */; };
+		728BAEE51BB2CF4800BD4DB4 /* RectangleLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728BAEE31BB2CF4800BD4DB4 /* RectangleLayer.swift */; };
+		728BAEE61BB2CF4800BD4DB4 /* ArcLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728BAEE41BB2CF4800BD4DB4 /* ArcLayer.swift */; };
 		72B7E5A81B63017D00963C08 /* BackgroundPopulateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B7E5A71B63017D00963C08 /* BackgroundPopulateData.swift */; };
 		72B7E5AA1B630E1500963C08 /* GameData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 72B7E5A91B630E1500963C08 /* GameData.plist */; };
 		72CD2A6F1B64457800EB539B /* RangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD2A6E1B64457800EB539B /* RangeSlider.swift */; };
@@ -51,6 +55,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		728BAEDF1BB2CF0B00BD4DB4 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		728BAEE11BB2CF3D00BD4DB4 /* HolderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HolderView.swift; sourceTree = "<group>"; };
+		728BAEE31BB2CF4800BD4DB4 /* RectangleLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RectangleLayer.swift; sourceTree = "<group>"; };
+		728BAEE41BB2CF4800BD4DB4 /* ArcLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArcLayer.swift; sourceTree = "<group>"; };
 		72B7E5A71B63017D00963C08 /* BackgroundPopulateData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundPopulateData.swift; sourceTree = "<group>"; };
 		72B7E5A91B630E1500963C08 /* GameData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GameData.plist; sourceTree = "<group>"; };
 		72CD2A6E1B64457800EB539B /* RangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSlider.swift; sourceTree = "<group>"; };
@@ -106,6 +114,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		728BAEDE1BB2CEF700BD4DB4 /* LoadScreen */ = {
+			isa = PBXGroup;
+			children = (
+				728BAEE71BB2CF4D00BD4DB4 /* Layers */,
+				728BAEE11BB2CF3D00BD4DB4 /* HolderView.swift */,
+				728BAEDF1BB2CF0B00BD4DB4 /* Colors.swift */,
+			);
+			name = LoadScreen;
+			sourceTree = "<group>";
+		};
+		728BAEE71BB2CF4D00BD4DB4 /* Layers */ = {
+			isa = PBXGroup;
+			children = (
+				728BAEE31BB2CF4800BD4DB4 /* RectangleLayer.swift */,
+				728BAEE41BB2CF4800BD4DB4 /* ArcLayer.swift */,
+			);
+			name = Layers;
+			sourceTree = "<group>";
+		};
 		72CD2A771B6A283600EB539B /* Play */ = {
 			isa = PBXGroup;
 			children = (
@@ -162,6 +189,7 @@
 		72ED610C1B52762800EFEE45 /* TimeIt */ = {
 			isa = PBXGroup;
 			children = (
+				728BAEDE1BB2CEF700BD4DB4 /* LoadScreen */,
 				72D52EB91B73B9700073AD0A /* MainMenu */,
 				72CD2A781B6A287200EB539B /* Timeline */,
 				72CD2A771B6A283600EB539B /* Play */,
@@ -322,10 +350,13 @@
 			files = (
 				72CD2A7A1B6A3A9000EB539B /* TimelineEventLabel.swift in Sources */,
 				72D192971B9898060035CE11 /* ClockView.swift in Sources */,
+				728BAEE51BB2CF4800BD4DB4 /* RectangleLayer.swift in Sources */,
 				72D52EBD1B73B9B00073AD0A /* TagCheckView.swift in Sources */,
+				728BAEE61BB2CF4800BD4DB4 /* ArcLayer.swift in Sources */,
 				72ED61331B52932A00EFEE45 /* PlayViewController.swift in Sources */,
 				72CD2A6F1B64457800EB539B /* RangeSlider.swift in Sources */,
 				72ED613E1B558B2600EFEE45 /* PeriodButton.swift in Sources */,
+				728BAEE01BB2CF0C00BD4DB4 /* Colors.swift in Sources */,
 				72CD2A711B64480200EB539B /* RangeSliderThumbLayer.swift in Sources */,
 				72ED61351B52FBDB00EFEE45 /* enums.swift in Sources */,
 				72CD2A761B6937E300EB539B /* TimelineViewController.swift in Sources */,
@@ -335,6 +366,7 @@
 				72CD2A821B6BE89100EB539B /* RangeWindowsLayer.swift in Sources */,
 				72ED61101B52762800EFEE45 /* AppDelegate.swift in Sources */,
 				72ED61421B59096500EFEE45 /* TimelineView.swift in Sources */,
+				728BAEE21BB2CF3D00BD4DB4 /* HolderView.swift in Sources */,
 				72ED61441B59C7DC00EFEE45 /* DataHandler.swift in Sources */,
 				72ED613A1B530A1400EFEE45 /* HistoricEvent.swift in Sources */,
 				72CD2A841B6D6C3200EB539B /* EventInfoLabel.swift in Sources */,
