@@ -17,11 +17,13 @@
                     <connections>
                         <segue destination="tAN-Rd-S8J" kind="modal" identifier="segueFromMainMenuToPlay" id="KeK-db-ZWs"/>
                         <segue destination="R3Z-rr-296" kind="modal" identifier="segueFromMainMenuToTimeline" id="t1w-sl-k5j"/>
+                        <segue destination="FXc-W5-SCC" kind="modal" identifier="segueFromMainMenuToChallengeResults" id="8pI-zV-fe1"/>
+                        <segue destination="Pze-qV-EPv" kind="modal" identifier="segueFromMainMenuToChallenge" id="rIl-hM-BF2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-36" y="401"/>
+            <point key="canvasLocation" x="-250" y="399"/>
         </scene>
         <!--Timeline View Controller-->
         <scene sceneID="2oB-ue-Ref">
@@ -38,7 +40,39 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fx7-vL-o0H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="13" y="1168"/>
+            <point key="canvasLocation" x="-225" y="1065"/>
+        </scene>
+        <!--Results View Controller-->
+        <scene sceneID="nG3-HQ-j1y">
+            <objects>
+                <viewController id="FXc-W5-SCC" customClass="ResultsViewController" customModule="TimeIt" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="c9G-SY-gLB">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="xJ7-Al-2wl"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="06C-dg-9Qn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="181" y="1125"/>
+        </scene>
+        <!--Challenge View Controller-->
+        <scene sceneID="vcp-qt-uNg">
+            <objects>
+                <viewController id="Pze-qV-EPv" customClass="ChallengeViewController" customModule="TimeIt" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dlB-lL-I67">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="tAN-Rd-S8J" kind="modal" identifier="segueFromChallengeToPlay" id="20Q-sN-2xL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XGn-ZR-XXp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="138" y="302"/>
         </scene>
         <!--Play View Controller-->
         <scene sceneID="Med-RK-vxT">
@@ -66,5 +100,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="z8f-6I-jKI"/>
+        <segue reference="20Q-sN-2xL"/>
     </inferredMetricsTieBreakers>
 </document>

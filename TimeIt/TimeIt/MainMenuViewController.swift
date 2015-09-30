@@ -20,6 +20,8 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
     //buttons
     var challengeUsersButton:UIButton!
     var resultsButton:UIButton!
+    var resultsChallengeButton:UIButton!
+    var resultsTimelineButton:UIButton!
     var adFreeButton:UIButton!
     var dynamicPlayButton:UIButton!
     var newChallengeButton:UIButton!
@@ -45,6 +47,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
     var newGameStatsValues:(Int,Int,Int)!
 
     let levelSlider = RangeSlider(frame: CGRectZero)
+    var gametype:gameType!
     var tags:[String] = []
     
     var holderView = HolderView(frame: CGRectZero)
@@ -84,6 +87,22 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         resultsButton.layer.masksToBounds = true
         resultsButton.setTitle("Results", forState: UIControlState.Normal)
         
+        
+        resultsChallengeButton = UIButton(frame:CGRectZero)
+        resultsChallengeButton.addTarget(self, action: "resultChallengeAction", forControlEvents: UIControlEvents.TouchUpInside)
+        resultsChallengeButton.backgroundColor = UIColor.blueColor()
+        resultsChallengeButton.layer.cornerRadius = 5
+        resultsChallengeButton.layer.masksToBounds = true
+        resultsChallengeButton.setTitle("Challenges", forState: UIControlState.Normal)
+        
+        resultsTimelineButton = UIButton(frame:CGRectZero)
+        resultsTimelineButton.addTarget(self, action: "resultTimelineAction", forControlEvents: UIControlEvents.TouchUpInside)
+        resultsTimelineButton.backgroundColor = UIColor.blueColor()
+        resultsTimelineButton.layer.cornerRadius = 5
+        resultsTimelineButton.layer.masksToBounds = true
+        resultsTimelineButton.setTitle("Timeline", forState: UIControlState.Normal)
+        
+        
         adFreeButton = UIButton(frame:CGRectZero)
         adFreeButton.addTarget(self, action: "buyProductAction", forControlEvents: UIControlEvents.TouchUpInside)
         adFreeButton.backgroundColor = UIColor.grayColor()
@@ -114,7 +133,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         
         // Do any additional setup after loading the view, typically from a nib.
         dynamicPlayButton = UIButton(frame:CGRectZero)
-        dynamicPlayButton.addTarget(self, action: "playAction", forControlEvents: UIControlEvents.TouchUpInside)
+        //dynamicPlayButton.addTarget(self, action: "playAction", forControlEvents: UIControlEvents.TouchUpInside)
         dynamicPlayButton.backgroundColor = UIColor.blueColor()
         dynamicPlayButton.layer.cornerRadius = 5
         dynamicPlayButton.layer.masksToBounds = true
@@ -341,6 +360,9 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         self.view.addSubview(newChallengeButton)
         self.view.addSubview(pendingChallengesButton)
         
+        self.view.addSubview(self.resultsTimelineButton)
+        self.view.addSubview(self.resultsChallengeButton)
+        
         self.view.addSubview(dynamicPlayButton)
         self.view.addSubview(levelSlider)
         self.view.addSubview(selectFilterTypeButton)
@@ -363,6 +385,8 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         setupChallengeTypeButtons()
         
         setupDynamicPlayButton()
+        
+        setupResultButtons()
 
         closeTagCheckView()
 
@@ -440,14 +464,9 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
             selectFilterTypeButton.frame = CGRectMake(levelSlider.frame.maxX, dynamicPlayButton.frame.maxY + margin, UIScreen.mainScreen().bounds.size.width * 0.2, levelSlider.frame.height)
         }
         
-
-
-        
         dynamicPlayButton.alpha = 0
         levelSlider.alpha = 0
         selectFilterTypeButton.alpha = 0
-        
-        
     }
     
     func setupChallengeTypeButtons()
@@ -470,6 +489,27 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         }
     }
     
+    func setupResultButtons()
+    {
+        resultsChallengeButton.alpha = 0
+        resultsTimelineButton.alpha = 0
+        let buttonMargin: CGFloat = 20.0
+        let orientation = UIDevice.currentDevice().orientation
+        if orientation == UIDeviceOrientation.LandscapeLeft || orientation == UIDeviceOrientation.LandscapeRight
+        {
+            let buttonHeight = self.resultsButton.frame.maxY - self.challengeUsersButton.frame.minY
+
+            resultsChallengeButton.frame = CGRectMake(self.challengeUsersButton.frame.minX, self.challengeUsersButton.frame.minY, self.challengeUsersButton.frame.width, buttonHeight)
+            resultsTimelineButton.frame = CGRectMake(self.practiceButton.frame.minX, self.challengeUsersButton.frame.minY, self.challengeUsersButton.frame.width, buttonHeight)
+        }
+        else
+        {
+            let buttonHeight = self.resultsButton.frame.maxY - self.challengeUsersButton.frame.minY
+            resultsChallengeButton.frame = CGRectMake(self.challengeUsersButton.frame.minX, self.challengeUsersButton.frame.minY, self.challengeUsersButton.frame.width, buttonHeight)
+            resultsTimelineButton.frame = CGRectMake(self.challengeUsersButton.frame.minX, self.newChallengeButton.frame.maxY + buttonMargin, self.challengeUsersButton.frame.width, buttonHeight)
+        }
+    }
+    
     func sliderUpperLevelText() -> String
     {
         return Int(levelSlider.upperValue) > 2 ? "ridiculous" : "\(Int(levelSlider.upperValue))"
@@ -483,18 +523,50 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
     
     func rangeSliderValueChanged(slider: RangeSlider) {
         //println("Range slider value changed: (\(Int(slider.lowerValue)) \(Int(slider.upperValue)))")
-        playButtonExstraLabel2.text = "level \(Int(slider.lowerValue)) - \(sliderUpperLevelText())"
+        playButtonExstraLabel.text = "level \(Int(slider.lowerValue)) - \(sliderUpperLevelText())"
     }
     
-    func playAction()
+    func resultAction()
+    {
+        self.resultsChallengeButton.transform = CGAffineTransformScale(self.resultsChallengeButton.transform, 0.1, 0.1)
+        self.resultsTimelineButton.transform = CGAffineTransformScale(self.resultsTimelineButton.transform, 0.1, 0.1)
+        var centerScreen = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, UIScreen.mainScreen().bounds.size.height / 2)
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            
+            self.challengeUsersButton.center = centerScreen
+            self.challengeUsersButton.transform = CGAffineTransformScale(self.challengeUsersButton.transform, 0.1, 0.1)
+            self.practiceButton.center = centerScreen
+            self.practiceButton.transform = CGAffineTransformScale(self.practiceButton.transform, 0.1, 0.1)
+            self.resultsButton.center = centerScreen
+            self.resultsButton.transform = CGAffineTransformScale(self.resultsButton.transform, 0.1, 0.1)
+            self.adFreeButton.center = centerScreen
+            self.adFreeButton.transform = CGAffineTransformScale(self.adFreeButton.transform, 0.1, 0.1)
+            
+            }, completion: { (value: Bool) in
+                
+                self.challengeUsersButton.alpha = 0
+                self.practiceButton.alpha = 0
+                self.resultsButton.alpha = 0
+                self.adFreeButton.alpha = 0
+                
+                self.resultsChallengeButton.alpha = 1
+                self.resultsTimelineButton.alpha = 1
+                
+                UIView.animateWithDuration(0.2, animations: { () -> Void in
+                    
+                    self.resultsChallengeButton.transform = CGAffineTransformIdentity
+                    self.resultsTimelineButton.transform = CGAffineTransformIdentity
+                    }, completion: { (value: Bool) in
+                })
+        })
+    }
+    
+    
+    func playPracticeAction()
     {
         self.performSegueWithIdentifier("segueFromMainMenuToPlay", sender: nil)
     }
-    
-    func timelineAction()
-    {
-        self.performSegueWithIdentifier("segueFromMainMenuToTimeline", sender: nil)
-    }
+
     
     func practiceAction()
     {
@@ -581,6 +653,18 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         })
     }
     
+    func playNewChallengeAction()
+    {
+        gametype = gameType.makingChallenge
+        self.performSegueWithIdentifier("segueFromMainMenuToChallenge", sender: nil)
+    }
+    
+    func pendingChallengesAction()
+    {
+        gametype = gameType.takingChallenge
+        self.performSegueWithIdentifier("segueFromMainMenuToChallenge", sender: nil)
+    }
+    
     func challengeAction()
     {
         
@@ -617,12 +701,32 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         })
     }
     
+    func resultChallengeAction()
+    {
+        self.performSegueWithIdentifier("segueFromMainMenuToChallengeResults", sender: nil)
+    }
+    
+    func resultTimelineAction()
+    {
+        self.performSegueWithIdentifier("segueFromMainMenuToTimeline", sender: nil)
+    }
+    
     override func prepareForSegue(segue: (UIStoryboardSegue!), sender: AnyObject!) {
+        
         if (segue.identifier == "segueFromMainMenuToPlay") {
             var svc = segue!.destinationViewController as! PlayViewController
             svc.levelLow = Int(levelSlider.lowerValue)
             svc.levelHigh = Int(levelSlider.upperValue)
             svc.tags = self.tags
+            svc.gametype = gametype
+        }
+        
+        if (segue.identifier == "segueFromMainMenuToChallenge") {
+            var svc = segue!.destinationViewController as! ChallengeViewController
+            svc.passingLevelLow = Int(levelSlider.lowerValue)
+            svc.passingLevelHigh = Int(levelSlider.upperValue)
+            svc.passingTags = self.tags
+            svc.gametype = self.gametype
         }
     }
     

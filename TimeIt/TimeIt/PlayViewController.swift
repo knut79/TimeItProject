@@ -32,8 +32,13 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     let rangeMinLabel = UILabel()
     let rangeButton = UIButton()
     let rangeBaileOutText = "Baile out!"
-        var rangeReset = true
-
+    var rangeReset = true
+    var gametype:gameType!
+    var usersIdsToChallenge:[String] = []
+    var myIdAndName:(String,String)!
+    
+    var challenge:Challenge!
+    
     let backButton = UIButton()
     var rightPeriodStrikes:Int = 0
     

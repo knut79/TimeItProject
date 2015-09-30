@@ -1022,6 +1022,12 @@ class DataHandler
         }
     }
     
+    func addRecordToGameResults(value:String)
+    {
+        //self.gameResultsValue.insertObject(value, atIndex: 0)
+        self.gameResultsValues.append(value)
+    }
+    
     let DataPopulatedKey = "DataPopulated"
     let OkScoreKey = "OkScore"
     let GoodScoreKey = "GoodScore"
@@ -1030,6 +1036,9 @@ class DataHandler
     let LevelKey = "Level"
     let EventsUpdateKey = "EventsUpdate"
     
+    let GameResultsKey = "GameResults"
+    let AdFreeKey = "AdFree"
+    
     var dataPopulatedValue:AnyObject = 0
     var okScoreValue:AnyObject = 0
     var goodScoreValue:AnyObject = 0
@@ -1037,6 +1046,9 @@ class DataHandler
     var tagsValue:AnyObject = 0
     var levelValue:AnyObject = 0
     var eventsUpdateValue:AnyObject = 0
+    var adFreeValue:AnyObject = 0
+    
+    var gameResultsValues:[AnyObject] = []
 
     func loadGameData() {
         // getting path to GameData.plist
@@ -1072,6 +1084,9 @@ class DataHandler
             tagsValue = dict.objectForKey(TagsKey)!
             levelValue = dict.objectForKey(LevelKey)!
             eventsUpdateValue = dict.objectForKey(EventsUpdateKey)!
+            adFreeValue = dict.objectForKey(AdFreeKey)!
+            NSUserDefaults.standardUserDefaults().setBool(adFreeValue as! NSNumber == 1 ? true : false, forKey: "adFree")
+            gameResultsValues = dict.objectForKey(GameResultsKey)! as! [AnyObject]
         } else {
             println("WARNING: Couldn't create dictionary from GameData.plist! Default values will be used!")
         }
@@ -1090,6 +1105,9 @@ class DataHandler
         dict.setObject(tagsValue, forKey: TagsKey)
         dict.setObject(levelValue, forKey: LevelKey)
         dict.setObject(eventsUpdateValue, forKey: EventsUpdateKey)
+        dict.setObject(adFreeValue, forKey: AdFreeKey)
+        
+        dict.setObject(gameResultsValues, forKey: GameResultsKey)
         //writing to GameData.plist
         dict.writeToFile(path, atomically: false)
         let resultDictionary = NSMutableDictionary(contentsOfFile: path)

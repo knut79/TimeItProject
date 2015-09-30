@@ -8,17 +8,25 @@
 
 import UIKit
 import CoreData
+import FBSDKCoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var client: MSClient?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: "firstlaunch")
-        return true
+        
+        application.statusBarHidden = true
+        self.client = MSClient(
+            applicationURLString:"https://placeintime.azure-mobile.net/",
+            applicationKey:"EPexqUWpxpiDBffWuGuiNUgjgTzeMz22"
+        )
+        
+        return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 
     func applicationWillResignActive(application: UIApplication) {

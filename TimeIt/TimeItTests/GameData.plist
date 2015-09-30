@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>GameResults</key>
+	<array/>
+	<key>AdFree</key>
+	<integer>0</integer>
 	<key>Tags</key>
 	<string></string>
 	<key>Level</key>

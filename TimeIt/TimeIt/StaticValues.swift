@@ -23,3 +23,8 @@ let maxWayBack:Int32 = -1000000
 let aMillion:Int32 = 1000000
 
 let smallButtonSide:CGFloat = 32
+
+enum gameType: Int
+{
+    case training = 0, makingChallenge = 1, takingChallenge = 2
+}
