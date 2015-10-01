@@ -1370,6 +1370,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     
     func backAction()
     {
+        self.clock.stop()
         //datactrl.saveGameData()
         self.performSegueWithIdentifier("segueFromPlayToMainMenu", sender: nil)
     }

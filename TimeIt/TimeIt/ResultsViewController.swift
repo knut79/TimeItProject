@@ -27,7 +27,7 @@ class ResultsViewController: UIViewController, FBSDKLoginButtonDelegate {
 
         
         self.client = (UIApplication.sharedApplication().delegate as! AppDelegate).client
-        
+        //FBSDKSettings.setAppID("154370428242475")
         if (FBSDKAccessToken.currentAccessToken() != nil)
         {
             // User is already logged in, do work such as go to next view controller.

@@ -22,11 +22,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         application.statusBarHidden = true
         self.client = MSClient(
-            applicationURLString:"https://placeintime.azure-mobile.net/",
-            applicationKey:"EPexqUWpxpiDBffWuGuiNUgjgTzeMz22"
+            applicationURLString:"https://timeit.azure-mobile.net/",
+            applicationKey:"vaiqQlesvGTZKGRIgNIcUvTdzjCGrn65"
         )
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
+    
+    func application(application: UIApplication,
+        openURL url: NSURL,
+        sourceApplication: String?,
+        annotation: AnyObject?) -> Bool {
+            return FBSDKApplicationDelegate.sharedInstance().application(
+                application,
+                openURL: url,
+                sourceApplication: sourceApplication,
+                annotation: annotation)
     }
 
     func applicationWillResignActive(application: UIApplication) {

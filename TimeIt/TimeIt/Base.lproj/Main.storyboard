@@ -52,10 +52,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="xJ7-Al-2wl"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="modal" identifier="segueFromResultsToMainMenu" id="3ux-G3-lmm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="06C-dg-9Qn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="181" y="1125"/>
+            <point key="canvasLocation" x="145" y="939"/>
         </scene>
         <!--Challenge View Controller-->
         <scene sceneID="vcp-qt-uNg">
@@ -68,11 +71,12 @@
                     </view>
                     <connections>
                         <segue destination="tAN-Rd-S8J" kind="modal" identifier="segueFromChallengeToPlay" id="20Q-sN-2xL"/>
+                        <segue destination="BYZ-38-t0r" kind="modal" identifier="segueFromChallengeToMainMenu" id="sOt-Q2-y6R"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XGn-ZR-XXp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138" y="302"/>
+            <point key="canvasLocation" x="236" y="297"/>
         </scene>
         <!--Play View Controller-->
         <scene sceneID="Med-RK-vxT">
@@ -99,7 +103,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="z8f-6I-jKI"/>
+        <segue reference="sOt-Q2-y6R"/>
         <segue reference="20Q-sN-2xL"/>
     </inferredMetricsTieBreakers>
 </document>

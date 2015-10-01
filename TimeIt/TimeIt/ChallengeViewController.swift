@@ -42,11 +42,13 @@ class ChallengeViewController:UIViewController,FBSDKLoginButtonDelegate, UserVie
             // User is already logged in, do work such as go to next view controller.
             //self.performSegueWithIdentifier("segueFromLoginToPlay", sender: nil)
             
-            initUserData()
-            if self.gametype == gameType.makingChallenge
-            {
-                self.initUserFriends()
-            }
+            initUserData({() -> Void in
+                if self.gametype == gameType.makingChallenge
+                {
+                    self.initUserFriends()
+                }
+            })
+            
         }
         else
         {
@@ -94,11 +96,17 @@ class ChallengeViewController:UIViewController,FBSDKLoginButtonDelegate, UserVie
             if result.grantedPermissions.contains("user_friends")
             {
                 // Do work
-                initUserData()
-                if self.gametype == gameType.makingChallenge
-                {
-                    self.initUserFriends()
-                }
+                initUserData({() -> Void in
+                    if self.gametype == gameType.makingChallenge
+                    {
+                        self.initUserFriends()
+                    }
+                    if self.gametype == gameType.takingChallenge
+                    {
+                        self.initChallenges()
+                    }
+                })
+                
             }
             else
             {
@@ -116,7 +124,7 @@ class ChallengeViewController:UIViewController,FBSDKLoginButtonDelegate, UserVie
         
     }
     
-    func initUserData()
+    func initUserData(completion: (() -> (Void)))
     {
         let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me", parameters: nil)
         graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
@@ -125,6 +133,7 @@ class ChallengeViewController:UIViewController,FBSDKLoginButtonDelegate, UserVie
             {
                 // Process error
                 println("Error: \(error)")
+                completion()
             }
             else
             {
@@ -137,13 +146,9 @@ class ChallengeViewController:UIViewController,FBSDKLoginButtonDelegate, UserVie
                 self.userId = userId2
                 //self.userId = "1492605914370841"
                 //self.userId = "10155943015600858"
-                if self.gametype == gameType.takingChallenge
-                {
-                    self.initChallenges()
-                }
-                
-                
+
                 result
+                completion()
             }
         })
     }
@@ -388,14 +393,15 @@ class ChallengeViewController:UIViewController,FBSDKLoginButtonDelegate, UserVie
     var randomUsersAdded = 0
     func addRandomUserAction()
     {
-        activityLabel.alpha = 1
-        activityLabel.text = "Collecting random user..."
+        //activityLabel.alpha = 1
+        //activityLabel.text = "Collecting random user..."
         addRandomUser(nil)
     }
     
     func addRandomUser(completionClosure: (() -> Void)? )
     {
-
+        activityLabel.alpha = 1
+        activityLabel.text = "Collecting random user..."
         randomUsersAdded++
         if randomUsersAdded > 2
         {
