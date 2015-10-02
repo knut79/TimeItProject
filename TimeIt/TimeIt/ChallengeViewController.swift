@@ -514,6 +514,10 @@ class ChallengeViewController:UIViewController,FBSDKLoginButtonDelegate, UserVie
         }
     }
     
+    override func shouldAutorotate() -> Bool {
+        return false
+    }
+    
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
