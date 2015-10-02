@@ -10,12 +10,16 @@ import UIKit
 import CoreGraphics
 import QuartzCore
 import iAd
+import StoreKit
 
-class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerViewDelegate, HolderViewDelegate {
+class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerViewDelegate, HolderViewDelegate,SKProductsRequestDelegate {
 
     
     var backgroundView:UIView!
     
+    //payment
+    var product: SKProduct?
+    var productID = "TimelineFeudAddFree1234"
     
     //buttons
     var challengeUsersButton:UIButton!
@@ -54,6 +58,8 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
     
     let logo1 = UILabel()
     let logo2 = UILabel()
+    
+    var numOfQuestionsForRound:Int = 5
     
     var bannerView:ADBannerView?
     override func viewDidLoad() {
@@ -113,6 +119,8 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         let adFree = NSUserDefaults.standardUserDefaults().boolForKey("adFree")
         if !adFree
         {
+            adFreeButton.backgroundColor = UIColor.blueColor()
+            adFreeButton.userInteractionEnabled = true
             adFreeButton.setTitle("Remove ads", forState: UIControlState.Normal)
         }
         
@@ -564,6 +572,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
     
     func playPracticeAction()
     {
+        gametype = gameType.training
         self.performSegueWithIdentifier("segueFromMainMenuToPlay", sender: nil)
     }
 
@@ -616,7 +625,9 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
     
     func newChallengeAction()
     {
-        dynamicPlayButton.setTitle("New challenge", forState: UIControlState.Normal)
+        dynamicPlayButton.titleLabel?.numberOfLines = 2
+        dynamicPlayButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        dynamicPlayButton.setTitle("New challenge\n\(numOfQuestionsForRound) questions", forState: UIControlState.Normal)
         dynamicPlayButton.addTarget(self, action: "playNewChallengeAction", forControlEvents: UIControlEvents.TouchUpInside)
         self.dynamicPlayButton.alpha = 0
         self.dynamicPlayButton.transform = CGAffineTransformScale(self.dynamicPlayButton.transform, 0.1, 0.1)
@@ -726,13 +737,15 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
             svc.passingLevelLow = Int(levelSlider.lowerValue)
             svc.passingLevelHigh = Int(levelSlider.upperValue)
             svc.passingTags = self.tags
+            svc.numOfQuestionsForRound = self.numOfQuestionsForRound
             svc.gametype = self.gametype
         }
     }
     
     
     func bannerViewDidLoadAd(banner: ADBannerView!) {
-        self.bannerView?.hidden = false
+        let adFree = NSUserDefaults.standardUserDefaults().boolForKey("adFree")
+        self.bannerView?.hidden = adFree
     }
     
     func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
@@ -740,7 +753,8 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
     }
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
-        self.bannerView?.hidden = true
+        let adFree = NSUserDefaults.standardUserDefaults().boolForKey("adFree")
+        self.bannerView?.hidden = adFree
     }
 
     //MARK: TagCheckViewProtocol
@@ -817,8 +831,6 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
     
     func openFilterList()
     {
-        
-        
         let rightLocation = tagsScrollView.center
         tagsScrollView.transform = CGAffineTransformScale(tagsScrollView.transform, 0.1, 0.1)
         self.tagsScrollView.alpha = 1
@@ -836,6 +848,105 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         })
         
     }
+    
+    
+    //MARK addRemove
+    
+    func requestProductData()
+    {
+        let adFree = NSUserDefaults.standardUserDefaults().boolForKey("adFree")
+        if adFree
+        {
+            return
+        }
+        if SKPaymentQueue.canMakePayments() {
+            let request = SKProductsRequest(productIdentifiers:
+                NSSet(objects: self.productID) as Set<NSObject>)
+            request.delegate = self
+            request.start()
+        } else {
+            var alert = UIAlertController(title: "In-App Purchases Not Enabled", message: "Please enable In App Purchase in Settings", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Settings", style: UIAlertActionStyle.Default, handler: { alertAction in
+                alert.dismissViewControllerAnimated(true, completion: nil)
+                
+                let url: NSURL? = NSURL(string: UIApplicationOpenSettingsURLString)
+                if url != nil
+                {
+                    UIApplication.sharedApplication().openURL(url!)
+                }
+                
+            }))
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: { alertAction in
+                alert.dismissViewControllerAnimated(true, completion: nil)
+            }))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func productsRequest(request: SKProductsRequest!, didReceiveResponse response: SKProductsResponse!) {
+        
+        var products = response.products
+        
+        if (products.count != 0) {
+            product = products[0] as? SKProduct
+            //buyButton.enabled = true
+            //productTitle.text = product!.localizedTitle
+            //productDescription.text = product!.localizedDescription
+            
+            adFreeButton.backgroundColor = UIColor.blueColor()
+            adFreeButton.userInteractionEnabled = true
+            
+        } else {
+            //productTitle.text = "Product not found"
+        }
+        
+        products = response.invalidProductIdentifiers
+        
+        for product in products
+        {
+            println("Product not found: \(product)")
+        }
+    }
+    
+    func buyProductAction() {
+        let payment = SKPayment(product: product)
+        SKPaymentQueue.defaultQueue().addPayment(payment)
+    }
+    
+    func paymentQueue(queue: SKPaymentQueue!, updatedTransactions transactions: [AnyObject]!) {
+        
+        for transaction in transactions as! [SKPaymentTransaction] {
+            
+            switch transaction.transactionState {
+                
+            case SKPaymentTransactionState.Purchased:
+                self.removeAdds()
+                SKPaymentQueue.defaultQueue().finishTransaction(transaction)
+            case SKPaymentTransactionState.Restored:
+                self.removeAdds()
+                SKPaymentQueue.defaultQueue().finishTransaction(transaction)
+            case SKPaymentTransactionState.Failed:
+                SKPaymentQueue.defaultQueue().finishTransaction(transaction)
+            default:
+                break
+            }
+        }
+    }
+    
+    func removeAdds() {
+        let appdelegate = UIApplication.sharedApplication().delegate
+            as! AppDelegate
+        
+        datactrl.adFreeValue = 1
+        datactrl.saveGameData()
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: "adFree")
+        self.bannerView?.hidden = true
+        
+        adFreeButton.backgroundColor = UIColor.grayColor()
+        adFreeButton.userInteractionEnabled = false
+        adFreeButton.setTitle(" ", forState: UIControlState.Normal)
+    }
+
 
 }
 

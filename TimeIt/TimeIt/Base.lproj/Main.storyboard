@@ -90,11 +90,29 @@
                     <navigationItem key="navigationItem" id="st1-bn-trb"/>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="modal" identifier="segueFromPlayToMainMenu" id="NwA-XC-VpD"/>
+                        <segue destination="Qpt-qv-pVG" kind="modal" identifier="segueFromPlayToFinished" id="N6h-gn-78B"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AnN-t3-4YV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="636" y="390"/>
+            <point key="canvasLocation" x="614" y="319"/>
+        </scene>
+        <!--Finished View Controller-->
+        <scene sceneID="bry-Qi-2LA">
+            <objects>
+                <viewController id="Qpt-qv-pVG" customClass="FinishedViewController" customModule="TimeIt" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hbE-fX-GOG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="modal" identifier="segueFromFinishedToMainMenu" id="QIJ-zW-kQS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UHW-g7-kdx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="711" y="1024"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -103,7 +121,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="sOt-Q2-y6R"/>
+        <segue reference="QIJ-zW-kQS"/>
         <segue reference="20Q-sN-2xL"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -35,6 +35,8 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     var rangeReset = true
     var gametype:gameType!
     var usersIdsToChallenge:[String] = []
+    var completedQuestionsIds:[String] = []
+    var numOfQuestionsForRound:Int!
     var myIdAndName:(String,String)!
     
     var challenge:Challenge!
@@ -107,12 +109,19 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         answerAnimationYellLabel.adjustsFontSizeToFitWidth = true
         answerAnimationYellLabel.alpha = 0
 
-        backButton.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - smallButtonSide, 0, smallButtonSide, smallButtonSide)
-        backButton.backgroundColor = UIColor.whiteColor()
-        backButton.layer.borderColor = UIColor.grayColor().CGColor
-        backButton.layer.borderWidth = 1
-        backButton.setTitle("🔚", forState: UIControlState.Normal)
-        backButton.addTarget(self, action: "backAction", forControlEvents: UIControlEvents.TouchUpInside)
+        if self.gametype == gameType.training
+        {
+            let backButtonMargin:CGFloat = 15
+            backButton.frame = CGRectMake(UIScreen.mainScreen().bounds.size.width - smallButtonSide - backButtonMargin, backButtonMargin, smallButtonSide, smallButtonSide)
+            backButton.backgroundColor = UIColor.whiteColor()
+            backButton.layer.borderColor = UIColor.grayColor().CGColor
+            backButton.layer.borderWidth = 1
+            backButton.layer.cornerRadius = 5
+            backButton.layer.masksToBounds = true
+            backButton.setTitle("🔚", forState: UIControlState.Normal)
+            backButton.addTarget(self, action: "backAction", forControlEvents: UIControlEvents.TouchUpInside)
+            view.addSubview(backButton)
+        }
 
         let margin: CGFloat = 10.0
         questionLabel = UILabel(frame: CGRectMake(margin, timelineScrollView.frame.maxY, UIScreen.mainScreen().bounds.width - (margin * 2), 50))
@@ -139,12 +148,8 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         view.addSubview(answerAnimationYellLabel)
         view.addSubview(backButton)
         view.addSubview(clock)
-        
 
-        
         startPlay()
-        
-        
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -429,8 +434,6 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     var index = 0
     func startPlay()
     {
-
-        
         buttonCollection = []
         
         setupRanger()
@@ -504,30 +507,46 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     {
         self.clock.stop()
         currentQuestion = datactrl.historicEventItems[index % datactrl.historicEventItems.count]
-        UIView.animateWithDuration(0.50, animations: { () -> Void in
-            self.questionLabel.center = CGPointMake(0 - self.questionLabel.frame.width, self.originalCenterQueston.y)
-
-            }, completion: { (value: Bool) in
-                self.questionLabel.center = CGPointMake(UIScreen.mainScreen().bounds.width + self.questionLabel.frame.width, self.originalCenterQueston.y)
-                self.questionLabel.text = self.currentQuestion.title
-               
-                UIView.animateWithDuration(0.50, animations: { () -> Void in
-                    self.questionLabel.center = self.originalCenterQueston
+        
+        
+        
+        if (self.gametype != gameType.training) && (self.completedQuestionsIds.count  >= self.numOfQuestionsForRound)
+        {
+            self.performSegueWithIdentifier("segueFromPlayToFinished", sender: nil)
+        }
+        else
+        {
+            self.completedQuestionsIds.append("\(currentQuestion.idForUpdate)")
+            
+            UIView.animateWithDuration(0.50, animations: { () -> Void in
+                self.questionLabel.center = CGPointMake(0 - self.questionLabel.frame.width, self.originalCenterQueston.y)
+                
+                }, completion: { (value: Bool) in
+                    self.questionLabel.center = CGPointMake(UIScreen.mainScreen().bounds.width + self.questionLabel.frame.width, self.originalCenterQueston.y)
+                    self.questionLabel.text = self.currentQuestion.title
                     
-                    }, completion: { (value: Bool) in
+                    UIView.animateWithDuration(0.50, animations: { () -> Void in
+                        self.questionLabel.center = self.originalCenterQueston
+                        
+                        }, completion: { (value: Bool) in
                             self.questionLabel.center = self.originalCenterQueston
                             self.index++
                             self.loadQuestion()
-                        
+                            
                             self.clock.transform = CGAffineTransformIdentity
                             self.clock.center = self.orgClockCenter
                             self.clock.alpha = 1
                             //self.clock.stop()
                             self.clock.start(10.0)
                             //self.clock.restart(10.0)
-                        
-                })
-        })
+                            
+                    })
+            })
+        }
+        
+        
+        
+       
     }
     
     func loadQuestion()
@@ -1385,11 +1404,43 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                 //svc.imagefile = currentImagefile
             }
         }
+        if (segue.identifier == "segueFromPlayToFinished") {
+            var svc = segue!.destinationViewController as! FinishedViewController
+            svc.completedQuestionsIds = completedQuestionsIds
+            svc.usersIdsToChallenge = usersIdsToChallenge
+            svc.userFbId = myIdAndName.0
+            svc.correctAnswers = gameStats.lovePoints
+            svc.points = gameStats.okPoints
+            svc.gametype = gametype
+            if gametype == gameType.takingChallenge
+            {
+                svc.challengeToBeat = challenge
+            }
+            else if gametype == gameType.makingChallenge
+            {
+                svc.challengeName = "\(self.myIdAndName.1) \(self.levelLow)-\(self.levelHigh) \(self.tagsAsString())"
+            }
+        }
         
     }
     
+    func tagsAsString() -> String
+    {
+        var result = ""
+        for item in tags
+        {
+            result += item
+        }
+        if result == ""
+        {
+            result = "All categories"
+        }
+        return result
+    }
+    
     func bannerViewDidLoadAd(banner: ADBannerView!) {
-        self.bannerView?.hidden = false
+        let adFree = NSUserDefaults.standardUserDefaults().boolForKey("adFree")
+        self.bannerView?.hidden = adFree
     }
     
     func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
@@ -1397,7 +1448,8 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     }
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
-        self.bannerView?.hidden = true
+        let adFree = NSUserDefaults.standardUserDefaults().boolForKey("adFree")
+        self.bannerView?.hidden = adFree
     }
     
 }

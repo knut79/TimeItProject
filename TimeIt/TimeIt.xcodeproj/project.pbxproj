@@ -22,6 +22,7 @@
 		72CD2A821B6BE89100EB539B /* RangeWindowsLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD2A811B6BE89100EB539B /* RangeWindowsLayer.swift */; };
 		72CD2A841B6D6C3200EB539B /* EventInfoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CD2A831B6D6C3200EB539B /* EventInfoLabel.swift */; };
 		72D192971B9898060035CE11 /* ClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D192961B9898060035CE11 /* ClockView.swift */; };
+		72D22C901BBDBDE400D81C15 /* FinishedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D22C8F1BBDBDE400D81C15 /* FinishedViewController.swift */; };
 		72D52EBB1B73B98E0073AD0A /* TagCheckScrollview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D52EBA1B73B98E0073AD0A /* TagCheckScrollview.swift */; };
 		72D52EBD1B73B9B00073AD0A /* TagCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D52EBC1B73B9B00073AD0A /* TagCheckView.swift */; };
 		72E0CDC31BBAC762001DD271 /* ChallengeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E0CDC21BBAC762001DD271 /* ChallengeViewController.swift */; };
@@ -82,6 +83,7 @@
 		72CD2A811B6BE89100EB539B /* RangeWindowsLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeWindowsLayer.swift; sourceTree = "<group>"; };
 		72CD2A831B6D6C3200EB539B /* EventInfoLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventInfoLabel.swift; sourceTree = "<group>"; };
 		72D192961B9898060035CE11 /* ClockView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockView.swift; sourceTree = "<group>"; };
+		72D22C8F1BBDBDE400D81C15 /* FinishedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinishedViewController.swift; sourceTree = "<group>"; };
 		72D52EBA1B73B98E0073AD0A /* TagCheckScrollview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCheckScrollview.swift; sourceTree = "<group>"; };
 		72D52EBC1B73B9B00073AD0A /* TagCheckView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCheckView.swift; sourceTree = "<group>"; };
 		72E0CDC01BBA9D4A001DD271 /* TimeIt-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TimeIt-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -187,6 +189,14 @@
 			name = Timeline;
 			sourceTree = "<group>";
 		};
+		72D22C8E1BBDBDD200D81C15 /* Finished */ = {
+			isa = PBXGroup;
+			children = (
+				72D22C8F1BBDBDE400D81C15 /* FinishedViewController.swift */,
+			);
+			name = Finished;
+			sourceTree = "<group>";
+		};
 		72D52EB91B73B9700073AD0A /* MainMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -230,6 +240,7 @@
 		72ED610C1B52762800EFEE45 /* TimeIt */ = {
 			isa = PBXGroup;
 			children = (
+				72D22C8E1BBDBDD200D81C15 /* Finished */,
 				72E0CDC11BBAC750001DD271 /* Challenge */,
 				72FF78401BBA939500A5B587 /* Framework */,
 				72FF78371BBA90C400A5B587 /* Result */,
@@ -422,6 +433,7 @@
 				72D52EBD1B73B9B00073AD0A /* TagCheckView.swift in Sources */,
 				728BAEE61BB2CF4800BD4DB4 /* ArcLayer.swift in Sources */,
 				72ED61331B52932A00EFEE45 /* PlayViewController.swift in Sources */,
+				72D22C901BBDBDE400D81C15 /* FinishedViewController.swift in Sources */,
 				72CD2A6F1B64457800EB539B /* RangeSlider.swift in Sources */,
 				72E0CDCB1BBADB44001DD271 /* CheckItemView.swift in Sources */,
 				72FF78391BBA90D300A5B587 /* ResultsViewController.swift in Sources */,
