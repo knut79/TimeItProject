@@ -7,8 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		72424A1A1BC13C36009FED5C /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72424A181BC13C36009FED5C /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
-		72424A1B1BC13C36009FED5C /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72424A191BC13C36009FED5C /* FBSDKLoginKit.framework */; settings = {ASSET_TAGS = (); }; };
+		72424A321BC1C8C7009FED5C /* 54008__domingus__yeah-2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 72424A211BC1C8C7009FED5C /* 54008__domingus__yeah-2.wav */; settings = {ASSET_TAGS = (); }; };
+		72424A331BC1C8C7009FED5C /* 189068__donnieozone__yeah1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 72424A221BC1C8C7009FED5C /* 189068__donnieozone__yeah1.wav */; settings = {ASSET_TAGS = (); }; };
+		72424A341BC1C8C7009FED5C /* yeah.wav in Resources */ = {isa = PBXBuildFile; fileRef = 72424A231BC1C8C7009FED5C /* yeah.wav */; settings = {ASSET_TAGS = (); }; };
+		72424A351BC1C8C7009FED5C /* sigh.wav in Resources */ = {isa = PBXBuildFile; fileRef = 72424A241BC1C8C7009FED5C /* sigh.wav */; settings = {ASSET_TAGS = (); }; };
+		72424A361BC1C8C7009FED5C /* wrong.wav in Resources */ = {isa = PBXBuildFile; fileRef = 72424A251BC1C8C7009FED5C /* wrong.wav */; settings = {ASSET_TAGS = (); }; };
+		72424A371BC1C8C7009FED5C /* yeah-long-and-laugh.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 72424A261BC1C8C7009FED5C /* yeah-long-and-laugh.mp3 */; settings = {ASSET_TAGS = (); }; };
+		72424A381BC1C8C7009FED5C /* yeah-short.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 72424A271BC1C8C7009FED5C /* yeah-short.mp3 */; settings = {ASSET_TAGS = (); }; };
+		72424A391BC1C8C7009FED5C /* correct.wav in Resources */ = {isa = PBXBuildFile; fileRef = 72424A281BC1C8C7009FED5C /* correct.wav */; settings = {ASSET_TAGS = (); }; };
+		72424A3A1BC1C8C7009FED5C /* dealingCard.wav in Resources */ = {isa = PBXBuildFile; fileRef = 72424A291BC1C8C7009FED5C /* dealingCard.wav */; settings = {ASSET_TAGS = (); }; };
+		72424A3B1BC1C8C7009FED5C /* fanfare1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 72424A2A1BC1C8C7009FED5C /* fanfare1.wav */; settings = {ASSET_TAGS = (); }; };
+		72424A3C1BC1C8C7009FED5C /* fanfare2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 72424A2B1BC1C8C7009FED5C /* fanfare2.wav */; settings = {ASSET_TAGS = (); }; };
+		72424A3D1BC1C8C7009FED5C /* fanfare3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 72424A2C1BC1C8C7009FED5C /* fanfare3.wav */; settings = {ASSET_TAGS = (); }; };
+		72424A3E1BC1C8C7009FED5C /* clock-ticking-2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 72424A2D1BC1C8C7009FED5C /* clock-ticking-2.mp3 */; settings = {ASSET_TAGS = (); }; };
+		72424A3F1BC1C8C7009FED5C /* clockFast.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 72424A2E1BC1C8C7009FED5C /* clockFast.mp3 */; settings = {ASSET_TAGS = (); }; };
+		72424A401BC1C8C7009FED5C /* clockNorm.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 72424A2F1BC1C8C7009FED5C /* clockNorm.mp3 */; settings = {ASSET_TAGS = (); }; };
+		72424A411BC1C8C7009FED5C /* timeUp.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 72424A301BC1C8C7009FED5C /* timeUp.mp3 */; settings = {ASSET_TAGS = (); }; };
+		72424A421BC1C8C7009FED5C /* lostChallenge.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 72424A311BC1C8C7009FED5C /* lostChallenge.mp3 */; settings = {ASSET_TAGS = (); }; };
+		72424A451BC1D776009FED5C /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72424A431BC1D776009FED5C /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
+		72424A461BC1D776009FED5C /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72424A441BC1D776009FED5C /* FBSDKLoginKit.framework */; settings = {ASSET_TAGS = (); }; };
 		728BAEE01BB2CF0C00BD4DB4 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728BAEDF1BB2CF0B00BD4DB4 /* Colors.swift */; };
 		728BAEE21BB2CF3D00BD4DB4 /* HolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728BAEE11BB2CF3D00BD4DB4 /* HolderView.swift */; };
 		728BAEE51BB2CF4800BD4DB4 /* RectangleLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728BAEE31BB2CF4800BD4DB4 /* RectangleLayer.swift */; };
@@ -70,8 +87,25 @@
 
 /* Begin PBXFileReference section */
 		72424A171BC0BAC2009FED5C /* TimeIt 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TimeIt 3.xcdatamodel"; sourceTree = "<group>"; };
-		72424A181BC13C36009FED5C /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		72424A191BC13C36009FED5C /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		72424A211BC1C8C7009FED5C /* 54008__domingus__yeah-2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "54008__domingus__yeah-2.wav"; sourceTree = "<group>"; };
+		72424A221BC1C8C7009FED5C /* 189068__donnieozone__yeah1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 189068__donnieozone__yeah1.wav; sourceTree = "<group>"; };
+		72424A231BC1C8C7009FED5C /* yeah.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = yeah.wav; sourceTree = "<group>"; };
+		72424A241BC1C8C7009FED5C /* sigh.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sigh.wav; sourceTree = "<group>"; };
+		72424A251BC1C8C7009FED5C /* wrong.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = wrong.wav; sourceTree = "<group>"; };
+		72424A261BC1C8C7009FED5C /* yeah-long-and-laugh.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "yeah-long-and-laugh.mp3"; sourceTree = "<group>"; };
+		72424A271BC1C8C7009FED5C /* yeah-short.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "yeah-short.mp3"; sourceTree = "<group>"; };
+		72424A281BC1C8C7009FED5C /* correct.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = correct.wav; sourceTree = "<group>"; };
+		72424A291BC1C8C7009FED5C /* dealingCard.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dealingCard.wav; sourceTree = "<group>"; };
+		72424A2A1BC1C8C7009FED5C /* fanfare1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fanfare1.wav; sourceTree = "<group>"; };
+		72424A2B1BC1C8C7009FED5C /* fanfare2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fanfare2.wav; sourceTree = "<group>"; };
+		72424A2C1BC1C8C7009FED5C /* fanfare3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fanfare3.wav; sourceTree = "<group>"; };
+		72424A2D1BC1C8C7009FED5C /* clock-ticking-2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "clock-ticking-2.mp3"; sourceTree = "<group>"; };
+		72424A2E1BC1C8C7009FED5C /* clockFast.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = clockFast.mp3; sourceTree = "<group>"; };
+		72424A2F1BC1C8C7009FED5C /* clockNorm.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = clockNorm.mp3; sourceTree = "<group>"; };
+		72424A301BC1C8C7009FED5C /* timeUp.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = timeUp.mp3; sourceTree = "<group>"; };
+		72424A311BC1C8C7009FED5C /* lostChallenge.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = lostChallenge.mp3; sourceTree = "<group>"; };
+		72424A431BC1D776009FED5C /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		72424A441BC1D776009FED5C /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		728BAEDF1BB2CF0B00BD4DB4 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		728BAEE11BB2CF3D00BD4DB4 /* HolderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HolderView.swift; sourceTree = "<group>"; };
 		728BAEE31BB2CF4800BD4DB4 /* RectangleLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RectangleLayer.swift; sourceTree = "<group>"; };
@@ -132,8 +166,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				72FF78441BBA93B300A5B587 /* WindowsAzureMobileServices.framework in Frameworks */,
-				72424A1A1BC13C36009FED5C /* FBSDKCoreKit.framework in Frameworks */,
-				72424A1B1BC13C36009FED5C /* FBSDKLoginKit.framework in Frameworks */,
+				72424A451BC1D776009FED5C /* FBSDKCoreKit.framework in Frameworks */,
+				72424A461BC1D776009FED5C /* FBSDKLoginKit.framework in Frameworks */,
 				72ED614A1B5EF6DC00EFEE45 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -148,6 +182,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		72424A201BC1C8B8009FED5C /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				72424A211BC1C8C7009FED5C /* 54008__domingus__yeah-2.wav */,
+				72424A221BC1C8C7009FED5C /* 189068__donnieozone__yeah1.wav */,
+				72424A231BC1C8C7009FED5C /* yeah.wav */,
+				72424A241BC1C8C7009FED5C /* sigh.wav */,
+				72424A251BC1C8C7009FED5C /* wrong.wav */,
+				72424A261BC1C8C7009FED5C /* yeah-long-and-laugh.mp3 */,
+				72424A271BC1C8C7009FED5C /* yeah-short.mp3 */,
+				72424A281BC1C8C7009FED5C /* correct.wav */,
+				72424A291BC1C8C7009FED5C /* dealingCard.wav */,
+				72424A2A1BC1C8C7009FED5C /* fanfare1.wav */,
+				72424A2B1BC1C8C7009FED5C /* fanfare2.wav */,
+				72424A2C1BC1C8C7009FED5C /* fanfare3.wav */,
+				72424A2D1BC1C8C7009FED5C /* clock-ticking-2.mp3 */,
+				72424A2E1BC1C8C7009FED5C /* clockFast.mp3 */,
+				72424A2F1BC1C8C7009FED5C /* clockNorm.mp3 */,
+				72424A301BC1C8C7009FED5C /* timeUp.mp3 */,
+				72424A311BC1C8C7009FED5C /* lostChallenge.mp3 */,
+			);
+			name = Sounds;
+			sourceTree = "<group>";
+		};
 		728BAEDE1BB2CEF700BD4DB4 /* LoadScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -242,6 +300,7 @@
 		72ED610C1B52762800EFEE45 /* TimeIt */ = {
 			isa = PBXGroup;
 			children = (
+				72424A201BC1C8B8009FED5C /* Sounds */,
 				72D22C8E1BBDBDD200D81C15 /* Finished */,
 				72E0CDC11BBAC750001DD271 /* Challenge */,
 				72FF78401BBA939500A5B587 /* Framework */,
@@ -319,8 +378,8 @@
 		72FF78401BBA939500A5B587 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
-				72424A181BC13C36009FED5C /* FBSDKCoreKit.framework */,
-				72424A191BC13C36009FED5C /* FBSDKLoginKit.framework */,
+				72424A431BC1D776009FED5C /* FBSDKCoreKit.framework */,
+				72424A441BC1D776009FED5C /* FBSDKLoginKit.framework */,
 				72FF78411BBA93B300A5B587 /* WindowsAzureMobileServices.framework */,
 				72ED61491B5EF6DC00EFEE45 /* QuartzCore.framework */,
 			);
@@ -409,10 +468,27 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72424A3A1BC1C8C7009FED5C /* dealingCard.wav in Resources */,
+				72424A3F1BC1C8C7009FED5C /* clockFast.mp3 in Resources */,
 				72CD2A741B67A07C00EB539B /* GameData.plist in Resources */,
+				72424A321BC1C8C7009FED5C /* 54008__domingus__yeah-2.wav in Resources */,
+				72424A401BC1C8C7009FED5C /* clockNorm.mp3 in Resources */,
+				72424A331BC1C8C7009FED5C /* 189068__donnieozone__yeah1.wav in Resources */,
+				72424A3E1BC1C8C7009FED5C /* clock-ticking-2.mp3 in Resources */,
+				72424A341BC1C8C7009FED5C /* yeah.wav in Resources */,
+				72424A411BC1C8C7009FED5C /* timeUp.mp3 in Resources */,
+				72424A361BC1C8C7009FED5C /* wrong.wav in Resources */,
+				72424A391BC1C8C7009FED5C /* correct.wav in Resources */,
+				72424A371BC1C8C7009FED5C /* yeah-long-and-laugh.mp3 in Resources */,
 				72ED61181B52762800EFEE45 /* Main.storyboard in Resources */,
 				72ED611D1B52762800EFEE45 /* LaunchScreen.xib in Resources */,
+				72424A381BC1C8C7009FED5C /* yeah-short.mp3 in Resources */,
 				72ED611A1B52762800EFEE45 /* Images.xcassets in Resources */,
+				72424A3B1BC1C8C7009FED5C /* fanfare1.wav in Resources */,
+				72424A351BC1C8C7009FED5C /* sigh.wav in Resources */,
+				72424A3D1BC1C8C7009FED5C /* fanfare3.wav in Resources */,
+				72424A421BC1C8C7009FED5C /* lostChallenge.mp3 in Resources */,
+				72424A3C1BC1C8C7009FED5C /* fanfare2.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -636,10 +712,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -656,10 +729,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = TimeItTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.datadullum.$(PRODUCT_NAME:rfc1034identifier)";

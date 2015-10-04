@@ -199,9 +199,10 @@ class ChallengeViewController:UIViewController,FBSDKLoginButtonDelegate, UserVie
         self.playButton.setTitle("Play", forState: UIControlState.Normal)
         
         
-        activityLabel = UILabel(frame: CGRectMake(0, 0, 400, 50))
+        activityLabel = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width - 40, 50))
         activityLabel.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, UIScreen.mainScreen().bounds.size.height / 2)
         activityLabel.textAlignment = NSTextAlignment.Center
+        activityLabel.adjustsFontSizeToFitWidth = true
 
         
 /*
@@ -291,6 +292,7 @@ class ChallengeViewController:UIViewController,FBSDKLoginButtonDelegate, UserVie
         self.challengeScrollView.alpha = 1
         
         view.addSubview(titleLabel)
+        playButton.alpha = 0
         view.addSubview(playButton)
         view.addSubview(backButton)
         view.addSubview(challengeScrollView)
@@ -321,6 +323,7 @@ class ChallengeViewController:UIViewController,FBSDKLoginButtonDelegate, UserVie
                                 self.challengeScrollView.addItem(title,value: jsonDictionary)
                                 
                                 self.activityLabel.alpha = 0
+                                self.playButton.alpha = 1
                             }
                         }
                         if jsonArray?.count == 0

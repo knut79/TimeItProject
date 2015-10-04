@@ -36,9 +36,9 @@ class Challenge {
         }
     }
     
-    func getNextQuestionId() -> Int
+    func getNextQuestionId() -> Int?
     {
-        return questionIds.removeLast()
+        return questionIds.count == 0 ? nil : questionIds.removeLast()
     }
 
 }

@@ -1,4 +1,4 @@
-//
+    //
 //  ViewController.swift
 //  TimeIt
 //
@@ -292,8 +292,8 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         
         self.view.backgroundColor = UIColor.whiteColor()
         //_?
-        holderView.removeFromSuperview()
-        //holderView.hidden = true
+        //holderView.removeFromSuperview()
+        holderView.hidden = true
         allowRotate = true
         
         challengeUsersButton.transform = CGAffineTransformScale(challengeUsersButton.transform, 0.1, 0.1)

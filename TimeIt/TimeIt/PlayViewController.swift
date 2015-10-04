@@ -516,54 +516,60 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     {
         self.clock.stop()
 
-        if (self.gametype != gameType.training) && (self.completedQuestionsIds.count  >= self.numOfQuestionsForRound)
+        if (self.gametype == gameType.makingChallenge) && (self.completedQuestionsIds.count  >= self.numOfQuestionsForRound)
         {
             self.performSegueWithIdentifier("segueFromPlayToFinished", sender: nil)
         }
-        else
+        else if gametype == gameType.takingChallenge
         {
-            if gametype == gameType.takingChallenge
+            //randomHistoricEvents = datactrl.fetchHistoricEventOnIds(challenge.getNextQuestionBlock())!
+            if let questionId = challenge.getNextQuestionId()
             {
-                //randomHistoricEvents = datactrl.fetchHistoricEventOnIds(challenge.getNextQuestionBlock())!
-                currentQuestion = datactrl.fetchHistoricEventOnId(challenge.getNextQuestionId())!
+                currentQuestion = datactrl.fetchHistoricEventOnId(questionId)!
+                animateQuestion()
             }
-            else //makingChallenge or training
+            else
             {
-                currentQuestion = datactrl.historicEventItems[index % datactrl.historicEventItems.count]
+                self.performSegueWithIdentifier("segueFromPlayToFinished", sender: nil)
             }
-            currentQuestion.used++
-            datactrl.save()
-            self.completedQuestionsIds.append("\(currentQuestion.idForUpdate)")
-            
-            UIView.animateWithDuration(0.50, animations: { () -> Void in
-                self.questionLabel.center = CGPointMake(0 - self.questionLabel.frame.width, self.originalCenterQueston.y)
-                
-                }, completion: { (value: Bool) in
-                    self.questionLabel.center = CGPointMake(UIScreen.mainScreen().bounds.width + self.questionLabel.frame.width, self.originalCenterQueston.y)
-                    self.questionLabel.text = self.currentQuestion.title
-                    
-                    UIView.animateWithDuration(0.50, animations: { () -> Void in
-                        self.questionLabel.center = self.originalCenterQueston
-                        
-                        }, completion: { (value: Bool) in
-                            self.questionLabel.center = self.originalCenterQueston
-                            self.index++
-                            self.loadQuestion()
-                            
-                            self.clock.transform = CGAffineTransformIdentity
-                            self.clock.center = self.orgClockCenter
-                            self.clock.alpha = 1
-                            //self.clock.stop()
-                            self.clock.start(10.0)
-                            //self.clock.restart(10.0)
-                            
-                    })
-            })
         }
+        else //makingChallenge or training
+        {
+            currentQuestion = datactrl.historicEventItems[index % datactrl.historicEventItems.count]
+            animateQuestion()
+        }
+    }
+    
+    func animateQuestion()
+    {
+        currentQuestion.used++
+        datactrl.save()
+        self.completedQuestionsIds.append("\(currentQuestion.idForUpdate)")
         
-        
-        
-       
+        UIView.animateWithDuration(0.50, animations: { () -> Void in
+            self.questionLabel.center = CGPointMake(0 - self.questionLabel.frame.width, self.originalCenterQueston.y)
+            
+            }, completion: { (value: Bool) in
+                self.questionLabel.center = CGPointMake(UIScreen.mainScreen().bounds.width + self.questionLabel.frame.width, self.originalCenterQueston.y)
+                self.questionLabel.text = self.currentQuestion.title
+                
+                UIView.animateWithDuration(0.50, animations: { () -> Void in
+                    self.questionLabel.center = self.originalCenterQueston
+                    
+                    }, completion: { (value: Bool) in
+                        self.questionLabel.center = self.originalCenterQueston
+                        self.index++
+                        self.loadQuestion()
+                        
+                        self.clock.transform = CGAffineTransformIdentity
+                        self.clock.center = self.orgClockCenter
+                        self.clock.alpha = 1
+                        //self.clock.stop()
+                        self.clock.start(10.0)
+                        //self.clock.restart(10.0)
+                        
+                })
+        })
     }
     
     func loadQuestion()
