@@ -28,7 +28,7 @@ class TagCheckScrollView: UIView , UIScrollViewDelegate, TagCheckItemProtocol{
     var delegate:TagCheckViewProtocol!
     var selectedInfoLabel:UILabel!
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
     }

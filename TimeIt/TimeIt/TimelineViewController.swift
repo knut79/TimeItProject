@@ -52,16 +52,16 @@ class TimelineViewController: UIViewController,UIScrollViewDelegate {
         itemWidth = (scrollviewBaseView.frame.size.width - (margin * numberOfMargins)) / CGFloat(timelineItems.count)
         itemHeight = 50.0
         var xVal = margin
-        var yVal = scrollviewBaseView.frame.size.height - margin - itemHeight
+        let yVal = scrollviewBaseView.frame.size.height - margin - itemHeight
         
 
         
         for item in timelineItems
         {
             var answers = numberOfRightAnswersOnTimelinePocket(item)
-            var numOfRightAnswers = answers.0.count > 20 ? 20 : answers.0.count
+            let numOfRightAnswers = answers.0.count > 20 ? 20 : answers.0.count
             
-            var timelineLabel = UILabel(frame: CGRectMake(xVal, yVal, itemWidth, itemHeight))
+            let timelineLabel = UILabel(frame: CGRectMake(xVal, yVal, itemWidth, itemHeight))
             timelineLabel.text = item.formattedTime
             timelineLabel.textAlignment = NSTextAlignment.Center
             timelineLabel.numberOfLines = 1
@@ -87,7 +87,7 @@ class TimelineViewController: UIViewController,UIScrollViewDelegate {
                 for historicEvent:HistoricEvent in answers.0
                 {
                     
-                    var label = TimelineEventLabel(frame: CGRectMake(xVal, yValForHistEvent, itemWidth, itemHeight),event: historicEvent)
+                    let label = TimelineEventLabel(frame: CGRectMake(xVal, yValForHistEvent, itemWidth, itemHeight),event: historicEvent)
                     let tapGesture = UITapGestureRecognizer(target: self, action: "tapEvent:")
                     tapGesture.numberOfTapsRequired = 1
                     label.addGestureRecognizer(tapGesture)
@@ -154,7 +154,7 @@ class TimelineViewController: UIViewController,UIScrollViewDelegate {
     var lastTappedEvent:TimelineEventLabel?
     func tapEvent(sender:UITapGestureRecognizer)
     {
-        var label = sender.view as! TimelineEventLabel
+        let label = sender.view as! TimelineEventLabel
         if label == lastTappedEvent
         {
             UIView.animateWithDuration(0.25, animations: { () -> Void in
@@ -174,19 +174,19 @@ class TimelineViewController: UIViewController,UIScrollViewDelegate {
             
             if( eventInfoLabel.frame.maxX > scrollviewBaseView.bounds.width)
             {
-                eventInfoLabel.frame.offset(dx: scrollviewBaseView.bounds.width - eventInfoLabel.frame.maxX, dy: 0)
+                eventInfoLabel.frame.offsetInPlace(dx: scrollviewBaseView.bounds.width - eventInfoLabel.frame.maxX, dy: 0)
             }
             else if(eventInfoLabel.frame.minX < 0)
             {
-                eventInfoLabel.frame.offset(dx: eventInfoLabel.frame.minX * -1, dy: 0)
+                eventInfoLabel.frame.offsetInPlace(dx: eventInfoLabel.frame.minX * -1, dy: 0)
             }
             
             if( eventInfoLabel.frame.minY < 0)
             {
-                eventInfoLabel.frame.offset(dx: 0, dy: eventInfoLabel.frame.minY * -1)
+                eventInfoLabel.frame.offsetInPlace(dx: 0, dy: eventInfoLabel.frame.minY * -1)
             }
             
-            var scale:CGFloat = 0.1
+            let scale:CGFloat = 0.1
             eventInfoLabel.transform = CGAffineTransformScale(label.transform, scale,scale)
             eventInfoLabel.setText(label.event)
             UIView.animateWithDuration(0.25, animations: { () -> Void in
@@ -202,10 +202,10 @@ class TimelineViewController: UIViewController,UIScrollViewDelegate {
     var lastTappedPeriod = UILabel()
     func tapPeriod(sender:UITapGestureRecognizer)
     {
-        var label = sender.view as! UILabel
+        let label = sender.view as! UILabel
         label.layer.borderWidth = 4
-        var xPos = label.frame.minX
-        var yPosForceBottomOfScroll:CGFloat = 9999 //self.timelineScrollView.contentOffset.y + self.timelineScrollView.frame.height
+        let xPos = label.frame.minX
+        let yPosForceBottomOfScroll:CGFloat = 9999 //self.timelineScrollView.contentOffset.y + self.timelineScrollView.frame.height
         self.timelineScrollView.zoomToRect(CGRectMake(xPos - label.frame.width, yPosForceBottomOfScroll , label.frame.width * 3, label.frame.height * 3), animated: true)
         lastTappedPeriod.layer.borderWidth = 2
         lastTappedPeriod = label
@@ -232,8 +232,8 @@ class TimelineViewController: UIViewController,UIScrollViewDelegate {
     func scrollViewDidZoom(scrollView: UIScrollView) {
         
         
-        var offsetX = max((scrollView.bounds.size.width - scrollView.contentSize.width) * 0.5, 0.0)
-        var offsetY = max((scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5, 0.0)
+        let offsetX = max((scrollView.bounds.size.width - scrollView.contentSize.width) * 0.5, 0.0)
+        let offsetY = max((scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5, 0.0)
         
         scrollviewBaseView.center = CGPointMake(scrollView.contentSize.width * 0.5 + offsetX,
             scrollView.contentSize.height * 0.5 + offsetY);
@@ -244,7 +244,7 @@ class TimelineViewController: UIViewController,UIScrollViewDelegate {
         
     }
     
-    func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView!, atScale scale: CGFloat) {
+    func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
         
     }
     
@@ -270,9 +270,9 @@ class TimelineViewController: UIViewController,UIScrollViewDelegate {
         return false
     }
     
-    override func supportedInterfaceOrientations() -> Int {
-        print("supportedInterfaceOrientations")
-        return Int(UIInterfaceOrientationMask.LandscapeLeft.rawValue)
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        print("supportedInterfaceOrientations", terminator: "")
+        return UIInterfaceOrientationMask.LandscapeLeft
     }
     
     override func preferredInterfaceOrientationForPresentation() -> UIInterfaceOrientation {
@@ -283,7 +283,7 @@ class TimelineViewController: UIViewController,UIScrollViewDelegate {
     {
         var collectionOfRightAnsweredQuestions:[HistoricEvent] = []
         var collectionOfNotRightAnswQuestions:[HistoricEvent] = []
-        for eventItem in period.events
+        for eventItem in period.hevents
         {
             if (eventItem as! HistoricEvent).goodScore > 0
             {
@@ -304,7 +304,7 @@ class TimelineViewController: UIViewController,UIScrollViewDelegate {
         
         for periodItem in period.periods
         {
-            for eventItem in periodItem.events
+            for eventItem in periodItem.hevents
             {
                 if (eventItem as! HistoricEvent).goodScore > 0
                 {
@@ -321,7 +321,7 @@ class TimelineViewController: UIViewController,UIScrollViewDelegate {
     }
     
     func shuffle<C: MutableCollectionType where C.Index == Int>(var list: C) -> C {
-        let ecount = count(list)
+        let ecount = list.count
         for i in 0..<(ecount - 1) {
             let j = Int(arc4random_uniform(UInt32(ecount - i))) + i
             swap(&list[i], &list[j])

@@ -26,7 +26,7 @@ class DataHandler
         
         let date = NSDate()
         let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components(NSCalendarUnit.CalendarUnitYear, fromDate: date)
+        let components = calendar.components(NSCalendarUnit.Year, fromDate: date)
         todaysYear = Double(components.year)
         historicEventItems = []
         periodsItems = []
@@ -179,7 +179,7 @@ class DataHandler
         //let mil3 = PeriodData(from: minWayBack, to: 0,periods:[fh5,fh6,fh7],timelineItem:true)
         let mil3 = PeriodData(from: -1000, to: 0,periods:[fh5,fh6],timelineItem:true)
         
-        var dataToPopulate = [mil3,mil2,mil1]
+        let dataToPopulate = [mil3,mil2,mil1]
         
         savePeriodesFromCollection(dataToPopulate)
         
@@ -819,7 +819,7 @@ class DataHandler
         //newEvent(id++,title: "King David conquers Jerusalem", year:-990, type:periodType.fivehundred,level:2,tags:"#war")
         //newEvent(id++,title:"First Olympiad in Greece", year:-776, type:periodType.fivehundred,level:2,tags:"#war#curiosa")
         
-        println("populated new data")
+        print("populated new data")
 
         
         
@@ -888,11 +888,24 @@ class DataHandler
         historicEventItems = shuffle(historicEventItems)
     }
     
+    func orderOnUsed()
+    {
+        /*
+        var descriptor: NSSortDescriptor = NSSortDescriptor(key: "used", ascending: true)
+        var array:NSArray = historicEventItems as NSArray
+        historicEventItems = array.sortedArrayUsingDescriptors([descriptor]) as! [HistoricEvent]
+        */
+        historicEventItems = historicEventItems.sort { $0.used < $1.used }
+
+    }
+    
     func shuffle<C: MutableCollectionType where C.Index == Int>(var list: C) -> C {
-        let ecount = count(list)
+        let ecount = list.count
         for i in 0..<(ecount - 1) {
             let j = Int(arc4random_uniform(UInt32(ecount - i))) + i
-            swap(&list[i], &list[j])
+            if j != i {
+                swap(&list[i], &list[j])
+            }
         }
         return list
     }
@@ -903,13 +916,9 @@ class DataHandler
     {
         for periodData in dataToPopulate
         {
-            //test
-            if periodData.from == -1000 && periodData.to == 0
-            {
-                let h = 0
-            }
+
             
-            var period = Period.createInManagedObjectContext(self.managedObjectContext!, from: periodData.from, to:periodData.to, timelineItem:periodData.timeline)
+            let period = Period.createInManagedObjectContext(self.managedObjectContext!, from: periodData.from, to:periodData.to, timelineItem:periodData.timeline)
             save()
             if let parent = parentPeriod
             {
@@ -925,7 +934,7 @@ class DataHandler
         //var timelineItems:[Period] = []
         //periodsItems.filter(<#includeElement: (T) -> Bool##(T) -> Bool#>)
         let filteredArray = periodsItems.filter() {
-            if ($0 as Period).timelinePocket == 1 {
+            if ($0 as Period).timelinePocket == true {
                 return true
             } else {
                 return false
@@ -936,7 +945,7 @@ class DataHandler
     
     func hookQuestionToPeriods(question:HistoricEvent, type: periodType)
     {
-        println("try hookup event \(question.title) \(question.fromYear) - \(question.toYear) on periodType \(type.description)")
+        print("try hookup event \(question.title) \(question.fromYear) - \(question.toYear) on periodType \(type.description)")
         var found = false
         for period in periodsItems
         {
@@ -949,7 +958,7 @@ class DataHandler
                 {
                     if (question.toYear - question.fromYear) > type.years
                     {
-                        println("WARNING splitting question \(question.title) with a span of \((question.toYear - question.fromYear)) on periodType \(period.type.description)")
+                        print("WARNING splitting question \(question.title) with a span of \((question.toYear - question.fromYear)) on periodType \(period.type.description)")
                     }
                     found = true
                     question.addPeriod(period)
@@ -960,20 +969,26 @@ class DataHandler
         }
         if(!found)
         {
-            println("Could not hookup event \(question.title) on period of \(type.description)")
+            print("Could not hookup event \(question.title) on period of \(type.description)")
         }
         
     }
     
 
     func save() {
-        var error : NSError?
-        if(managedObjectContext!.save(&error) ) {
+        /*
+        let error : NSError?
+        if(managedObjectContext!.save() ) {
             if let err = error
             {
-                println(err.localizedDescription)
+                print(err.localizedDescription)
 
             }
+        }*/
+        do{
+            try managedObjectContext!.save()
+        } catch {
+            print(error)
         }
     }
     
@@ -1009,7 +1024,7 @@ class DataHandler
         //let predicate = tags == "" ? NSPredicate(format: "periods.@count > 0 AND level >= \(fromLevel) AND level <= \(toLevel)") : NSPredicate(format: "ANY tags == \(tags)")
         fetchEvents.predicate = predicate
         
-        if let fetchResults = managedObjectContext!.executeFetchRequest(fetchEvents, error: nil) as? [HistoricEvent] {
+        if let fetchResults = (try? managedObjectContext!.executeFetchRequest(fetchEvents)) as? [HistoricEvent] {
             historicEventItems = fetchResults
         }
         
@@ -1017,8 +1032,31 @@ class DataHandler
         let sortDescriptor = NSSortDescriptor(key: "fromYear", ascending: true)
         fetchPeriods.sortDescriptors = [sortDescriptor]
         
-        if let fetchResults = managedObjectContext!.executeFetchRequest(fetchPeriods, error: nil) as? [Period] {
+        if let fetchResults = (try? managedObjectContext!.executeFetchRequest(fetchPeriods)) as? [Period] {
             periodsItems = fetchResults
+        }
+    }
+    
+    func fetchHistoricEventOnId(id:Int) -> HistoricEvent?
+    {
+        
+        let fetchEvents = NSFetchRequest(entityName: "HistoricEvent")
+        
+        //let predicate = NSPredicate(format: "titlenumber contains %@", "Worst")
+        // Set the predicate on the fetch request
+        //let predicate = NSPredicate(format: "periods.@count > 0 AND level >= \(fromLevel) AND level <= \(toLevel)")
+        //let predicate = NSPredicate(format: "tags  MATCHES '.*(#war|#curiosa).*'")
+
+        let predicate = NSPredicate(format: "idForUpdate = \(id)") //NSPredicate(format: "idForUpdate IN \(predicateIds)")
+        //let predicate = tags == "" ? NSPredicate(format: "periods.@count > 0 AND level >= \(fromLevel) AND level <= \(toLevel)") : NSPredicate(format: "ANY tags == \(tags)")
+        fetchEvents.predicate = predicate
+        
+        if let fetchResults = (try? managedObjectContext!.executeFetchRequest(fetchEvents)) as? [HistoricEvent] {
+            return fetchResults.first
+        }
+        else
+        {
+            return nil
         }
     }
     
@@ -1054,27 +1092,30 @@ class DataHandler
         // getting path to GameData.plist
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
         let documentsDirectory = paths[0] as! String
-        let path = documentsDirectory.stringByAppendingPathComponent("GameData.plist")
+        let path = (documentsDirectory as NSString).stringByAppendingPathComponent("GameData.plist")
         let fileManager = NSFileManager.defaultManager()
         //check if file exists
         if(!fileManager.fileExistsAtPath(path)) {
             // If it doesn't, copy it from the default file in the Bundle
             if let bundlePath = NSBundle.mainBundle().pathForResource("GameData", ofType: "plist") {
                 let resultDictionary = NSMutableDictionary(contentsOfFile: bundlePath)
-                println("Bundle GameData.plist file is --> \(resultDictionary?.description)")
-                fileManager.copyItemAtPath(bundlePath, toPath: path, error: nil)
-                println("copy")
+                print("Bundle GameData.plist file is --> \(resultDictionary?.description)")
+                do {
+                    try fileManager.copyItemAtPath(bundlePath, toPath: path)
+                } catch _ {
+                }
+                print("copy")
             } else {
-                println("GameData.plist not found. Please, make sure it is part of the bundle.")
+                print("GameData.plist not found. Please, make sure it is part of the bundle.")
             }
         } else {
-            println("GameData.plist already exits at path. \(path)")
+            print("GameData.plist already exits at path. \(path)")
             // use this to delete file from documents directory
             //fileManager.removeItemAtPath(path, error: nil)
         }
         let resultDictionary = NSMutableDictionary(contentsOfFile: path)
-        println("Loaded GameData.plist file is --> \(resultDictionary?.description)")
-        var myDict = NSDictionary(contentsOfFile: path)
+        print("Loaded GameData.plist file is --> \(resultDictionary?.description)")
+        let myDict = NSDictionary(contentsOfFile: path)
         if let dict = myDict {
             //loading values
             dataPopulatedValue = dict.objectForKey(DataPopulatedKey)!
@@ -1088,7 +1129,7 @@ class DataHandler
             NSUserDefaults.standardUserDefaults().setBool(adFreeValue as! NSNumber == 1 ? true : false, forKey: "adFree")
             gameResultsValues = dict.objectForKey(GameResultsKey)! as! [AnyObject]
         } else {
-            println("WARNING: Couldn't create dictionary from GameData.plist! Default values will be used!")
+            print("WARNING: Couldn't create dictionary from GameData.plist! Default values will be used!")
         }
     }
     
@@ -1096,7 +1137,7 @@ class DataHandler
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
         let documentsDirectory = paths.objectAtIndex(0) as! NSString
         let path = documentsDirectory.stringByAppendingPathComponent("GameData.plist")
-        var dict: NSMutableDictionary = ["XInitializerItem": "DoNotEverChangeMe"]
+        let dict: NSMutableDictionary = ["XInitializerItem": "DoNotEverChangeMe"]
         //saving values
         dict.setObject(dataPopulatedValue, forKey: DataPopulatedKey)
         dict.setObject(okScoreValue, forKey: OkScoreKey)
@@ -1111,7 +1152,7 @@ class DataHandler
         //writing to GameData.plist
         dict.writeToFile(path, atomically: false)
         let resultDictionary = NSMutableDictionary(contentsOfFile: path)
-        println("Saved GameData.plist file is --> \(resultDictionary?.description)")
+        print("Saved GameData.plist file is --> \(resultDictionary?.description)")
     }
     
     func getMaxTimeLimit(year: Double) -> Double

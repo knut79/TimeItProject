@@ -13,7 +13,7 @@ class TimelineEventLabel: UILabel {
     
     var event:HistoricEvent!
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

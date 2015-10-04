@@ -70,7 +70,7 @@ class HolderView: UIView {
     })
   }
   
-  required init(coder: NSCoder) {
+  required init?(coder: NSCoder) {
     super.init(coder: coder)
   }
 
@@ -118,7 +118,7 @@ class HolderView: UIView {
     
     let dLabel2 = UILabel(frame: CGRectMake(0, 0, 50, 50))
     dLabel2.center = CGPointMake(box.bounds.width / 2, box.bounds.height / 2)
-    dLabel2.frame.offset(dx: 10, dy: 10)
+    dLabel2.frame.offsetInPlace(dx: 10, dy: 10)
     dLabel2.textColor = UIColor.blueColor()
     dLabel2.textAlignment = NSTextAlignment.Center
     dLabel2.font = UIFont.boldSystemFontOfSize(40)
@@ -141,6 +141,13 @@ class HolderView: UIView {
     UIView.animateWithDuration(0.3, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
       self.box.frame = self.bounds
       }, completion: { finished in
+        self.redRectangleLayer.removeAllAnimations()
+        self.redRectangleLayer.removeFromSuperlayer()
+        self.blueRectangleLayer.removeAllAnimations()
+        self.blueRectangleLayer.removeFromSuperlayer()
+        
+        self.arcLayer.removeAllAnimations()
+        self.arcLayer.removeFromSuperlayer()
         self.finishedAnimating()
     })
   }
@@ -148,5 +155,7 @@ class HolderView: UIView {
   func finishedAnimating() {
     delegate?.loadScreenFinished()
   }
+
+
 
 }

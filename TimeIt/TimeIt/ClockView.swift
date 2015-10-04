@@ -22,7 +22,7 @@ class ClockView:UIView {
     let circleLayer: CAShapeLayer = CAShapeLayer()
     var forceStop:Bool = false
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -30,8 +30,6 @@ class ClockView:UIView {
         super.init(frame: frame)
         self.backgroundColor = UIColor.clearColor()
         
-        
-        let endAngle = CGFloat(2*M_PI)
         /*
         clockHandLayer.frame = self.bounds
         let secondPath = CGPathCreateMutable()
@@ -170,10 +168,10 @@ class ClockView:UIView {
     
     func rotateLayer(currentLayer:CALayer,dur:CFTimeInterval){
         
-        var angle = degree2radian(360)
+        let angle = degree2radian(360)
         
         // rotation http://stackoverflow.com/questions/1414923/how-to-rotate-uiimageview-with-fix-point
-        var theAnimation = CABasicAnimation(keyPath:"transform.rotation.z")
+        let theAnimation = CABasicAnimation(keyPath:"transform.rotation.z")
         theAnimation.duration = dur
         // Make this view controller the delegate so it knows when the animation starts and ends
         theAnimation.delegate = self
@@ -187,7 +185,7 @@ class ClockView:UIView {
         
     }
     
-    override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
+    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
         if !forceStop
         {
             //println("timeup called")
@@ -222,14 +220,14 @@ class ClockView:UIView {
         return points
     }
     
-    func secondMarkers(#ctx:CGContextRef,x:CGFloat, y:CGFloat, radius:CGFloat, sides:Int, color:UIColor) {
+    func secondMarkers(ctx ctx:CGContextRef,x:CGFloat, y:CGFloat, radius:CGFloat, sides:Int, color:UIColor) {
         // retrieve points
         let points = circleCircumferencePoints(sides,x: x,y: y,radius: radius)
         // create path
         let path = CGPathCreateMutable()
         // determine length of marker as a fraction of the total radius
         var divider:CGFloat = 1/16
-        for p in enumerate(points) {
+        for p in points.enumerate() {
             if p.index % 5 == 0 {
                 divider = 1/8
             }

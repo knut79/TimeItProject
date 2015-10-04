@@ -44,7 +44,7 @@ class UserScrollView: UIView , UIScrollViewDelegate, CheckItemProtocol{
     var selectedInfoLabel:UILabel!
     var itemName:String!
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
     }
@@ -100,11 +100,6 @@ class UserScrollView: UIView , UIScrollViewDelegate, CheckItemProtocol{
         
     }
     
-    func initValues( )
-    {
-        let itemheight:CGFloat = 40
-
-    }
     
     func addItem(title:String,value:String)
     {

@@ -19,7 +19,7 @@ class EventInfoLabel: UIView {
     var infoTextView:UIView!
     var infoText:UILabel!
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     override init(frame: CGRect) {
@@ -91,7 +91,7 @@ class EventInfoLabel: UIView {
         var yOffset:CGFloat = 0
         for var i = 0 ; i < badgeLabelsNum ; i++
         {
-            var badgeLabel = UILabel(frame: CGRectMake(xOffset, yOffset, badgeWidth, badgeHeight))
+            let badgeLabel = UILabel(frame: CGRectMake(xOffset, yOffset, badgeWidth, badgeHeight))
             badgeLabel.textColor = UIColor.blackColor()
             badgeLabel.textAlignment = NSTextAlignment.Right
             badgeLabel.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0)
@@ -116,15 +116,15 @@ class EventInfoLabel: UIView {
         infoTextView.frame = CGRectMake(width  * -1, (height / 1.5) * -1, width, height)
         infoText.frame = CGRectMake(margin, margin, width - (margin * 2), height - (margin * 2))
         
-        println("  eventlabel maxx \(self.frame.maxX) minx \(self.frame.minX) scrollviewBaseView width \(self.superview!.bounds.width)")
+        print("  eventlabel maxx \(self.frame.maxX) minx \(self.frame.minX) scrollviewBaseView width \(self.superview!.bounds.width)")
         
         if self.frame.minX <= 0
         {
-            infoTextView.frame.offset(dx: infoTextView.frame.width + self.frame.width, dy: 0)
+            infoTextView.frame.offsetInPlace(dx: infoTextView.frame.width + self.frame.width, dy: 0)
         }
         if self.frame.minY <= 0
         {
-            infoTextView.frame.offset(dx: 0, dy: self.frame.height)
+            infoTextView.frame.offsetInPlace(dx: 0, dy: self.frame.height)
         }
         
         infoTextView.transform = CGAffineTransformScale(infoTextView.transform, 0.1, 0.1)

@@ -63,16 +63,21 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.canDisplayBannerAds = true
-        bannerView = ADBannerView(frame: CGRectMake(0, UIScreen.mainScreen().bounds.size.height - 44, UIScreen.mainScreen().bounds.size.width, 44))
-        self.view.addSubview(bannerView!)
-        self.bannerView?.delegate = self
-        self.bannerView?.hidden = false
-        
+        let adFree = NSUserDefaults.standardUserDefaults().boolForKey("adFree")
+        if !adFree
+        {
+            self.canDisplayBannerAds = true
+            bannerView = ADBannerView(frame: CGRectZero)
+            bannerView!.center = CGPoint(x: bannerView!.center.x, y: self.view.bounds.size.height - bannerView!.frame.size.height / 2)
+            self.view.addSubview(bannerView!)
+            self.bannerView?.delegate = self
+            self.bannerView?.hidden = false
+        }
         // Do any additional setup after loading the view, typically from a nib.
         datactrl = DataHandler()
-        datactrl.fetchData(tags: tags,fromLevel:levelLow,toLevel: levelHigh)
+        datactrl.fetchData(tags,fromLevel:levelLow,toLevel: levelHigh)
         datactrl.shuffleEvents()
+        datactrl.orderOnUsed()
         
         gameStats = GameStats(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width * 0.5, UIScreen.mainScreen().bounds.size.height * 0.08),okScore: 0,goodScore: 0,loveScore: 0)
         
@@ -152,6 +157,11 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         startPlay()
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        bannerView?.delegate = nil
+        bannerView?.removeFromSuperview()
+    }
+    
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
@@ -163,8 +173,8 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     func scrollViewDidZoom(scrollView: UIScrollView) {
         
         
-        var offsetX = max((scrollView.bounds.size.width - scrollView.contentSize.width) * 0.5, 0.0);
-        var offsetY = max((scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5, 0.0);
+        let offsetX = max((scrollView.bounds.size.width - scrollView.contentSize.width) * 0.5, 0.0);
+        let offsetY = max((scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5, 0.0);
         
         timelineView.center = CGPointMake(scrollView.contentSize.width * 0.5 + offsetX,
             scrollView.contentSize.height * 0.5 + offsetY);
@@ -175,7 +185,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         
     }
     
-    func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView!, atScale scale: CGFloat) {
+    func scrollViewDidEndZooming(scrollView: UIScrollView, withView view: UIView?, atScale scale: CGFloat) {
         
     }
     
@@ -185,7 +195,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     
     func timeup()
     {
-        println("timeup")
+        print("timeup")
         
         for item in self.buttonCollection
         {
@@ -212,7 +222,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             self.clock.transform = CGAffineTransformScale(self.clock.transform, 3, 3)
             
             }, completion: { (value: Bool) in
-                var label = UILabel(frame: CGRectMake(0, 0, 100, 40))
+                let label = UILabel(frame: CGRectMake(0, 0, 100, 40))
                 label.textAlignment = NSTextAlignment.Center
                 label.font = UIFont.boldSystemFontOfSize(20)
                 label.adjustsFontSizeToFitWidth = true
@@ -251,7 +261,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     func animateTimeupMinusPoints()
     {
 
-        var button = {() -> UIButton? in
+        let button = {() -> UIButton? in
             for item in self.buttonCollection
             {
                 if self.isOnRightTrack(item.period)
@@ -262,7 +272,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             return self.rangeButton
         }()
         
-        var yearlabel = UILabel(frame: CGRectMake(0, 0, 100, 40))
+        let yearlabel = UILabel(frame: CGRectMake(0, 0, 100, 40))
         yearlabel.textAlignment = NSTextAlignment.Center
         yearlabel.font = UIFont.boldSystemFontOfSize(20)
         yearlabel.adjustsFontSizeToFitWidth = true
@@ -273,7 +283,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         self.view.addSubview(yearlabel)
         
         let minusPoints = 3
-        var minusPointslabel = UILabel(frame: CGRectMake(0, 0, 60, 40))
+        let minusPointslabel = UILabel(frame: CGRectMake(0, 0, 60, 40))
         minusPointslabel.textAlignment = NSTextAlignment.Center
         minusPointslabel.font = UIFont.boldSystemFontOfSize(20)
         minusPointslabel.backgroundColor = UIColor.clearColor()
@@ -286,7 +296,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         {
             if self.rangeButton !=  item
             {
-                var pulseAnimation:CABasicAnimation = CABasicAnimation(keyPath: "opacity");
+                let pulseAnimation:CABasicAnimation = CABasicAnimation(keyPath: "opacity");
                 pulseAnimation.duration = 0.3
                 pulseAnimation.toValue = NSNumber(float: 0.3)
                 pulseAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
@@ -302,7 +312,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
 
             yearlabel.transform = CGAffineTransformIdentity
             yearlabel.transform = CGAffineTransformScale(yearlabel.transform, 2, 2)
-            yearlabel.frame.offset(dx: 0, dy: button!.frame.height * -1)
+            yearlabel.frame.offsetInPlace(dx: 0, dy: button!.frame.height * -1)
             
             minusPointslabel.transform = CGAffineTransformIdentity
             minusPointslabel.center = self.gameStats.okPointsView.center
@@ -411,7 +421,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             }
         }
         
-        println("Range slider value changed: (\(Int(rangeSlider.lowerValue)) \(Int(rangeSlider.upperValue)))")
+        print("Range slider value changed: (\(Int(rangeSlider.lowerValue)) \(Int(rangeSlider.upperValue)))")
     }
     
     func resetRange()
@@ -446,7 +456,6 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         let height:CGFloat = 31.0
         let margin: CGFloat = 20.0
         let rangeSliderWidth = view.bounds.width - 2.0 * margin
-        let rangeSliderCenterX = margin + (rangeSliderWidth / 2)
         
         let buttonAndLabelHeight = height * 2
         let buttonAndLabelWidth:CGFloat = (UIScreen.mainScreen().bounds.width - (margin * 2)) / 3
@@ -506,16 +515,24 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     func setNextQuestion()
     {
         self.clock.stop()
-        currentQuestion = datactrl.historicEventItems[index % datactrl.historicEventItems.count]
-        
-        
-        
+
         if (self.gametype != gameType.training) && (self.completedQuestionsIds.count  >= self.numOfQuestionsForRound)
         {
             self.performSegueWithIdentifier("segueFromPlayToFinished", sender: nil)
         }
         else
         {
+            if gametype == gameType.takingChallenge
+            {
+                //randomHistoricEvents = datactrl.fetchHistoricEventOnIds(challenge.getNextQuestionBlock())!
+                currentQuestion = datactrl.fetchHistoricEventOnId(challenge.getNextQuestionId())!
+            }
+            else //makingChallenge or training
+            {
+                currentQuestion = datactrl.historicEventItems[index % datactrl.historicEventItems.count]
+            }
+            currentQuestion.used++
+            datactrl.save()
             self.completedQuestionsIds.append("\(currentQuestion.idForUpdate)")
             
             UIView.animateWithDuration(0.50, animations: { () -> Void in
@@ -555,8 +572,8 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             
             if( periods.count > 0)
             {
-                var xMaxBound:CGFloat = UIScreen.mainScreen().bounds.size.width
-                var xMinBound:CGFloat = 0
+                let xMaxBound:CGFloat = UIScreen.mainScreen().bounds.size.width
+                let xMinBound:CGFloat = 0
                 self.cleanUpButtons()
                 self.layoutButtons(nil,periods: periods, xMinBoundary: xMinBound, xMaxBoundary: xMaxBound,yBoundary: self.questionLabel.frame.maxY, level: 1)
             }
@@ -566,10 +583,10 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         
         if rightPeriodStrikes >= 3
         {
-            var periodsOneLevelFromEvent = ((currentQuestion.periods.allObjects as! [Period])[0] as Period).period?.sortedPeriods
+            let periodsOneLevelFromEvent = ((currentQuestion.periods.allObjects as! [Period])[0] as Period).period?.sortedPeriods
             if periodsOneLevelFromEvent == nil
             {
-                println("Could not get periods one level up for question \(currentQuestion.title)")
+                print("Could not get periods one level up for question \(currentQuestion.title)")
                 rightPeriodStrikes -= 2
                 self.loadQuestion()
             }
@@ -585,10 +602,10 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         }
         else if rightPeriodStrikes >= 1
         {
-            var periodsToLevelsFromEvent = ((currentQuestion.periods.allObjects as! [Period])[0] as Period).period?.period?.sortedPeriods
+            let periodsToLevelsFromEvent = ((currentQuestion.periods.allObjects as! [Period])[0] as Period).period?.period?.sortedPeriods
             if periodsToLevelsFromEvent == nil
             {
-                println("Could not get periods to levels up for question \(currentQuestion.title)")
+                print("Could not get periods to levels up for question \(currentQuestion.title)")
                 rightPeriodStrikes = 0
                 self.loadQuestion()
             }
@@ -623,48 +640,74 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     }
     
     let defaultButtonHeight:CGFloat = 70
-    func layoutButtons(parentButton:PeriodButton?, periods:[Period],xMinBoundary:CGFloat, xMaxBoundary:CGFloat, yBoundary:CGFloat, buttonHeight:CGFloat = 70,level:Int)
+    func layoutButtons(parentButton:PeriodButton?, periods:[Period],xMinBoundary:CGFloat, xMaxBoundary:CGFloat, yBoundary:CGFloat, buttonHeight:CGFloat = 70,level:Int, layoutDepth: Int = 0)
     {
         let vertialHorizontalMargin:CGFloat = 2
-        var buttonWidth = (xMaxBoundary - xMinBoundary - (vertialHorizontalMargin * (CGFloat(periods.count) - 1))) / CGFloat(periods.count)
+        let buttonWidth = (xMaxBoundary - xMinBoundary - (vertialHorizontalMargin * (CGFloat(periods.count) - 1))) / CGFloat(periods.count)
         var x:CGFloat = xMinBoundary
         var collectionForRelation:[PeriodButton] = []
         for item in periods
         {
-            var periodButton = PeriodButton(frame:CGRectMake(0, 0, buttonWidth,buttonHeight), level:level)
-            periodButton.addTarget(self, action: "periodSelected:", forControlEvents: .TouchUpInside)
-            periodButton.setPeriodAndTitle(item as Period)
-            buttonCollection.append(periodButton)
-            collectionForRelation.append(periodButton)
-            periodButton.center = CGPointMake(x + (periodButton.frame.width/2), yBoundary + (periodButton.frame.height / 2))
-            
-            if periodButton.frame.size.width < (UIScreen.mainScreen().bounds.size.width / 4)
+            if layoutDepth < 2
             {
-                periodButton.titleLabel?.font = UIFont.systemFontOfSize(10)
-            }
-            if buttonHeight < CGFloat(70)
-            {
-                periodButton.enabled = false
-                periodButton.backgroundColor = UIColor.lightGrayColor()
-            }
+                let periodButton = PeriodButton(frame:CGRectMake(0, 0, buttonWidth,buttonHeight), level:level, period: item as Period)
+                periodButton.addTarget(self, action: "periodSelected:", forControlEvents: .TouchUpInside)
 
-            self.view.addSubview(periodButton)
+                buttonCollection.append(periodButton)
+                collectionForRelation.append(periodButton)
+                periodButton.center = CGPointMake(x + (periodButton.frame.width/2), yBoundary + (periodButton.frame.height / 2))
+                
+                    if periodButton.frame.size.width < (UIScreen.mainScreen().bounds.size.width / 4)
+                    {
+                        periodButton.titleLabel?.font = UIFont.systemFontOfSize(10)
+                    }
+                    if buttonHeight < CGFloat(70)
+                    {
+                        periodButton.enabled = false
+                        periodButton.backgroundColor = UIColor.lightGrayColor()
+                    }
 
-            var tempPeriodItemsOnType:[Period] = []
-            for item in item.sortedPeriods
-            {
-                tempPeriodItemsOnType.append(item as! Period)
+
+                //periodButton.transform = CGAffineTransformScale(periodButton.transform, 0.1, 0.1)
+                if layoutDepth > 0
+                {
+                    periodButton.alpha = 0
+                }
+                self.view.addSubview(periodButton)
+                    
+
+
+                var tempPeriodItemsOnType:[Period] = []
+                for item in item.sortedPeriods
+                {
+                    tempPeriodItemsOnType.append(item as! Period)
+                }
+
+                let newYBoundary = yBoundary + periodButton.frame.size.height + vertialHorizontalMargin
+
+                    layoutButtons(periodButton,periods: tempPeriodItemsOnType, xMinBoundary: x, xMaxBoundary: x + periodButton.frame.size.width, yBoundary: newYBoundary, buttonHeight: buttonHeight / 2 , level: level + 1, layoutDepth: layoutDepth + 1)
+               
+                x += periodButton.frame.width + vertialHorizontalMargin
+                if layoutDepth > 0
+                {
+                    periodButton.transform = CGAffineTransformScale(periodButton.transform, 0.1, 0.1)
+                }
             }
-            let newYBoundary = yBoundary + periodButton.frame.size.height + vertialHorizontalMargin
-
-            layoutButtons(periodButton,periods: tempPeriodItemsOnType, xMinBoundary: x, xMaxBoundary: x + periodButton.frame.size.width, yBoundary: newYBoundary, buttonHeight: buttonHeight / 2 , level: level + 1)
-             x += periodButton.frame.width + vertialHorizontalMargin
         }
         
         if parentButton != nil
         {
             parentButton!.childButtons = collectionForRelation
         }
+        
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            for item in collectionForRelation
+            {
+                item.alpha = 1
+                item.transform = CGAffineTransformIdentity
+            }
+            
+            })
      
     }
     
@@ -674,7 +717,6 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         //self.clock.alpha = 1
         
         //animate!!!
-        var orgPoint = sender.center
         self.view.bringSubviewToFront(sender)
         
         UIView.animateWithDuration(0.50, animations: { () -> Void in
@@ -691,7 +733,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             //sender.layoutIfNeeded() ?? ()
             var x:CGFloat = 0
             let vertialHorizontalMargin:CGFloat = 2
-            var buttonWidth = (UIScreen.mainScreen().bounds.size.width - (vertialHorizontalMargin * (CGFloat(sender.childButtons.count) - 1))) / CGFloat(sender.childButtons.count)
+            let buttonWidth = (UIScreen.mainScreen().bounds.size.width - (vertialHorizontalMargin * (CGFloat(sender.childButtons.count) - 1))) / CGFloat(sender.childButtons.count)
             //var buttonWidth = UIScreen.mainScreen().bounds.size.width / CGFloat(sender.childButtons.count)
             for item in sender.childButtons
             {
@@ -777,7 +819,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         }
         else
         {
-            var rightTrack = isOnRightTrack(sender.period)
+            let rightTrack = isOnRightTrack(sender.period)
             if rightTrack
             {
                 self.clock.alpha = 1
@@ -819,8 +861,8 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         rightPeriodStrikes =  rightPeriodStrikes >= 3 ? 3 : rightPeriodStrikes + 1
         
         animateRightPeriod(periodButton, completion: {() -> Void in
-            var xPos = self.timelineView.getXPosOfTimelineItem(periodButton.period)
-            var yPosForceBottomOfScroll:CGFloat = 9999
+            let xPos = self.timelineView.getXPosOfTimelineItem(periodButton.period)
+            let yPosForceBottomOfScroll:CGFloat = 9999
             self.timelineScrollView.zoomToRect(CGRectMake(xPos - rectangleWidth, yPosForceBottomOfScroll , rectangleWidth * 3, self.timelineScrollView.frame.height), animated: true)
             
             self.timelineView.animateTimelinePocket(periodButton.period, scale:self.timelineScrollView.zoomScale)
@@ -883,7 +925,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         //animate zoominrect
         UIView.animateWithDuration(1.0, delay: 0.0, options:UIViewAnimationOptions.CurveEaseIn, animations: { () -> Void in
             
-            for button:UIButton in self.buttonCollection
+            for button:PeriodButton in self.buttonCollection
             {
                 button.alpha = 0
             }
@@ -914,7 +956,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         rangeSlider.maximumValue = datactrl.getMaxTimeLimit(Double(periodButton.period.toYear))
         rangeSlider.minimumValue = Double(periodButton.period.fromYear)
 
-        println("rangeslider max \(rangeSlider.maximumValue) min \(rangeSlider.minimumValue)")
+        print("rangeslider max \(rangeSlider.maximumValue) min \(rangeSlider.minimumValue)")
         if currentQuestion.type == Int16(eventType.singleYear.rawValue)
         {
             rangeSlider.typeValue = sliderType.single
@@ -1091,9 +1133,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                         self.setNextQuestion()
                     })
                 }
-                
-            default:
-                break
+
             }
         }
     }
@@ -1249,7 +1289,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         answerAnimationLabel.text = pointsStringOkPoints
         answerAnimationLabel.alpha = 0
         
-        var lovepointAnimationLabel:UILabel? = lovePoint ? UILabel(frame: answerAnimationLabel.frame) : nil
+        let lovepointAnimationLabel:UILabel? = lovePoint ? UILabel(frame: answerAnimationLabel.frame) : nil
         lovepointAnimationLabel?.center = animateFromView.center
         lovepointAnimationLabel?.text = "1"
         lovepointAnimationLabel?.textColor = UIColor.greenColor()
@@ -1268,8 +1308,8 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         answerAnimationYellLabel.transform = CGAffineTransformScale(self.answerAnimationYellLabel.transform, 0.1, 0.1)
         //animate zoominrect
         UIView.animateWithDuration(1.0, animations: { () -> Void in
-            var xPos = self.timelineView.getXPosOfTimelineItem(self.lastRightPeriodButtonClicked.period)
-            var yPosForceBottomOfScroll:CGFloat = 9999 //self.timelineScrollView.contentOffset.y + self.timelineScrollView.frame.height
+            let xPos = self.timelineView.getXPosOfTimelineItem(self.lastRightPeriodButtonClicked.period)
+            let yPosForceBottomOfScroll:CGFloat = 9999 //self.timelineScrollView.contentOffset.y + self.timelineScrollView.frame.height
             self.timelineScrollView.zoomToRect(CGRectMake(xPos - rectangleWidth, yPosForceBottomOfScroll , rectangleWidth * 3, self.timelineScrollView.frame.height), animated: true)
             let xOffsetOkPoint = self.gameStats.okPointsView.center.x
             self.answerAnimationLabel.center =  CGPointMake(xOffsetOkPoint,self.gameStats.center.y )
@@ -1351,9 +1391,9 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             tempPeriodItems.append(item as! Period)
         }
         
-        var yBound =  questionLabel.frame.maxY
-        var xMaxBound:CGFloat = UIScreen.mainScreen().bounds.size.width - 0
-        var xMinBound:CGFloat = 0
+        let yBound =  questionLabel.frame.maxY
+        let xMaxBound:CGFloat = UIScreen.mainScreen().bounds.size.width - 0
+        let xMinBound:CGFloat = 0
         
         cleanUpButtons()
         layoutButtons(periodButton,periods: tempPeriodItems,xMinBoundary: xMinBound, xMaxBoundary: xMaxBound,yBoundary: yBound,level: periodButton.level + 1)
@@ -1396,7 +1436,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     
     override func prepareForSegue(segue: (UIStoryboardSegue!), sender: AnyObject!) {
         if (segue.identifier == "segueFromPlayToMainMenu") {
-            var svc = segue!.destinationViewController as! MainMenuViewController
+            let svc = segue!.destinationViewController as! MainMenuViewController
             if gameStats.newValues()
             {
                 svc.updateGlobalGameStats = true
@@ -1405,7 +1445,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             }
         }
         if (segue.identifier == "segueFromPlayToFinished") {
-            var svc = segue!.destinationViewController as! FinishedViewController
+            let svc = segue!.destinationViewController as! FinishedViewController
             svc.completedQuestionsIds = completedQuestionsIds
             svc.usersIdsToChallenge = usersIdsToChallenge
             svc.userFbId = myIdAndName.0

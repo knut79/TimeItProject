@@ -13,7 +13,7 @@ class Challenge {
     var id:String!
     var fbIdToBeat:String!
     //var questions:[[HistoricEvent]]!
-    var questionBlocks:[[Int]] = []
+    var questionIds:[Int] = []
     var pointsToBeat:Int
     var correctAnswersToBeat:Int
     var title:String
@@ -26,26 +26,21 @@ class Challenge {
         fbIdToBeat = values["fbIdToBeat"] as! String
         pointsToBeat = values["pointsToBeat"] as! Int
         correctAnswersToBeat = values["correctAnswersToBeat"] as! Int
-        var questionsStringFormat = values["questionsStringFormat"] as! String
+        let questionsStringFormat = values["questionsStringFormat"] as! String
         
-        let questionBlocksStringFormat = questionsStringFormat.componentsSeparatedByString(";")
-        for item in questionBlocksStringFormat
+        let questionIdsStringFormat = questionsStringFormat.componentsSeparatedByString(",")
+        for item in questionIdsStringFormat
         {
-            let questionIds = item.componentsSeparatedByString(",")
-            var idsArray:[Int] = []
-            for id in questionIds
-            {
-                let idAsNumber = NSNumberFormatter().numberFromString(id)
-                idsArray.append(idAsNumber!.integerValue)
-            }
-            questionBlocks.append(idsArray)
+            let idAsNumber = NSNumberFormatter().numberFromString(item)
+            questionIds.append(idAsNumber!.integerValue)
         }
     }
     
-    func getNextQuestionBlock() -> [Int]
+    func getNextQuestionId() -> Int
     {
-        return questionBlocks.removeLast()
+        return questionIds.removeLast()
     }
+
 }
 
 

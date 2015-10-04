@@ -15,9 +15,9 @@ class Period: NSManagedObject {
     @NSManaged var fromYear: Int32
     @NSManaged var type: Int16
     @NSManaged var periods: NSSet
-    @NSManaged var events: NSSet
+    @NSManaged var hevents: NSSet
     @NSManaged var period: Period?
-    @NSManaged var timelinePocket:Boolean
+    @NSManaged var timelinePocket:DarwinBoolean
     
     //added on picture with coordinates on parent filepoint
     class func createInManagedObjectContext(moc: NSManagedObjectContext, from: Int32, to:Int32, timelineItem:Bool) -> Period{
@@ -39,7 +39,7 @@ class Period: NSManagedObject {
         */
         let toHack = to > 2000 ? 2000 : to
         let fromHack = from < -1000 ? -1000 : from
-        var diff = toHack - fromHack
+        let diff = toHack - fromHack
         //SUPERHACK
         if from == minWayBack && to == maxWayBack
         {
@@ -69,13 +69,12 @@ class Period: NSManagedObject {
         {
             newitem.type = Int16(periodType.unvalid.rawValue)
         }
+
         
-        
-        
-        newitem.timelinePocket = timelineItem ? 1 : 0
+        newitem.timelinePocket = timelineItem ? true : false
         
         newitem.periods = NSMutableSet()
-        newitem.events = NSMutableSet()
+        newitem.hevents = NSMutableSet()
         return newitem
     }
     
@@ -127,7 +126,7 @@ class Period: NSManagedObject {
             //NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"type1.size" ascending:YES];
             //NSArray *finalArray = [self.firstArray sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
             let sortDescriptor = NSSortDescriptor(key: "fromYear", ascending: true)
-            var temp = self.periods.sortedArrayUsingDescriptors([sortDescriptor])
+            let temp = self.periods.sortedArrayUsingDescriptors([sortDescriptor])
             return temp
         }
     }
@@ -149,14 +148,14 @@ class Period: NSManagedObject {
     func lowPercentHalfWindow() -> Int
     {
         //var val = Double(Int(self.toYear) - Int(self.fromYear)) * 0.05
-        var val = Double(Int(self.toYear) - Int(self.fromYear)) * (lowPercentWindow / 2)
+        let val = Double(Int(self.toYear) - Int(self.fromYear)) * (lowPercentWindow / 2)
         return Int(val)
     }
  
     func highPercentHalfWindow() -> Int
     {
         //var val = Double(Int(self.toYear) - Int(self.fromYear)) * 0.1
-        var val = Double(Int(self.toYear) - Int(self.fromYear)) * (highPercentWindow / 2)
+        let val = Double(Int(self.toYear) - Int(self.fromYear)) * (highPercentWindow / 2)
         return Int(val)
     }
 

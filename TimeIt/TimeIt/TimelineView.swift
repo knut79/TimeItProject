@@ -22,7 +22,7 @@ class TimelineView: UIView {
     var timelineItems:[Period]?
     let maringLeft:CGFloat = rectangleWidth * 0.25
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     override init(frame: CGRect) {
@@ -45,33 +45,27 @@ class TimelineView: UIView {
     }
     
     override func drawRect(rect: CGRect) {
+
         
-        var center = CGPointMake(self.frame.size.width / 2.0, self.frame.size.height / 2.0)
-        
-        var textAttributes: [String: AnyObject] = [
-            NSForegroundColorAttributeName : UIColor(white: 1.0, alpha: 1.0).CGColor,
-            NSFontAttributeName : UIFont.systemFontOfSize(12)
-        ]
-        
-        var ctx = UIGraphicsGetCurrentContext()
+        let ctx = UIGraphicsGetCurrentContext()
         //CGContextSetTextMatrix(ctx, CGAffineTransformIdentity)
         //CGContextTranslateCTM(ctx, 0.0, rect.height)
         //CGContextScaleCTM(ctx, 1.0, -1.0)
         
         
-        var paragraphStyle = NSMutableParagraphStyle()
+        let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .Center
         let attrs = [NSFontAttributeName: UIFont(name: "Helvetica-Bold", size: 24)!, NSParagraphStyleAttributeName: paragraphStyle, NSForegroundColorAttributeName : UIColor(white: 0.0, alpha: 1.0).CGColor]
 
         
         var xVal:CGFloat = maringLeft
-        var yVal:CGFloat = rect.height
+        let yVal:CGFloat = rect.height
         let yValForPocket = yVal - (rectangleHeight * 2)
         let yValForPeriodText = yVal - rectangleHeight
         for item in timelineItems!
         {
             var answers = numberOfRightAnswersOnTimelinePocket(item)
-            var numOfRightAnswers = answers.0.count
+            let numOfRightAnswers = answers.0.count
             CGContextAddRect(ctx, CGRectMake(xVal, yValForPocket, rectangleWidth, rectangleHeight))
             CGContextSetLineWidth(ctx, 5);
             CGContextSetStrokeColorWithColor(ctx, UIColor.grayColor().CGColor)
@@ -84,18 +78,18 @@ class TimelineView: UIView {
             CGContextFillPath(ctx)
 
             let string = "\(item.formattedTime)\n"
-            string.drawWithRect(CGRect(x: xVal, y: yValForPeriodText, width: rectangleWidth, height: rectangleHeight), options: .UsesLineFragmentOrigin, attributes: attrs as [NSObject : AnyObject], context: nil)
+            string.drawWithRect(CGRect(x: xVal, y: yValForPeriodText, width: rectangleWidth, height: rectangleHeight), options: .UsesLineFragmentOrigin, attributes: attrs as? [String : AnyObject], context: nil)
             
             if numOfRightAnswers > 0
             {
                 answers.0 = shuffle(answers.0)
-                let maxIteration = numOfRightAnswers > 5 ?  5 : numOfRightAnswers
+                //let maxIteration = numOfRightAnswers > 5 ?  5 : numOfRightAnswers
                 var yValForHistEvent = yValForPocket - rectangleHeight
                 for historicEvent:HistoricEvent in answers.0
                 {
                     
                     let string = "\(historicEvent.title)\n"
-                    string.drawWithRect(CGRect(x: xVal, y: yValForHistEvent, width: rectangleWidth, height: rectangleHeight), options: .UsesLineFragmentOrigin, attributes: attrs as [NSObject : AnyObject], context: nil)
+                    string.drawWithRect(CGRect(x: xVal, y: yValForHistEvent, width: rectangleWidth, height: rectangleHeight), options: .UsesLineFragmentOrigin, attributes: attrs as? [String : AnyObject], context: nil)
                     
                     yValForHistEvent -= rectangleHeight
                     
@@ -112,7 +106,7 @@ class TimelineView: UIView {
     }
     
     func shuffle<C: MutableCollectionType where C.Index == Int>(var list: C) -> C {
-        let ecount = count(list)
+        let ecount = list.count
         for i in 0..<(ecount - 1) {
             let j = Int(arc4random_uniform(UInt32(ecount - i))) + i
             swap(&list[i], &list[j])
@@ -124,7 +118,7 @@ class TimelineView: UIView {
     {
         var collectionOfRightAnsweredQuestions:[HistoricEvent] = []
         var collectionOfNotRightAnswQuestions:[HistoricEvent] = []
-        for eventItem in period.events
+        for eventItem in period.hevents
         {
             if (eventItem as! HistoricEvent).goodScore > 0
             {
@@ -145,7 +139,7 @@ class TimelineView: UIView {
 
         for periodItem in period.periods
         {
-            for eventItem in periodItem.events
+            for eventItem in periodItem.hevents
             {
                 if (eventItem as! HistoricEvent).goodScore > 0
                 {
@@ -181,8 +175,6 @@ class TimelineView: UIView {
     func getXPosOfTimelineItem(period:Period) -> CGFloat
     {
         var xVal:CGFloat = maringLeft
-        var yVal:CGFloat = self.frame.size.height
-        let yValForPocket = yVal - (rectangleHeight * 2)
         for item in timelineItems!
         {
             if self.periodHittingPeriod(period, hitting: item)
@@ -200,7 +192,7 @@ class TimelineView: UIView {
     {
         var viewForAnimation:UIView?
         var xVal:CGFloat = maringLeft
-        var yVal:CGFloat = self.frame.size.height / scale
+        let yVal:CGFloat = self.frame.size.height / scale
         let yValForPocket = yVal - (rectangleHeight * 2)
 
         for item in timelineItems!
@@ -213,7 +205,7 @@ class TimelineView: UIView {
                 viewForAnimation?.alpha = 0
                 self.addSubview(viewForAnimation!)
                 
-                var pulseAnimation:CABasicAnimation = CABasicAnimation(keyPath: "opacity");
+                let pulseAnimation:CABasicAnimation = CABasicAnimation(keyPath: "opacity");
                 
                 pulseAnimation.delegate = self
                 UIView.setAnimationDelegate(self)
@@ -231,7 +223,7 @@ class TimelineView: UIView {
         }
     }
     
-    override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
+    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
         delegate?.finishedAnimatingTimeline()
     }
 

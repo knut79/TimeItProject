@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		72424A1A1BC13C36009FED5C /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72424A181BC13C36009FED5C /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
+		72424A1B1BC13C36009FED5C /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72424A191BC13C36009FED5C /* FBSDKLoginKit.framework */; settings = {ASSET_TAGS = (); }; };
 		728BAEE01BB2CF0C00BD4DB4 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728BAEDF1BB2CF0B00BD4DB4 /* Colors.swift */; };
 		728BAEE21BB2CF3D00BD4DB4 /* HolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728BAEE11BB2CF3D00BD4DB4 /* HolderView.swift */; };
 		728BAEE51BB2CF4800BD4DB4 /* RectangleLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728BAEE31BB2CF4800BD4DB4 /* RectangleLayer.swift */; };
@@ -54,8 +56,6 @@
 		72FF783E1BBA90F300A5B587 /* ResultItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FF783B1BBA90F300A5B587 /* ResultItemView.swift */; };
 		72FF783F1BBA90F300A5B587 /* ResultTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FF783C1BBA90F300A5B587 /* ResultTitleLabel.swift */; };
 		72FF78441BBA93B300A5B587 /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72FF78411BBA93B300A5B587 /* WindowsAzureMobileServices.framework */; };
-		72FF78451BBA93B300A5B587 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72FF78421BBA93B300A5B587 /* FBSDKLoginKit.framework */; };
-		72FF78461BBA93B300A5B587 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72FF78431BBA93B300A5B587 /* FBSDKCoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +69,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		72424A171BC0BAC2009FED5C /* TimeIt 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TimeIt 3.xcdatamodel"; sourceTree = "<group>"; };
+		72424A181BC13C36009FED5C /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		72424A191BC13C36009FED5C /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		728BAEDF1BB2CF0B00BD4DB4 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		728BAEE11BB2CF3D00BD4DB4 /* HolderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HolderView.swift; sourceTree = "<group>"; };
 		728BAEE31BB2CF4800BD4DB4 /* RectangleLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RectangleLayer.swift; sourceTree = "<group>"; };
@@ -84,6 +87,7 @@
 		72CD2A831B6D6C3200EB539B /* EventInfoLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventInfoLabel.swift; sourceTree = "<group>"; };
 		72D192961B9898060035CE11 /* ClockView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockView.swift; sourceTree = "<group>"; };
 		72D22C8F1BBDBDE400D81C15 /* FinishedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinishedViewController.swift; sourceTree = "<group>"; };
+		72D22C911BBEC19500D81C15 /* TimeIt 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TimeIt 2.xcdatamodel"; sourceTree = "<group>"; };
 		72D52EBA1B73B98E0073AD0A /* TagCheckScrollview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCheckScrollview.swift; sourceTree = "<group>"; };
 		72D52EBC1B73B9B00073AD0A /* TagCheckView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCheckView.swift; sourceTree = "<group>"; };
 		72E0CDC01BBA9D4A001DD271 /* TimeIt-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TimeIt-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -120,8 +124,6 @@
 		72FF783B1BBA90F300A5B587 /* ResultItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultItemView.swift; sourceTree = "<group>"; };
 		72FF783C1BBA90F300A5B587 /* ResultTitleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultTitleLabel.swift; sourceTree = "<group>"; };
 		72FF78411BBA93B300A5B587 /* WindowsAzureMobileServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WindowsAzureMobileServices.framework; sourceTree = "<group>"; };
-		72FF78421BBA93B300A5B587 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		72FF78431BBA93B300A5B587 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,9 +132,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				72FF78441BBA93B300A5B587 /* WindowsAzureMobileServices.framework in Frameworks */,
-				72FF78461BBA93B300A5B587 /* FBSDKCoreKit.framework in Frameworks */,
+				72424A1A1BC13C36009FED5C /* FBSDKCoreKit.framework in Frameworks */,
+				72424A1B1BC13C36009FED5C /* FBSDKLoginKit.framework in Frameworks */,
 				72ED614A1B5EF6DC00EFEE45 /* QuartzCore.framework in Frameworks */,
-				72FF78451BBA93B300A5B587 /* FBSDKLoginKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,9 +319,9 @@
 		72FF78401BBA939500A5B587 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				72424A181BC13C36009FED5C /* FBSDKCoreKit.framework */,
+				72424A191BC13C36009FED5C /* FBSDKLoginKit.framework */,
 				72FF78411BBA93B300A5B587 /* WindowsAzureMobileServices.framework */,
-				72FF78421BBA93B300A5B587 /* FBSDKLoginKit.framework */,
-				72FF78431BBA93B300A5B587 /* FBSDKCoreKit.framework */,
 				72ED61491B5EF6DC00EFEE45 /* QuartzCore.framework */,
 			);
 			name = Framework;
@@ -369,7 +371,9 @@
 		72ED61021B52762700EFEE45 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = knut;
 				TargetAttributes = {
 					72ED61091B52762700EFEE45 = {
@@ -527,7 +531,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -543,7 +549,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -572,6 +578,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -582,7 +589,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -601,6 +608,7 @@
 				INFOPLIST_FILE = TimeIt/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.datadullum.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "TimeIt/TimeIt-Bridging-Header.h";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "TimeIt/TimeIt-Bridging-Header.h";
@@ -618,6 +626,7 @@
 				INFOPLIST_FILE = TimeIt/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.datadullum.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "TimeIt/TimeIt-Bridging-Header.h";
 			};
@@ -637,6 +646,7 @@
 				);
 				INFOPLIST_FILE = TimeItTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.datadullum.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TimeIt.app/TimeIt";
 			};
@@ -652,6 +662,7 @@
 				);
 				INFOPLIST_FILE = TimeItTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.datadullum.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TimeIt.app/TimeIt";
 			};
@@ -693,9 +704,11 @@
 		72ED61111B52762800EFEE45 /* TimeIt.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				72424A171BC0BAC2009FED5C /* TimeIt 3.xcdatamodel */,
+				72D22C911BBEC19500D81C15 /* TimeIt 2.xcdatamodel */,
 				72ED61121B52762800EFEE45 /* TimeIt.xcdatamodel */,
 			);
-			currentVersion = 72ED61121B52762800EFEE45 /* TimeIt.xcdatamodel */;
+			currentVersion = 72424A171BC0BAC2009FED5C /* TimeIt 3.xcdatamodel */;
 			path = TimeIt.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

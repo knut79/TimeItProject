@@ -11,15 +11,10 @@ import QuartzCore
 
 class RangeWindowsLayer: CALayer {
     weak var rangeSlider: RangeSlider?
-
-    var value:Double?{
-        didSet {
-            let h = 0
-        }
-    }
-
     
-    override func drawInContext(ctx: CGContext!) {
+    var value:Double?
+    
+    override func drawInContext(ctx: CGContext) {
         if let slider = rangeSlider {
 
             // Fill the highlighted range
