@@ -109,7 +109,9 @@ class TimelineView: UIView {
         let ecount = list.count
         for i in 0..<(ecount - 1) {
             let j = Int(arc4random_uniform(UInt32(ecount - i))) + i
-            swap(&list[i], &list[j])
+            if j != i {
+                swap(&list[i], &list[j])
+            }
         }
         return list
     }

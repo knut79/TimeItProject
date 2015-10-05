@@ -54,7 +54,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
     
     var holderView:HolderView!
     
-    var numOfQuestionsForRound:Int = 5
+    var numOfQuestionsForRound:Int = 2
     
     var bannerView:ADBannerView?
     override func viewDidLoad() {
@@ -247,6 +247,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
             self.resultsButton.alpha = 1
             self.adFreeButton.alpha = 1
             
+            requestProductData()
             //setupAfterPopulateData()
         }
 
@@ -313,7 +314,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
             }, completion: { (value: Bool) in
                 self.view.backgroundColor = UIColor.whiteColor()
         })
-        
+        requestProductData()
         populateDataIfNeeded()
     }
     
@@ -336,7 +337,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
     
     override func viewDidLayoutSubviews() {
 
-        bannerView?.frame = CGRectMake(0, UIScreen.mainScreen().bounds.size.height - 44, UIScreen.mainScreen().bounds.size.width, 44)
+        //bannerView?.frame = CGRectMake(0, UIScreen.mainScreen().bounds.size.height - 44, UIScreen.mainScreen().bounds.size.width, 44)
         
         loadingDataView?.frame =  CGRectMake(50, 50, 200, 50)
 
@@ -358,7 +359,8 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         var buttonWidth = UIScreen.mainScreen().bounds.size.width * 0.17
         let buttonHeight = buttonWidth
         let orientation = UIDevice.currentDevice().orientation
-        if orientation == UIDeviceOrientation.LandscapeLeft || orientation == UIDeviceOrientation.LandscapeRight
+        //if orientation == UIDeviceOrientation.LandscapeLeft || orientation == UIDeviceOrientation.LandscapeRight
+        if orientation.isLandscape || orientation.isFlat
         {
             challengeUsersButton.frame = CGRectMake((UIScreen.mainScreen().bounds.size.width / 2) - buttonWidth - (marginButtons / 2), UIScreen.mainScreen().bounds.size.height * 0.15, buttonWidth, buttonHeight)
             practiceButton.frame = CGRectMake(challengeUsersButton.frame.maxX + marginButtons, UIScreen.mainScreen().bounds.size.height * 0.15, buttonWidth, buttonHeight)
@@ -394,7 +396,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         var playbuttonWidth = self.practiceButton.frame.maxX - self.challengeUsersButton.frame.minX
         var playbuttonHeight = self.resultsButton.frame.maxY - self.challengeUsersButton.frame.minY - sliderAndFilterbuttonHeight - margin
         playButtonExstraLabel2.text = "In \(orientationText) mode"
-        if orientation == UIDeviceOrientation.LandscapeLeft || orientation == UIDeviceOrientation.LandscapeRight
+        if orientation.isLandscape || orientation.isFlat
         {
             playbuttonWidth = UIScreen.mainScreen().bounds.size.width * 0.7
             playbuttonHeight = UIScreen.mainScreen().bounds.size.height * 0.33
@@ -436,7 +438,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         let orientation = UIDevice.currentDevice().orientation
         var buttonWidth = UIScreen.mainScreen().bounds.size.width * 0.17
         var buttonHeight = buttonWidth
-        if orientation == UIDeviceOrientation.LandscapeLeft || orientation == UIDeviceOrientation.LandscapeRight
+        if orientation.isLandscape || orientation.isFlat
         {
             buttonHeight = (buttonWidth * 2) + buttonMargin
             newChallengeButton.frame = CGRectMake((UIScreen.mainScreen().bounds.size.width / 2) -  buttonWidth - (buttonMargin / 2), UIScreen.mainScreen().bounds.size.height * 0.15, buttonWidth, buttonHeight)
@@ -908,6 +910,9 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
     override func shouldAutorotate() -> Bool {
         return allowRotate
     }
+    
+    func canRotate () -> Void{ }
+    
 
 }
 

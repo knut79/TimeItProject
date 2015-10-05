@@ -82,7 +82,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         gameStats = GameStats(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width * 0.5, UIScreen.mainScreen().bounds.size.height * 0.08),okScore: 0,goodScore: 0,loveScore: 0)
         
         //timelineScrollView = UIScrollView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height * 0.20))
-        timelineScrollView = UIScrollView(frame: CGRectMake(0, gameStats.frame.maxY, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height * 0.20))
+        timelineScrollView = UIScrollView(frame: CGRectMake(0, gameStats.frame.maxY, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height * 0.2))
         timelineScrollView.backgroundColor = UIColor.whiteColor()
         let timelineItems = datactrl.getTimelineItems()
         let maringLeftAndRight = rectangleWidth / 2
@@ -95,6 +95,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         timelineScrollView.minimumZoomScale =  minscaleWidth
         timelineScrollView.maximumZoomScale = 1.0
         timelineScrollView.zoomScale = minscaleWidth
+
 
         answerAnimationLabel = UILabel(frame: CGRectMake(0, 0, rectangleWidth,rectangleHeight))
         answerAnimationLabel.font = UIFont.boldSystemFontOfSize(24)
@@ -129,7 +130,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         }
 
         let margin: CGFloat = 10.0
-        questionLabel = UILabel(frame: CGRectMake(margin, timelineScrollView.frame.maxY, UIScreen.mainScreen().bounds.width - (margin * 2), 50))
+        questionLabel = UILabel(frame: CGRectMake(margin, timelineScrollView.frame.maxY + 10, UIScreen.mainScreen().bounds.width - (margin * 2), 50))
         questionLabel.textAlignment = NSTextAlignment.Center
         questionLabel.font = UIFont.boldSystemFontOfSize(25)
         questionLabel.numberOfLines = 1
@@ -160,6 +161,13 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     override func viewWillDisappear(animated: Bool) {
         bannerView?.delegate = nil
         bannerView?.removeFromSuperview()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+
+        let bottomOffset = CGPointMake(0, self.timelineScrollView.contentSize.height - self.timelineScrollView.bounds.size.height)
+        timelineScrollView.setContentOffset(bottomOffset, animated: true)
+        //self.timelineScrollView.zoomToRect(CGRectMake(0, timelineScrollView.frame.height * 2, timelineScrollView.frame.width, timelineScrollView.frame.height), animated: true)
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -421,7 +429,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             }
         }
         
-        print("Range slider value changed: (\(Int(rangeSlider.lowerValue)) \(Int(rangeSlider.upperValue)))")
+        //print("Range slider value changed: (\(Int(rangeSlider.lowerValue)) \(Int(rangeSlider.upperValue)))")
     }
     
     func resetRange()
@@ -1436,6 +1444,8 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     func backAction()
     {
         self.clock.stop()
+        self.clock.delegate = nil
+        self.clock = nil
         //datactrl.saveGameData()
         self.performSegueWithIdentifier("segueFromPlayToMainMenu", sender: nil)
     }

@@ -49,9 +49,9 @@ class FinishedViewController:UIViewController {
         backToMenuButton.layer.masksToBounds = true
         backToMenuButton.setTitle("Back to menu", forState: UIControlState.Normal)
         backToMenuButton.alpha = 0
-        self.view.addSubview(self.backToMenuButton)
         
-        activityLabel = UILabel(frame: CGRectMake(0, 0, 400, 100))
+        
+        activityLabel = UILabel(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width - 40, 100))
         activityLabel.center = CGPointMake(UIScreen.mainScreen().bounds.size.width / 2, UIScreen.mainScreen().bounds.size.height / 2)
         activityLabel.adjustsFontSizeToFitWidth = true
         activityLabel.textAlignment = NSTextAlignment.Center
@@ -77,16 +77,17 @@ class FinishedViewController:UIViewController {
             resultChallengeLabel.textAlignment = NSTextAlignment.Center
             resultChallengeLabel.text = "Result of challenge \(self.challengeToBeat.title)"
             resultChallengeLabel.font = UIFont.boldSystemFontOfSize(20)
+            resultChallengeLabel.adjustsFontSizeToFitWidth = true
             self.view.addSubview(resultChallengeLabel)
             
-            resultLabel = UILabel(frame: CGRectMake(margin, resultChallengeLabel.frame.maxY , UIScreen.mainScreen().bounds.size.width - (margin * 2), UIScreen.mainScreen().bounds.size.height - resultChallengeLabel.frame.height - (margin * 2)))
+            resultLabel = UILabel(frame: CGRectMake(margin, resultChallengeLabel.frame.maxY , UIScreen.mainScreen().bounds.size.width - (margin * 2),  backToMenuButton.frame.minY - resultChallengeLabel.frame.maxY))
             resultLabel.numberOfLines = 9
             resultLabel.backgroundColor = UIColor.grayColor()
             resultLabel.textAlignment = NSTextAlignment.Center
-            resultLabel.textColor = UIColor.whiteColor()
+            resultLabel.textColor = UIColor.blackColor()
             resultLabel.adjustsFontSizeToFitWidth = true
-            resultLabel.backgroundColor = UIColor.blueColor()
-            resultLabel.layer.borderColor = UIColor.whiteColor().CGColor
+            resultLabel.backgroundColor = UIColor.whiteColor()
+            resultLabel.layer.borderColor = UIColor.blueColor().CGColor
             resultLabel.layer.cornerRadius = 8
             resultLabel.layer.masksToBounds = true
             resultLabel.layer.borderWidth = 5.0
@@ -110,6 +111,7 @@ class FinishedViewController:UIViewController {
                 youLostChallenge()
             }
         }
+        self.view.addSubview(self.backToMenuButton)
     }
     
     func youLostChallenge()
