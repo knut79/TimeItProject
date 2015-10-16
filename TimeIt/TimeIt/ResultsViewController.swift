@@ -11,7 +11,7 @@ import FBSDKLoginKit
 
 
 class ResultsViewController: UIViewController, FBSDKLoginButtonDelegate {
-    let datactrl = DataHandler()
+    let datactrl = (UIApplication.sharedApplication().delegate as! AppDelegate).datactrl
     var client: MSClient?
     var activityLabel:UILabel!
     let backButton = UIButton()

@@ -59,10 +59,10 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
     var bannerView:ADBannerView?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         let firstLaunch = NSUserDefaults.standardUserDefaults().boolForKey("firstlaunch")
 
-        datactrl = DataHandler()
+        datactrl = (UIApplication.sharedApplication().delegate as! AppDelegate).datactrl
 
         challengeUsersButton = UIButton(frame:CGRectZero)
         challengeUsersButton.addTarget(self, action: "challengeAction", forControlEvents: UIControlEvents.TouchUpInside)
@@ -96,6 +96,8 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         adFreeButton.layer.masksToBounds = true
         adFreeButton.titleLabel?.adjustsFontSizeToFitWidth = true
         adFreeButton.alpha = 0
+        
+
         let adFree = NSUserDefaults.standardUserDefaults().boolForKey("adFree")
         if !adFree
         {
@@ -114,6 +116,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         resultsChallengeButton = UIButton(frame:CGRectZero)
         resultsChallengeButton.addTarget(self, action: "resultChallengeAction", forControlEvents: UIControlEvents.TouchUpInside)
         resultsChallengeButton.backgroundColor = UIColor.blueColor()
+        resultsChallengeButton.titleLabel?.adjustsFontSizeToFitWidth = true
         resultsChallengeButton.layer.cornerRadius = 5
         resultsChallengeButton.layer.masksToBounds = true
         resultsChallengeButton.setTitle("Challenges", forState: UIControlState.Normal)
@@ -323,7 +326,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         if Int(datactrl.dataPopulatedValue as! NSNumber) <= 0
         {
             
-            DataHandler().populateData({ () in
+            datactrl.populateData({ () in
                 
                 
                 self.loadingDataView.alpha = 0
@@ -899,6 +902,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         datactrl.adFreeValue = 1
         datactrl.saveGameData()
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: "adFree")
+        NSUserDefaults.standardUserDefaults().synchronize()
         self.bannerView?.hidden = true
         
         adFreeButton.backgroundColor = UIColor.grayColor()

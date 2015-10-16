@@ -74,7 +74,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             self.bannerView?.hidden = false
         }
         // Do any additional setup after loading the view, typically from a nib.
-        datactrl = DataHandler()
+        datactrl = (UIApplication.sharedApplication().delegate as! AppDelegate).datactrl
         datactrl.fetchData(tags,fromLevel:levelLow,toLevel: levelHigh)
         datactrl.shuffleEvents()
         datactrl.orderOnUsed()
@@ -130,7 +130,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         }
 
         let margin: CGFloat = 10.0
-        questionLabel = UILabel(frame: CGRectMake(margin, timelineScrollView.frame.maxY + 10, UIScreen.mainScreen().bounds.width - (margin * 2), 50))
+        questionLabel = UILabel(frame: CGRectMake(margin, timelineScrollView.frame.maxY + (UIScreen.mainScreen().bounds.height * 0.07), UIScreen.mainScreen().bounds.width - (margin * 2), 50))
         questionLabel.textAlignment = NSTextAlignment.Center
         questionLabel.font = UIFont.boldSystemFontOfSize(25)
         questionLabel.numberOfLines = 1
@@ -522,7 +522,11 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     
     func setNextQuestion()
     {
-        self.clock.stop()
+        if let c = clock
+        {
+            c.stop()
+        }
+        
 
         if (self.gametype == gameType.makingChallenge) && (self.completedQuestionsIds.count  >= self.numOfQuestionsForRound)
         {
@@ -569,13 +573,13 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                         self.index++
                         self.loadQuestion()
                         
-                        self.clock.transform = CGAffineTransformIdentity
-                        self.clock.center = self.orgClockCenter
-                        self.clock.alpha = 1
-                        //self.clock.stop()
-                        self.clock.start(10.0)
-                        //self.clock.restart(10.0)
-                        
+                        if let c = self.clock
+                        {
+                            c.transform = CGAffineTransformIdentity
+                            c.center = self.orgClockCenter
+                            c.alpha = 1
+                            c.start(10.0)
+                        }
                 })
         })
     }
@@ -588,8 +592,9 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             {
                 let xMaxBound:CGFloat = UIScreen.mainScreen().bounds.size.width
                 let xMinBound:CGFloat = 0
+                let yBoundary = self.questionLabel.frame.maxY + (UIScreen.mainScreen().bounds.size.height * 0.07)
                 self.cleanUpButtons()
-                self.layoutButtons(nil,periods: periods, xMinBoundary: xMinBound, xMaxBoundary: xMaxBound,yBoundary: self.questionLabel.frame.maxY, level: 1)
+                self.layoutButtons(nil,periods: periods, xMinBoundary: xMinBound, xMaxBoundary: xMaxBound,yBoundary: yBoundary, level: 1)
             }
         }
         var periodItemsOnTypeAndLevelDepth:[Period] = []
@@ -875,15 +880,9 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
         rightPeriodStrikes =  rightPeriodStrikes >= 3 ? 3 : rightPeriodStrikes + 1
         
         animateRightPeriod(periodButton, completion: {() -> Void in
-            let xPos = self.timelineView.getXPosOfTimelineItem(periodButton.period)
-            let yPosForceBottomOfScroll:CGFloat = 9999
-            self.timelineScrollView.zoomToRect(CGRectMake(xPos - rectangleWidth, yPosForceBottomOfScroll , rectangleWidth * 3, self.timelineScrollView.frame.height), animated: true)
+                self.bonusQuestion(periodButton)
             
-            self.timelineView.animateTimelinePocket(periodButton.period, scale:self.timelineScrollView.zoomScale)
-            self.datactrl.updateGoodScore(self.currentQuestion, deltaScore:1)
-            self.bonusQuestion(periodButton)
         })
- 
     }
     
     func animateRightPeriod(periodButton:PeriodButton,completion: (() -> (Void))? = nil)
@@ -1120,7 +1119,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
                 {
                     giveNoBonus(rangeMinLabel, completionClosure: { () in
                         self.gameStats.subtractOkPoints(self.noBonusSubtractOkPoints)
-                        self.datactrl.updateGoodScore(self.currentQuestion, deltaScore: -1)
+                        //self.datactrl.updateGoodScore(self.currentQuestion, deltaScore: -1)
                         self.giveBonus(pointsUpper, animateFromView: self.rangeMaxLabel, completionClosure: { () in
                             self.resetRange()
                             self.setNextQuestion()
@@ -1247,6 +1246,14 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
     func giveBonus(points:Int, animateFromView:UIView, completionClosure: (() -> Void)? )
     {
 
+
+            let xPos = self.timelineView.getXPosOfTimelineItem(lastRightPeriodButtonClicked.period)
+            let yPosForceBottomOfScroll:CGFloat = 9999
+            self.timelineScrollView.zoomToRect(CGRectMake(xPos - rectangleWidth, yPosForceBottomOfScroll , rectangleWidth * 3, self.timelineScrollView.frame.height), animated: true)
+            self.timelineView.animateTimelinePocket(lastRightPeriodButtonClicked.period, scale:self.timelineScrollView.zoomScale)
+            
+        
+        
         let lovePoint = points == self.bonusPointsPerfect
         let percentString:String = {() -> String in
             if points == self.bonusPoints20PercentWindow
@@ -1405,7 +1412,7 @@ class PlayViewController: UIViewController, UIScrollViewDelegate, TimelineDelega
             tempPeriodItems.append(item as! Period)
         }
         
-        let yBound =  questionLabel.frame.maxY
+        let yBound =  questionLabel.frame.maxY + (UIScreen.mainScreen().bounds.size.height * 0.07)
         let xMaxBound:CGFloat = UIScreen.mainScreen().bounds.size.width - 0
         let xMinBound:CGFloat = 0
         

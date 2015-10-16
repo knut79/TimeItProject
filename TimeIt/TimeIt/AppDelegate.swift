@@ -15,10 +15,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var client: MSClient?
+    var datactrl:DataHandler!
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: "firstlaunch")
+        
+        datactrl = DataHandler()
         
         application.statusBarHidden = true
         self.client = MSClient(

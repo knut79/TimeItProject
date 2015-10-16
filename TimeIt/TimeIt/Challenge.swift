@@ -17,7 +17,7 @@ class Challenge {
     var pointsToBeat:Int
     var correctAnswersToBeat:Int
     var title:String
-    let datactrl = DataHandler()
+    let datactrl = (UIApplication.sharedApplication().delegate as! AppDelegate).datactrl
     
     init(values:NSDictionary)
     {

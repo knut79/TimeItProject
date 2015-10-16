@@ -27,7 +27,7 @@ class TimelineViewController: UIViewController,UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        datactrl = DataHandler()
+        datactrl = (UIApplication.sharedApplication().delegate as! AppDelegate).datactrl
         datactrl.fetchData(fromLevel:minLevel,toLevel: maxLevel)
         
     }
@@ -285,7 +285,7 @@ class TimelineViewController: UIViewController,UIScrollViewDelegate {
         var collectionOfNotRightAnswQuestions:[HistoricEvent] = []
         for eventItem in period.hevents
         {
-            if (eventItem as! HistoricEvent).goodScore > 0
+            if (eventItem as! HistoricEvent).loveScore > 0
             {
                 collectionOfRightAnsweredQuestions.append(eventItem as! HistoricEvent)
             }
@@ -306,7 +306,7 @@ class TimelineViewController: UIViewController,UIScrollViewDelegate {
         {
             for eventItem in periodItem.hevents
             {
-                if (eventItem as! HistoricEvent).goodScore > 0
+                if (eventItem as! HistoricEvent).loveScore > 0
                 {
                     collectionRight.append(eventItem as! HistoricEvent)
                 }

@@ -187,7 +187,7 @@ class DataHandler
         var id = 1
 
         //MISCELLANEOUS ,tags:"#miscellaneous"
-    /*
+    
         newEvent(id++,title:"First Olympiad in Greece", year:-776, type:periodType.ten,level:2,tags:"#miscellaneous#sport")
         newEvent(id++,title:"Aesop’s fables thought to be written", year:-990, type:periodType.ten,tags:"#miscellaneous")
         
@@ -737,7 +737,7 @@ class DataHandler
         
         newEvent(id++,title:"Napoleonic Wars", from:1803, to: 1815, type:periodType.ten,level:2,tags:"#war")
         newEvent(id++,title:"Year of the Soccer War or 100 Hour War", year:1969, type:periodType.ten,level:2,tags:"#war")
-*/
+
         
         //NOT USED
         /*
@@ -793,12 +793,12 @@ class DataHandler
         
 
         //TEST
-        
+        /*
         newEvent(id++,title:"war (1918-1939)", from: 1918, to:1939, type:periodType.fifty,level: 1)
         newEvent(id++,title:"Test between (1918-1960)", from: 1918, to:1960, type:periodType.fifty,text:"First record of an automatic instrument, an organ-building treatise called Banu Musa. First record of an automatic instrument, an organ-building treatise called Banu Musa.",level: 2)
         newEvent(id++,title:"Someone is born (1751)", year: 1751, type:periodType.fifty,level:2)
         newEvent(id++,title:"old war (1918-1939)", from: -540, to:-300, type:periodType.fivehundred, text:"The best approach to add padding to a UILabel is to subclass UILabel and add an edgeInsets property. You then set the desired insets and the label will be drawn accordingly.",level: 3)
-
+*/
 
 
         /*
@@ -854,16 +854,6 @@ class DataHandler
         save()
     }
     
-    func updateGoodScore(historicEvent:HistoricEvent, deltaScore:Int)
-    {
-        //goodScoreID = Int(goodScoreID as! NSNumber) + deltaScore
-        historicEvent.goodScore = historicEvent.goodScore + Int16(deltaScore)
-        if historicEvent.goodScore < 0
-        {
-            historicEvent.goodScore = 0
-        }
-        save()
-    }
     
     func updateLoveScore(historicEvent:HistoricEvent, deltaScore:Int)
     {
@@ -1127,6 +1117,7 @@ class DataHandler
             eventsUpdateValue = dict.objectForKey(EventsUpdateKey)!
             adFreeValue = dict.objectForKey(AdFreeKey)!
             NSUserDefaults.standardUserDefaults().setBool(adFreeValue as! NSNumber == 1 ? true : false, forKey: "adFree")
+            NSUserDefaults.standardUserDefaults().synchronize()
             gameResultsValues = dict.objectForKey(GameResultsKey)! as! [AnyObject]
         } else {
             print("WARNING: Couldn't create dictionary from GameData.plist! Default values will be used!")

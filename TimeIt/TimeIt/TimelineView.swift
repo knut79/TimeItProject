@@ -122,7 +122,7 @@ class TimelineView: UIView {
         var collectionOfNotRightAnswQuestions:[HistoricEvent] = []
         for eventItem in period.hevents
         {
-            if (eventItem as! HistoricEvent).goodScore > 0
+            if (eventItem as! HistoricEvent).loveScore > 0
             {
                 collectionOfRightAnsweredQuestions.append(eventItem as! HistoricEvent)
             }
@@ -143,7 +143,7 @@ class TimelineView: UIView {
         {
             for eventItem in periodItem.hevents
             {
-                if (eventItem as! HistoricEvent).goodScore > 0
+                if (eventItem as! HistoricEvent).loveScore > 0
                 {
                      collectionRight.append(eventItem as! HistoricEvent)
                 }
