@@ -266,4 +266,13 @@ class ResultsViewController: UIViewController, FBSDKLoginButtonDelegate {
         return true
     }
     
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return [UIInterfaceOrientationMask.LandscapeLeft, UIInterfaceOrientationMask.LandscapeRight]
+    }
+    
+    override func preferredInterfaceOrientationForPresentation() -> UIInterfaceOrientation {
+        return UIInterfaceOrientation.LandscapeRight
+        
+    }
+    
 }

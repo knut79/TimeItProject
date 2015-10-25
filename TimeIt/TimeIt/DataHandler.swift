@@ -11,9 +11,6 @@ import CoreData
 import UIKit
 
 
-
-
-
 class DataHandler
 {
     let managedObjectContext = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext

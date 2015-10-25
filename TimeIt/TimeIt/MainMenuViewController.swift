@@ -17,7 +17,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
 
     //payment
     var product: SKProduct?
-    var productID = "TimelineFeudAddFree1234"
+    var productID = "YearFeudAddFree1234"
     
     //buttons
     var challengeUsersButton:UIButton!
@@ -54,7 +54,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
     
     var holderView:HolderView!
     
-    var numOfQuestionsForRound:Int = 2
+    var numOfQuestionsForRound:Int = 8
     
     var bannerView:ADBannerView?
     override func viewDidLoad() {
@@ -106,7 +106,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
             adFreeButton.setTitle("Remove ads", forState: UIControlState.Normal)
             
             self.canDisplayBannerAds = true
-            bannerView = ADBannerView(frame: CGRectZero)
+            bannerView = ADBannerView(frame: CGRectMake(0, 0, view.bounds.width, view.bounds.height))
             bannerView!.center = CGPoint(x: bannerView!.center.x, y: self.view.bounds.size.height - bannerView!.frame.size.height / 2)
             self.view.addSubview(bannerView!)
             self.bannerView?.delegate = self
@@ -262,6 +262,15 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         return true
     }
     
+    /*
+    override func viewWillAppear(animated: Bool) {
+        bannerView?.translatesAutoresizingMaskIntoConstraints = false
+        
+        bannerView?.frame = CGRectZero
+        bannerView!.center = CGPoint(x: bannerView!.center.x, y: self.view.bounds.size.height - bannerView!.frame.size.height / 2)
+    }
+    */
+    
     override func viewWillDisappear(animated: Bool) {
         bannerView?.delegate = nil
         bannerView?.removeFromSuperview()
@@ -290,6 +299,9 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
             datactrl.updateGameData(newGameStatsValues.0,deltaGoodPoints: newGameStatsValues.1,deltaLovePoints: newGameStatsValues.2)
             datactrl.saveGameData()
         }
+
+        bannerView?.frame = CGRectMake(0, 0, view.bounds.width, view.bounds.height)
+        bannerView!.center = CGPoint(x: bannerView!.center.x, y: self.view.bounds.size.height - bannerView!.frame.size.height / 2)
     }
     
     func loadScreenFinished() {
@@ -871,8 +883,34 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         }
     }
     
-    func buyProductAction() {
+ 
+    func buyProductAction()
+    {
+        let numberPrompt = UIAlertController(title: "Remove ads",
+            message: "",
+            preferredStyle: .Alert)
+        
+        
+        numberPrompt.addAction(UIAlertAction(title: "Buy",
+            style: .Default,
+            handler: { (action) -> Void in
+                self.addProductPayment()
+        }))
+        numberPrompt.addAction(UIAlertAction(title: "Restore purchase",
+            style: .Default,
+            handler: { (action) -> Void in
 
+                self.addProductPayment()
+                
+        }))
+
+        self.presentViewController(numberPrompt,
+            animated: true,
+            completion: nil)
+    }
+    
+    func addProductPayment()
+    {
         let payment = SKPayment(product: product!)
         SKPaymentQueue.defaultQueue().addPayment(payment)
     }
@@ -888,7 +926,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
                 SKPaymentQueue.defaultQueue().finishTransaction(transaction)
             case SKPaymentTransactionState.Restored:
                 self.removeAdds()
-                SKPaymentQueue.defaultQueue().finishTransaction(transaction)
+                SKPaymentQueue.defaultQueue().restoreCompletedTransactions()
             case SKPaymentTransactionState.Failed:
                 SKPaymentQueue.defaultQueue().finishTransaction(transaction)
             default:
@@ -915,7 +953,15 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         return allowRotate
     }
     
-    func canRotate () -> Void{ }
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return [UIInterfaceOrientationMask.LandscapeLeft, UIInterfaceOrientationMask.LandscapeRight]
+    }
+    
+    override func preferredInterfaceOrientationForPresentation() -> UIInterfaceOrientation {
+        return UIInterfaceOrientation.LandscapeRight
+        
+    }
+    //func canRotate () -> Void{ }
     
 
 }

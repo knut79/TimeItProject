@@ -271,12 +271,12 @@ class TimelineViewController: UIViewController,UIScrollViewDelegate {
     }
     
     override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-        print("supportedInterfaceOrientations", terminator: "")
-        return UIInterfaceOrientationMask.LandscapeLeft
+        return [UIInterfaceOrientationMask.LandscapeLeft, UIInterfaceOrientationMask.LandscapeRight]
     }
     
     override func preferredInterfaceOrientationForPresentation() -> UIInterfaceOrientation {
-        return UIInterfaceOrientation.LandscapeLeft
+        return UIInterfaceOrientation.LandscapeRight
+        
     }
 
     func numberOfRightAnswersOnTimelinePocket(period:Period) -> ([HistoricEvent],[HistoricEvent])
