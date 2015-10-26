@@ -95,6 +95,8 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         adFreeButton.layer.cornerRadius = 5
         adFreeButton.layer.masksToBounds = true
         adFreeButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        adFreeButton.titleLabel?.numberOfLines = 2
+        adFreeButton.titleLabel?.textAlignment = NSTextAlignment.Center
         adFreeButton.alpha = 0
         
 
@@ -103,7 +105,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         {
             adFreeButton.backgroundColor = UIColor.blueColor()
             adFreeButton.userInteractionEnabled = true
-            adFreeButton.setTitle("Remove ads", forState: UIControlState.Normal)
+            adFreeButton.setTitle("Remove\nads", forState: UIControlState.Normal)
             
             self.canDisplayBannerAds = true
             bannerView = ADBannerView(frame: CGRectMake(0, 0, view.bounds.width, view.bounds.height))
@@ -455,9 +457,12 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         var buttonHeight = buttonWidth
         if orientation.isLandscape || orientation.isFlat
         {
-            buttonHeight = (buttonWidth * 2) + buttonMargin
-            newChallengeButton.frame = CGRectMake((UIScreen.mainScreen().bounds.size.width / 2) -  buttonWidth - (buttonMargin / 2), UIScreen.mainScreen().bounds.size.height * 0.15, buttonWidth, buttonHeight)
-            pendingChallengesButton.frame = CGRectMake(self.newChallengeButton.frame.maxX + buttonMargin, self.newChallengeButton.frame.minY, buttonWidth, buttonHeight)
+
+            buttonWidth = practiceButton.frame.maxX - challengeUsersButton.frame.minX
+            buttonHeight = practiceButton.frame.height
+            
+            newChallengeButton.frame = CGRectMake(self.challengeUsersButton.frame.minX, UIScreen.mainScreen().bounds.size.height * 0.15, buttonWidth, buttonHeight)
+            pendingChallengesButton.frame = CGRectMake(self.resultsChallengeButton.frame.minX, self.resultsButton.frame.minY , buttonWidth, buttonHeight)
         }
         else
         {
@@ -477,10 +482,13 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         let orientation = UIDevice.currentDevice().orientation
         if orientation == UIDeviceOrientation.LandscapeLeft || orientation == UIDeviceOrientation.LandscapeRight
         {
-            buttonHeight = (buttonWidth * 2) + buttonMargin
+            buttonWidth = practiceButton.frame.maxX - challengeUsersButton.frame.minX
+            buttonHeight = practiceButton.frame.height
 
-            resultsChallengeButton.frame = CGRectMake((UIScreen.mainScreen().bounds.size.width / 2) -  buttonWidth - (buttonMargin / 2), UIScreen.mainScreen().bounds.size.height * 0.15, buttonWidth, buttonHeight)
-            resultsTimelineButton.frame = CGRectMake(self.resultsChallengeButton.frame.maxX + buttonMargin, self.resultsChallengeButton.frame.minY, buttonWidth, buttonHeight)
+            resultsChallengeButton.frame = CGRectMake(self.challengeUsersButton.frame.minX, UIScreen.mainScreen().bounds.size.height * 0.15, buttonWidth, buttonHeight)
+            resultsTimelineButton.frame = CGRectMake(self.resultsChallengeButton.frame.minX, self.resultsButton.frame.minY , buttonWidth, buttonHeight)
+
+
         }
         else
         {
@@ -942,6 +950,7 @@ class MainMenuViewController: UIViewController, TagCheckViewProtocol , ADBannerV
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: "adFree")
         NSUserDefaults.standardUserDefaults().synchronize()
         self.bannerView?.hidden = true
+        self.bannerView?.frame.offsetInPlace(dx: 0, dy: self.bannerView!.frame.height)
         
         adFreeButton.backgroundColor = UIColor.grayColor()
         adFreeButton.userInteractionEnabled = false
